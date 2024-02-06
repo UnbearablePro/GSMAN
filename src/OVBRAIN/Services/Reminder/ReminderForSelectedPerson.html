@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap" rel="stylesheet" />
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Roboto", sans-serif;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      display: flex;
+      max-width: 400px;
+      flex-direction: column;
+      margin-top: 20px;
+      height: 380px;
+      position: relative;
+    }
+
+    #contact {
+      margin-bottom: 10px;
+      font-weight: 500;
+      font-size: 18px;
+    }
+
+    .first-radio-btns {
+      display: flex;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+
+    .second-radio-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr 2fr;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      padding: 5px 10px;
+      background-color: #fff;
+      border: 1px solid black;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+    }
+
+    .btn-1,
+    .btn-5 {
+      border-radius: 5px 0 0 5px;
+      border-right: none;
+    }
+
+    .btn-2,
+    .btn-3,
+    .btn-5,
+    .btn-6 {
+      border-right: none;
+    }
+
+    .btn-7,
+    .btn-4 {
+      border-radius: 0 5px 5px 0;
+    }
+
+    .btn-7 {
+      text-align: center;
+    }
+
+    .hidden-radio,
+    .hidden-radio2 {
+      position: absolute;
+      width: 1px;
+    }
+
+    .hidden-radio:checked+label,
+    .hidden-radio2:checked+label {
+      background-color: #11734b;
+      color: #fff;
+    }
+
+    .time-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    #date,
+    #time {
+      height: 80%;
+      margin-bottom: 10px;
+      font-size: 20px;
+      border: 1px solid black;
+      border-radius: 5px;
+    }
+
+    .commentarii {
+      width: 100%;
+      position: absolute;
+      bottom: 125px;
+    }
+
+    .comentarii-box {
+      font-family: "Roboto", sans-serif;
+      border: 1px solid black;
+      border-radius: 5px;
+      resize: none;
+      outline: none;
+      text-decoration: none;
+      width: 100%;
+      font-size: 17px;
+      font-style: italic;
+      padding: 2px;
+    }
+
+    .warning {
+      font-weight: bold;
+      font-size: 15px;
+      position: absolute;
+      bottom: 100px;
+      color: red;
+      display: none;
+    }
+
+    .submit-btns {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+    }
+
+    .ok-button {
+      cursor: pointer;
+      background-color: #11734b;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-align: center;
+      font-size: 20px;
+      box-shadow: 0 4px 4px 1px #999;
+      width: 100%;
+      margin-bottom: 10px;
+      user-select: none;
+    }
+
+    .cancel-button {
+      cursor: pointer;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: bold;
+      box-shadow: 0 1px 9px 1px #999;
+      user-select: none;
+    }
+
+    .cancel-button:hover,
+    .ok-button:hover {
+      opacity: 0.9;
+    }
+
+    .cancel-button:active,
+    .ok-button:active {
+      transform: translateY(4px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <p id="contact"></p>
+    <div class="first-radio-btns">
+      <input
+          type="radio"
+          name="set-reminder"
+          id="btn-1"
+          class="hidden-radio"
+          value="5"
+        />
+      <label for="btn-1" class="btn btn-1">5 min</label>
+
+      <input
+          type="radio"
+          name="set-reminder"
+          id="btn-2"
+          class="hidden-radio"
+          value="10"
+        />
+      <label for="btn-2" class="btn btn-2">10 min</label>
+
+      <input
+          type="radio"
+          name="set-reminder"
+          id="btn-3"
+          class="hidden-radio"
+          value="15"
+        />
+      <label for="btn-3" class="btn btn-3">15 min</label>
+
+      <input
+          type="radio"
+          name="set-reminder"
+          id="btn-4"
+          class="hidden-radio"
+          value="30"
+        />
+      <label for="btn-4" class="btn btn-4">30 min</label>
+    </div>
+    <div class="second-radio-btns">
+      <input
+          type="radio"
+          name="set-reminder"
+          id="btn-5"
+          class="hidden-radio"
+          value="1"
+        />
+      <label for="btn-5" class="btn btn-5">1 ora</label>
+
+      <input
+          type="radio"
+          name="set-reminder"
+          id="btn-6"
+          class="hidden-radio"
+          value="2"
+        />
+      <label for="btn-6" class="btn btn-6">2 ore</label>
+
+      <input
+          type="radio"
+          name="set-reminder"
+          id="btn-7"
+          class="hidden-radio2"
+          value="Selecteaza"
+        />
+      <label for="btn-7" class="btn btn-7">Alege o data</label>
+    </div>
+    <div class="time-container">
+      <label for="date">
+          <input type="date" id="date" name="date" value="" />
+        </label>
+      <label for="time">
+          <input type="time" id="time" name="time" value="" />
+        </label>
+    </div>
+    <div class="commentarii">
+      <textarea
+          class="comentarii-box"
+          placeholder="Comentarii"
+          rows="4"
+          spellcheck="false"
+          name="commentarii"
+        ></textarea>
+    </div>
+    <p class="warning"></p>
+
+    <div class="submit-btns">
+      <button class="ok-button" id="submit-btn" onclick="submit()">
+          Adauga reminder
+        </button>
+      <div class="cancel-button" title="Inchide Fereastra" onclick="closeTheWindow()">
+        Renunta
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let personData = {};
+
+      window.onload = function(personSupplier){
+          google.script.run.withSuccessHandler(function(personSupplier){
+          giveContactSomeContent(personSupplier.numePrenume, personSupplier.status);
+          personData = personSupplier;
+      }).getPersonSupplier();}
+      
+
+      const btn7 = document.getElementById("btn-7");
+      const timeContainer = document.querySelector(".time-container");
+      const radioButtons = document.querySelectorAll(".hidden-radio");
+      const contact = document.getElementById("contact");
+
+      // vvv ascunde time-container ca default
+      timeContainer.style.display = "none";
+      // vvv afiseaza time-container atunci cand e apasat butonul Selecteaza
+      btn7.addEventListener("change", function () {
+        if (this.checked) {
+          timeContainer.style.display = "flex";
+        } else {
+          timeContainer.style.display = "none";
+        }
+      });
+      // vvv ascunde time-container  daca butonul Selecteaza este unchecked
+      radioButtons.forEach((radioButtons) => {
+        radioButtons.addEventListener("change", function () {
+          if (!btn7.checked) {
+            timeContainer.style.display = "none";
+          }
+        });
+      });
+
+      function giveContactSomeContent(numeSiPrenume, status) {
+        contact.textContent = `${numeSiPrenume} - ${status}`;
+      }
+
+      function displayWarning(warning) {
+        let warningContent = document.querySelector(".warning");
+        warningContent.textContent = warning;
+        warningContent.style.display = "block";
+      }
+      // function getCheckedRadioButton() {
+      //   radioButtons.forEach(function (radioButton) {
+      //     radioButton.addEventListener("change", function () {
+      //       if (radioButton.checked) {
+      //         return radioButton.value;
+      //       }
+      //     });
+      //   });
+      // }
+      
+      function convertDateTimeIntoJSDate(date, time) {
+        
+        // Split the date and time strings into day, month, year, hours, and minutes
+        var dateParts = date.split("-");
+        var timeParts = time.split(":");
+
+        // Create a new Date object using the extracted parts
+        // Note: Months in JavaScript are 0-indexed, so we subtract 1 from the month
+        var convertedDate = new Date(
+          parseInt(dateParts[0], 10),
+          parseInt(dateParts[1], 10) - 1,
+          parseInt(dateParts[2], 10),
+          parseInt(timeParts[0], 10),
+          parseInt(timeParts[1], 10)
+        );
+        console.log(convertedDate);
+
+        return convertedDate;
+      }
+
+      function convertradioButtonIntoJSDate(value) {
+        let t = 0;
+        if(value == "5") {
+          t = 5;
+        }
+        if(value == "10") {
+          t = 10;
+        }
+        if(value == "15") {
+          t = 15;
+        }
+        if(value == "30") {
+          t = 30;
+        }
+        if(value == "1") {
+          t = 60;
+        }
+        if(value == "2") {
+          t = 120;
+        }
+        var currentDate = new Date();
+
+       // Add one hour to the current date and time
+        var later = new Date(currentDate.getTime() + t * 60 * 1000);
+
+        return later;
+      }
+
+
+      
+      function submit() {
+        if (personData.numePrenume === undefined ) {
+          return;
+        }
+        
+        let date = document.getElementById("date").value;
+        let time = document.getElementById("time").value;
+        let comentarii = document.querySelector(".comentarii-box").value;
+        let rdBt;
+        let finalDate;
+
+        radioButtons.forEach(r => {
+          if(r.checked) {
+            rdBt = r.value;
+          }
+        });
+
+        if (rdBt === undefined || rdBt == null || rdBt == "" || rdBt == " ") {
+          if (date === undefined || date == null || date == "" || date == " ") {
+            displayWarning("Introdu data reminderului.");
+            return;
+          }
+          if (time === undefined || time == null || time == "" || time == " ") {
+            displayWarning("Alege ora reminderului.");
+            return;
+          }
+          finalDate = convertDateTimeIntoJSDate(date, time);
+        } else {
+          finalDate = convertradioButtonIntoJSDate(rdBt);
+        }
+
+        console.log(personData);
+        console.log(date);
+        console.log(time);
+        console.log(comentarii);
+        console.log(rdBt);
+        console.log(finalDate);
+        google.script.run.responseReminderForSelectedPerson("Reminder", finalDate.toString(), personData, comentarii);
+        google.script.host.close();
+      }
+
+      function closeTheWindow() {
+        google.script.host.close();
+      }
+  </script>
+</body>
+
+</html>

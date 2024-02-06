@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+    <script>
+
+      window.onload = function(person){
+          google.script.run.withSuccessHandler(function(person){
+          console.log("Persoana este:");
+          console.log(person);
+      }).getPersonSupplier();}
+
+
+      const btn7 = document.getElementById("btn-7");
+      const timeContainer = document.querySelector(".time-container");
+      const radioButtons = document.querySelectorAll(".hidden-radio");
+      // vvv ascunde time-container ca default
+      timeContainer.style.display = "none";
+      // vvv afiseaza time-container atunci cand e apasat butonul Selecteaza
+      btn7.addEventListener("change", function () {
+        if (this.checked) {
+          timeContainer.style.display = "flex";
+        } else {
+          timeContainer.style.display = "none";
+        }
+      });
+      // vvv ascunde time-container  daca butonul Selecteaza este unchecked
+      radioButtons.forEach((radioButtons) => {
+        radioButtons.addEventListener("change", function () {
+          if (!btn7.checked) {
+            timeContainer.style.display = "none";
+          }
+        });
+      });
+      // vvv itereaza toate radioButtons si pentru fiecare adauga un Event Listener care salveaza valoarea celui care e checked in variabila radioButton. (doar pentru primele butoane, pentru partea de "Alege o data" codul e scris mai jos)
+      // radioButtons.forEach(function (radioButton) {
+      //   radioButton.addEventListener("change", function () {
+      //     if (radioButton.checked) {
+      //       console.log("Optiune selectata: " + radioButton.value);
+      //     }
+      //   });
+      // });
+      //vvv
+      function displayWarning(warning){
+        let warningContent = document.querySelector(".warning");
+        warningContent.textContent = warning;
+        warningContent.style.display = "block"
+        
+      }
+      // vvv
+      function submit() {
+        let date = document.getElementById("date").value;
+        let time = document.getElementById("time").value;
+        let titlu = document.querySelector(".comentarii-titlu").value;
+        let comentarii = document.querySelector(".comentarii-box").value;
+        if(date === "" || time === "" || titlu === "" || comentarii === ""){
+          displayWarning("ce vor muschii mei");
+
+        }
+
+        // if (btn7.checked) {
+        //   return console.log(date, time);
+        // } else {
+        //   radioButtons.forEach(function (radioButton) {
+        //     if (radioButton.checked) {
+        //       console.log(radioButton.value);
+        //     }
+        //   });
+        // }
+      }
+      // vvv aceasta functie e menita sa inchida fereastra in momentul in care este chemata.
+      function closeTheWindow() {
+        google.script.host.close();
+      }
+    </script>
+    
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Roboto", sans-serif;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .container {
+        display: flex;
+        max-width: 400px;
+        flex-direction: column;
+        margin-top: 20px;
+        height: 405px;
+        position: relative;
+      }
+
+      .first-radio-btns {
+        display: flex;
+        margin-bottom: 10px;
+        align-items: center;
+      }
+      .second-radio-btns {
+        display: grid;
+        grid-template-columns: 1fr 1fr 2fr;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+      }
+
+      .btn {
+        padding: 5px 10px;
+        background-color: #fff;
+        border: 1px solid black;
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+      }
+      .btn-1,
+      .btn-5 {
+        border-radius: 5px 0 0 5px;
+        border-right: none;
+      }
+      .btn-2,
+      .btn-3,
+      .btn-5,
+      .btn-6 {
+        border-right: none;
+      }
+      .btn-7,
+      .btn-4 {
+        border-radius: 0 5px 5px 0;
+      }
+      .btn-7 {
+        text-align: center;
+      }
+      .hidden-radio,
+      .hidden-radio2 {
+        position: absolute;
+        width: 1px;
+      }
+
+      .hidden-radio:checked + label,
+      .hidden-radio2:checked + label {
+        background-color: #11734b;
+        color: #fff;
+      }
+      .time-container {
+        display: flex;
+        justify-content: space-between;
+      }
+      #date,
+      #time {
+        height: 80%;
+        margin-bottom: 10px;
+        font-size: 20px;
+        border: 1px solid black;
+        border-radius: 5px;
+      }
+      .commentarii {
+        width: 100%;
+        position: absolute;
+        bottom: 150px;
+      }
+      .comentarii-titlu {
+        width: 100%;
+        border: 1px solid black;
+        border-radius: 5px;
+        resize: none;
+        outline: none;
+        text-decoration: none;
+        font-size: 19px;
+        font-weight: bold;
+        font-family: "Roboto", sans-serif;
+        padding-left: 2px;
+        margin-bottom: 10px;
+      }
+      .comentarii-box {
+        font-family: "Roboto", sans-serif;
+        border: 1px solid black;
+        border-radius: 5px;
+        resize: none;
+        outline: none;
+        text-decoration: none;
+        width: 100%;
+        font-size: 17px;
+        font-style: italic;
+        padding: 2px;
+      }
+      .warning{
+        font-weight:bold;
+        font-size:15px;
+        position:absolute;
+        bottom:100px;
+        color:red;
+        display:none;
+      }
+      .submit-btns {
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+      }
+      .ok-button {
+        cursor: pointer;
+        background-color: #11734b;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 20px;
+        box-shadow: 0 4px 4px 1px #999;
+        width: 100%;
+        margin-bottom: 10px;
+        user-select: none;
+      }
+
+      .cancel-button {
+        cursor: pointer;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold;
+        box-shadow: 0 1px 9px 1px #999;
+        user-select: none;
+      }
+      .cancel-button:hover,
+      .ok-button:hover {
+        opacity: 0.9;
+      }
+
+      .cancel-button:active,
+      .ok-button:active {
+        transform: translateY(4px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <textarea
+        class="comentarii-titlu"
+        placeholder="Reminder titlu"
+        rows="1"
+        spellcheck="false"
+        name="comentarii-titlu"
+      ></textarea>
+      <div class="first-radio-btns">
+        <input
+          type="radio"
+          name="set-reminder"
+          id="btn-1"
+          class="hidden-radio"
+          value="5 min"
+        />
+        <label for="btn-1" class="btn btn-1">5 min</label>
+
+        <input
+          type="radio"
+          name="set-reminder"
+          id="btn-2"
+          class="hidden-radio"
+          value="10 min"
+        />
+        <label for="btn-2" class="btn btn-2">10 min</label>
+
+        <input
+          type="radio"
+          name="set-reminder"
+          id="btn-3"
+          class="hidden-radio"
+          value="15min"
+        />
+        <label for="btn-3" class="btn btn-3">15 min</label>
+
+        <input
+          type="radio"
+          name="set-reminder"
+          id="btn-4"
+          class="hidden-radio"
+          value="30min"
+        />
+        <label for="btn-4" class="btn btn-4">30 min</label>
+      </div>
+      <div class="second-radio-btns">
+        <input
+          type="radio"
+          name="set-reminder"
+          id="btn-5"
+          class="hidden-radio"
+          value="1 ora"
+        />
+        <label for="btn-5" class="btn btn-5">1 ora</label>
+
+        <input
+          type="radio"
+          name="set-reminder"
+          id="btn-6"
+          class="hidden-radio"
+          value="2 ore"
+        />
+        <label for="btn-6" class="btn btn-6">2 ore</label>
+
+        <input
+          type="radio"
+          name="set-reminder"
+          id="btn-7"
+          class="hidden-radio2"
+          value="Selecteaza"
+        />
+        <label for="btn-7" class="btn btn-7">Alege o data</label>
+      </div>
+      <div class="time-container">
+        <label for="date">
+          <input type="date" id="date" name="date" value="" />
+        </label>
+        <label for="time">
+          <input type="time" id="time" name="time" value="" />
+        </label>
+      </div>
+      <div class="commentarii">
+        <textarea
+          class="comentarii-box"
+          placeholder="Comentarii"
+          rows="4"
+          spellcheck="false"
+          name="commentarii"
+        ></textarea>
+      </div>
+      <p class="warning"></p>
+      
+      <div class="submit-btns">
+        <button class="ok-button" id="submit-btn" onclick="submit()">
+          Adauga reminder
+        </button>
+        <div
+          class="cancel-button"
+          title="Inchide Fereastra"
+          onclick="closeTheWindow()"
+        >
+          Renunta
+        </div>
+      </div>
+    </p>
+    
+  </body>
+</html>
+<!-- 
+  adauga un textarea.
+ -->
+
+
+
+

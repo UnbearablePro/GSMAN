@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- font's external link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Add contacts</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Roboto", sans-serif;
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        padding: 10px;
+        border-radius: 5px;
+        height: 441px;
+      }
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 5px;
+        border-radius: 5px;
+        border: 2px solid grey;
+        resize: none;
+        outline: none;
+        text-decoration: none;
+      }
+      input[type="text"] {
+        margin-bottom: 10px;
+        font-size: 20px;
+      }
+      textarea {
+        font-size: 14px;
+      }
+      textarea::first-letter {
+        text-transform: uppercase;
+      }
+      .instructiuni {
+        margin-top: 0;
+        margin-bottom: 24px;
+        font-size: 9px;
+        padding-left: 5px;
+      }
+      .instructiuni p:first-child {
+        color: rgb(128, 128, 128);
+        margin-bottom: 5px;
+      }
+      #alertEmptyFields {
+        color: red;
+        font-size: 13px;
+        font-weight: bold;
+        display: none;
+      }
+
+      .ok-button {
+        cursor: pointer;
+        background-color: #11734b;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 15px;
+        box-shadow: 0 4px 4px 1px #999;
+        width: 100%;
+        margin-bottom: 10px;
+        user-select: none;
+      }
+
+      .cancel-button {
+        cursor: pointer;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 15px;
+        box-shadow: 0 1px 9px 1px #999;
+        user-select: none;
+      }
+      .cancel-button:hover,
+      .ok-button:hover {
+        opacity: 0.9;
+      }
+
+      .cancel-button:active,
+      .ok-button:active {
+        transform: translateY(4px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <label for="recommender">
+        <input
+          type="text"
+          id="recommender"
+          placeholder="Recomandator"
+          spellcheck="false"
+          name="recommender"
+          value=""
+      /></label>
+      <label for="listRecommends">
+        <textarea
+          id="listRecommends"
+          placeholder="Contacte"
+          rows="12"
+          spellcheck="false"
+          name="listRecommends"
+          value=""
+          ;
+        ></textarea>
+      </label>
+      <div class="instructiuni">
+        <p>
+          Atentie! Recomandarile trebuie sa fie separate printr-un separator "-"
+          <br />Ex: Nume Prenume - Nr telefon - (optional) detalii
+        </p>
+        <!-- <p id="alertrecommender">Completeaza campul recommender</p>
+        <p id="alertRecomandari">Completeaza campul Recomandari</p> -->
+        <p id="alertEmptyFields">Completeaza toate campurile.</p>
+      </div>
+      <div class="btns">
+        <div class="ok-button" onclick="submitRecomandari()">
+          Adauga contacte
+        </div>
+        <div
+          class="cancel-button"
+          title="Inchide Fereastra"
+          onclick="closeTheWindow()"
+        >
+          Renunta
+        </div>
+      </div>
+    </div>
+    <script>
+      function submitRecomandari() {
+        let recommender = document.getElementById("recommender").value;
+        let listRecommends = document.getElementById("listRecommends").value;
+
+        let alertEmptyFields = document.getElementById("alertEmptyFields");
+
+        if (recommender.length === 0 || listRecommends.length === 0) {
+          alertEmptyFields.style.display = "block";
+          return;
+        } else {
+          alertEmptyFields.style.display = "none";
+          // google.script.run.addContacts_catchResponse(
+          //   recommender,
+          //   listContacte
+          // );
+          // google.script.host.close();
+          catchResponse(recommender, listRecommends);
+        }
+      }
+      function closeTheWindow() {
+        google.script.host.close();
+      }
+      function catchResponse(recommender, listRecommends) {
+        let list = listRecommends.split("\n");
+        list.forEach((element, index) => {
+          list[index] = getTextWithoutBeginningCounts(element);
+        });
+
+        for (let i = 0; i < list.length; i++) {
+          list[i] = list[i].split(/–|_|-|\/|\|/);
+        }
+        console.log(list);
+      }
+      function getTextWithoutBeginningCounts(line) {
+        let indexOfFirstLetter = line.search(/[a-zA-Z]/);
+        return line.slice(indexOfFirstLetter, line.length);
+      }
+      function splitLineUsingSeparator(line) {}
+    </script>
+  </body>
+</html>
+

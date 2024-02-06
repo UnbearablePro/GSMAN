@@ -1,0 +1,4 @@
+clasp push -w - CTRL+C to stop it
+clasp push
+
+clasp pull

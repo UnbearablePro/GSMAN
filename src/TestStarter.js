@@ -1,0 +1,3 @@
+TestManager.flag = {
+    interactionTesting: false
+}

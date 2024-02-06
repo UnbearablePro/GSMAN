@@ -1,0 +1,417 @@
+class ContacteStatusHandler {
+
+  static handleStatusEvent(event) {
+    UIUtils.debug("Am ajuns pana in handleStatusEvent");
+    const { 
+      NESUNAT, 
+      NURASPUNDE1, 
+      NURASPUNDE2, 
+      NURASPUNDE3, 
+      REVINPESTE, 
+      REVINEELEA, 
+      REFUZTELEFON, 
+      NRINVALID, 
+      NRNECUNOSCUT, 
+      DEJACLIENT, 
+      ANALIZA, 
+      CONSULTANTA, 
+      CONTRACT, 
+      NUMAIRASPUNDE, 
+      ABSENTINTALNIRE,
+      REFUZOFERTA, 
+      DEREPROGRAMATINTALNIRE, 
+      REVINCUOFERTAPANA, 
+      POTENTIALCLIENT, 
+      POTENTIALCOLABORATOR,
+      POTENTIALRECOMANDATOR,  
+      SERVICE,
+      CLIENT,  
+      CLIENTPIERDUT, 
+      ABANDONEZ,
+      RESETEZSTATUSUL
+    } = ContacteSheet.status;
+
+    switch (event.value) {
+      case NESUNAT: this.neSunat_(event); break;
+
+      case NURASPUNDE1: this.nuRaspunde1_(event); break;
+      case NURASPUNDE2: this.nuRaspunde2_(event); break;
+      case NURASPUNDE3: this.nuRaspunde3_(event); break;
+
+      case REVINPESTE: this.revin_(event); break;
+      case REVINEELEA: this.revineElEa_(event); break;
+
+      case REFUZTELEFON: this.refuzTelefon_(event); break;
+      case NRINVALID: this.nrInvalid_(event); break;
+      case NRNECUNOSCUT: this.nrNecunoscut_(event); break;
+      case DEJACLIENT: this.dejaClient_(event); break;
+
+      case ANALIZA: this.analiza_(event); break;
+      case CONSULTANTA: this.consultanta_(event); break;
+      case CONTRACT: this.contract_(event); break;
+
+      case NUMAIRASPUNDE: this.nuMaiRaspunde_(event); break;
+      case ABSENTINTALNIRE: this.absentIntalnire_(event); break;
+      case REFUZOFERTA: this.refuzOferta_(event); break;
+
+      case DEREPROGRAMATINTALNIRE: this.deReprogramatIntalnire_(event); break;
+      case REVINCUOFERTAPANA: this.revinCuOfertaPana_(event); break;
+
+      case POTENTIALCLIENT: this.potentialClient_(event); break;
+      case POTENTIALCOLABORATOR: this.potentialColaborator_(event); break;
+      case POTENTIALRECOMANDATOR: this.potentialRecomandator_(event); break;
+
+      case SERVICE: this.service_(event); break;
+      case CLIENT: this.client_(event); break;
+      case CLIENTPIERDUT: this.clientPierdut_(event); break;
+
+      case ABANDONEZ: this.abandonez_(event); break;
+      case RESETEZSTATUSUL: this.resetezStatusul_(event); break;
+
+      default: throw Error(`Status unknown: ${status}`);
+    }
+  };
+
+  static getContacteValidationRuleFunction(statusValue) {
+    const { 
+      NESUNAT, 
+      NURASPUNDE1, 
+      NURASPUNDE2, 
+      NURASPUNDE3, 
+      REVINPESTE, 
+      REVINEELEA, 
+      REFUZTELEFON, 
+      NRINVALID, 
+      NRNECUNOSCUT, 
+      DEJACLIENT, 
+      ANALIZA, 
+      CONSULTANTA, 
+      CONTRACT, 
+      NUMAIRASPUNDE, 
+      ABSENTINTALNIRE,
+      REFUZOFERTA, 
+      DEREPROGRAMATINTALNIRE, 
+      REVINCUOFERTAPANA, 
+      POTENTIALCLIENT, 
+      POTENTIALCOLABORATOR,
+      POTENTIALRECOMANDATOR,  
+      SERVICE,
+      CLIENT,  
+      CLIENTPIERDUT, 
+      ABANDONEZ,
+      RESETEZSTATUSUL
+    } = ContacteSheet.status;
+
+    switch (statusValue) {
+      case NESUNAT:                return [NESUNAT, NURASPUNDE1, REVINPESTE, REVINEELEA, REFUZTELEFON, NRINVALID,  NRNECUNOSCUT, DEJACLIENT, ANALIZA, ABANDONEZ, RESETEZSTATUSUL];
+
+      case NURASPUNDE1:            return [NURASPUNDE1, NURASPUNDE2, REVINPESTE, REVINEELEA, REFUZTELEFON, NRNECUNOSCUT, DEJACLIENT, ANALIZA, ABANDONEZ, RESETEZSTATUSUL];
+      case NURASPUNDE2:            return [NURASPUNDE2, NURASPUNDE3, REVINPESTE, REVINEELEA, REFUZTELEFON, NRNECUNOSCUT, DEJACLIENT, ANALIZA, ABANDONEZ, RESETEZSTATUSUL];
+      case NURASPUNDE3:            return [NURASPUNDE3, REVINPESTE, REVINEELEA, REFUZTELEFON,  NRNECUNOSCUT, DEJACLIENT, ANALIZA, ABANDONEZ, RESETEZSTATUSUL];
+
+      case REVINPESTE:             return [REVINPESTE, "RevinPesteDinNou", REFUZTELEFON, REVINEELEA, ANALIZA, NUMAIRASPUNDE, ABANDONEZ, RESETEZSTATUSUL];
+      case REVINEELEA:             return [REVINEELEA, REFUZTELEFON, REVINPESTE, ANALIZA, NUMAIRASPUNDE, ABANDONEZ, RESETEZSTATUSUL];
+
+      case REFUZTELEFON:           return [REFUZTELEFON, ANALIZA, RESETEZSTATUSUL];
+      case NRINVALID:              return [NRINVALID, RESETEZSTATUSUL];
+      case NRNECUNOSCUT:           return [NRNECUNOSCUT, REFUZTELEFON, DEJACLIENT, ANALIZA, ABANDONEZ, RESETEZSTATUSUL];
+      case DEJACLIENT:             return [DEJACLIENT, RESETEZSTATUSUL];
+
+      case ANALIZA:                return [ANALIZA, "ReprogrameazaAnaliza", NUMAIRASPUNDE, ABSENTINTALNIRE, REFUZOFERTA, CONSULTANTA, DEREPROGRAMATINTALNIRE, REVINCUOFERTAPANA, POTENTIALCLIENT, POTENTIALCOLABORATOR, POTENTIALRECOMANDATOR, ABANDONEZ, RESETEZSTATUSUL];
+      case CONSULTANTA:            return [CONSULTANTA, "ReprogrameazaConsultanta", NUMAIRASPUNDE, ABSENTINTALNIRE, REFUZOFERTA, CONTRACT, DEREPROGRAMATINTALNIRE, REVINCUOFERTAPANA, POTENTIALCLIENT, POTENTIALCOLABORATOR, POTENTIALRECOMANDATOR, ABANDONEZ, RESETEZSTATUSUL];
+      case CONTRACT:               return [CONTRACT, "ReprogrameazaContract", NUMAIRASPUNDE, ABSENTINTALNIRE, REFUZOFERTA, CLIENT, DEREPROGRAMATINTALNIRE, REVINCUOFERTAPANA, POTENTIALCLIENT, POTENTIALCOLABORATOR, POTENTIALRECOMANDATOR, ABANDONEZ, RESETEZSTATUSUL];
+      
+      case NUMAIRASPUNDE:          return [NUMAIRASPUNDE, ANALIZA, CONSULTANTA, CONTRACT,DEREPROGRAMATINTALNIRE, ABANDONEZ, RESETEZSTATUSUL];
+      case ABSENTINTALNIRE:        return [ABSENTINTALNIRE, ANALIZA, CONSULTANTA, CONTRACT, NUMAIRASPUNDE, REFUZOFERTA, DEREPROGRAMATINTALNIRE, ABANDONEZ, RESETEZSTATUSUL];
+      case REFUZOFERTA:            return [REFUZOFERTA, CONSULTANTA, CONTRACT, POTENTIALCLIENT, POTENTIALCOLABORATOR, POTENTIALRECOMANDATOR, ABANDONEZ, RESETEZSTATUSUL];
+
+      case DEREPROGRAMATINTALNIRE: return [DEREPROGRAMATINTALNIRE, ANALIZA, CONSULTANTA, CONTRACT, NUMAIRASPUNDE, REFUZOFERTA, ABANDONEZ, RESETEZSTATUSUL];
+      case REVINCUOFERTAPANA:      return [REVINCUOFERTAPANA, CONSULTANTA, CONTRACT, NUMAIRASPUNDE, POTENTIALCLIENT, POTENTIALCOLABORATOR, POTENTIALRECOMANDATOR, REFUZOFERTA, ABANDONEZ, RESETEZSTATUSUL];
+      
+      case SERVICE:                return [SERVICE, "ReprogrameazaService", CLIENT, CONTRACT, CLIENTPIERDUT, RESETEZSTATUSUL];
+      case CLIENT:                 return [CLIENT, SERVICE, DEREPROGRAMATINTALNIRE, CLIENTPIERDUT, POTENTIALCOLABORATOR, REFUZOFERTA, RESETEZSTATUSUL];
+      case CLIENTPIERDUT:          return [CLIENTPIERDUT, CLIENT, CONTRACT, SERVICE, RESETEZSTATUSUL];
+      
+      case POTENTIALCLIENT:        return [POTENTIALCLIENT, CONSULTANTA, CONTRACT, NUMAIRASPUNDE, POTENTIALCOLABORATOR, POTENTIALRECOMANDATOR, REFUZOFERTA, ABANDONEZ, RESETEZSTATUSUL];
+      case POTENTIALCOLABORATOR:   return [POTENTIALCOLABORATOR, ANALIZA, CONSULTANTA, CONTRACT, SERVICE, NUMAIRASPUNDE, REFUZOFERTA, POTENTIALCLIENT, POTENTIALRECOMANDATOR, ABANDONEZ, RESETEZSTATUSUL];
+      case POTENTIALRECOMANDATOR:  return [POTENTIALCLIENT, POTENTIALCOLABORATOR, ANALIZA, CONSULTANTA, CONTRACT, SERVICE, NUMAIRASPUNDE, REFUZOFERTA, ABANDONEZ, RESETEZSTATUSUL];
+      
+      case ABANDONEZ:              return [ABANDONEZ, RESETEZSTATUSUL];
+      case RESETEZSTATUSUL:        return resetStatus();
+
+      // FIXME
+      default: return SpreadshDeetApp.newDataValidation().requireValueInList([value, RESETEZSTATUSUL]).setAllowInvalid(false).build();
+    }
+  }
+  
+
+/**********************************************************************************
+ **********************************************************************************
+ **                                                                              **
+ **                             HANDLING STATUS CASES                            **
+ **                                                                              **
+ **********************************************************************************
+ **********************************************************************************/
+  
+  static neSunat_(event) {
+    ContacteSheet.setDataValidationFor(event.range, ContacteSheet.status.NESUNAT);
+    TextUtils.changeColors(event.range, ColorPallet.WHITE, ColorPallet.GREEN);
+    ContacteSheet.updateInteractionDate(event.row);
+  }
+
+  static nuRaspunde1_(event) {
+    ContacteSheet.setDataValidationFor(event.range, ContacteSheet.status.NURASPUNDE1);
+    TextUtils.changeColors(event.range, ColorPallet.WHITE, ColorPallet.LIGHTGREEN);
+    PropertiesHandlerDocument.increment(PropertiesHandlerDocument.key.TELEFOANESUNATE);
+    ContacteSheet.updateInteractionDate(event.row);
+  }
+
+  static nuRaspunde2_(event) {
+    let contact = Contact.getContactFrom(event.row);
+    let isChangedToday = contact.isLastInteractionToday();
+
+    if (isChangedToday == true && event.oldValue == ContacteSheet.status.NURASPUNDE1) {
+      UIUtils.warning("Ati sunat deja aceasta persoana astazi! Nu este nevoie sa schimbati statusul persoanei daca ati sunat aceeasi persoana de mai multe ori in aceeasi zi.\n Puteti schimba statusul de la NuRaspunde(1) la NuRaspunde(2) in urmatorul tell party.")
+      ContacteSheet.setDataValidationFor(event.range, ContacteSheet.status.NURASPUNDE1);
+      TextUtils.changeColors(event.range, ColorPallet.WHITE, ColorPallet.LIGHTGREEN);
+      return;
+    }
+
+    ContacteSheet.setDataValidationFor(event.range, ContacteSheet.status.NURASPUNDE2);
+    TextUtils.changeColors(event.range, ColorPallet.WHITE, ColorPallet.LIGHTGREEN);
+    PropertiesHandlerDocument.increment(PropertiesHandlerDocument.key.TELEFOANESUNATE);
+    ContacteSheet.updateInteractionDate(event.row);
+  }
+
+  static nuRaspunde3_(event) {
+    let contact = Contact.getContactFrom(event.row);
+    let isChangedToday = contact.isLastInteractionToday();
+
+    if (isChangedToday == true && event.oldValue == ContacteSheet.status.NURASPUNDE2) {
+      UIUtils.warning("Ati sunat deja aceasta persoana astazi! Nu este nevoie sa schimbati statusul persoanei daca ati sunat aceeasi persoana de mai multe ori in aceeasi zi.\n Puteti schimba statusul de la NuRaspunde(2) la NuRaspunde(3) in urmatorul tell party.");
+      ContacteSheet.setDataValidationFor(event.range, ContacteSheet.status.NURASPUNDE2);
+      TextUtils.changeColors(event.range, ColorPallet.WHITE, ColorPallet.LIGHTGREEN);
+      return;
+    }
+
+    ContacteSheet.setDataValidationFor(event.range, ContacteSheet.status.NURASPUNDE3);
+    TextUtils.changeColors(event.range, ColorPallet.WHITE, ColorPallet.GREY);
+    PropertiesHandlerDocument.increment(PropertiesHandlerDocument.key.TELEFOANESUNATE);
+    ContacteSheet.updateInteractionDate(event.row);
+  }
+
+  // static revin_(event) {
+  //   // .createReminderForSelectedPerson();
+  // }
+
+  // static revineElEa_(event) {
+  //   let contacte = Contact.getContactFrom(event.row);
+  //   let isChangedThisWeek = contact.isLastInteractionThisWeek();
+
+  //   if (isChangedThisWeek == false) {
+  //     PropertiesHandlerDocument.incrementFromList([PropertiesHandlerDocument.key.TELEFOANESUNATE, PropertiesHandlerDocument.key.TELEFOANERASPUNSE]);
+  //   } else {
+  //     PropertiesHandlerDocument.increment(PropertiesHandlerDocument.key.TELEFOANERASPUNSE);
+  //   }
+  //   ContacteSheet.setDataValidationFor(event.range, REVINEELEA);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.LIGHTGREEN);
+  //   this.updateInteractionDate();
+    
+  //   let response = UIUtils.question("Doriti sa setati un reminder?");
+  //   if (response == true) {
+  //     // TODO: Set Reminder
+  //   }
+  // }
+
+  // static refuzTelefon_(event) {
+  //   let isChangedThisWeek = this.isLastInteractionThisWeek();
+
+  //   if (isChangedThisWeek == true && (lastValueGlobal == REVINEELEA || lastValueGlobal == REVINPESTE)) {
+  //     // NOTHING TO DO
+  //   } else {
+  //     if (isChangedThisWeek == true && (lastValueGlobal == NURASPUNDE1 || lastValueGlobal == NURASPUNDE2 || lastValueGlobal == NURASPUNDE3)) {
+  //       PropertiesHandlerDocument.increment(PropertiesHandlerDocument.key.TELEFOANERASPUNSE);
+  //     } else {
+  //       PropertiesHandlerDocument.incrementFromList([PropertiesHandlerDocument.key.TELEFOANESUNATE, PropertiesHandlerDocument.key.TELEFOANERASPUNSE]);
+  //     }
+  //   }
+  //   ContacteSheet.setDataValidationFor(event.range, REFUZTELEFON);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.GREY);
+  //   this.updateInteractionDate();
+  // }
+
+  // static nrInvalid_(event) {
+  //   ContacteSheet.setDataValidationFor(event.range, NRINVALID);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.GREY);
+  //   this.updateInteractionDate();
+  // }
+
+  // static nrNecunoscut_(event) {
+  //   let isChangedThisWeek = this.isLastInteractionThisWeek()
+    
+  //   if (isChangedThisWeek == false) {
+  //     PropertiesHandlerDocument.incrementFromList([PropertiesHandlerDocument.key.TELEFOANESUNATE, PropertiesHandlerDocument.key.TELEFOANERASPUNSE]);
+  //   } else {
+  //     PropertiesHandlerDocument.increment(PropertiesHandlerDocument.key.TELEFOANERASPUNSE);
+  //   }
+    
+  //   ContacteSheet.setDataValidationFor(event.range, NRNECUNOSCUT);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.GREY);
+  //   this.updateInteractionDate();
+  // }
+
+  // static dejaClient_(event) {
+  //   let isChangedThisWeek = this.isLastInteractionThisWeek()
+    
+  //   if (isChangedThisWeek == false) {
+  //     PropertiesHandlerDocument.incrementFromList([PropertiesHandlerDocument.key.TELEFOANESUNATE, PropertiesHandlerDocument.key.TELEFOANERASPUNSE]);
+  //   } else {
+  //     PropertiesHandlerDocument.increment(PropertiesHandlerDocument.key.TELEFOANERASPUNSE);
+  //   }
+    
+  //   ContacteSheet.setDataValidationFor(event.range, DEJACLIENT);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.GREY);
+  //   PropertiesHandlerDocument.incrementFromList([PropertiesHandlerDocument.key.TELEFOANESUNATE, PropertiesHandlerDocument.key.TELEFOANERASPUNSE]);
+  //   this.updateInteractionDate();
+  // }
+
+  // static analiza_(event) {
+  //   // let isChangedThisWeek = this.isLastInteractionThisWeek()
+    
+  //   // if (isChangedThisWeek == false) {// TODO Check if good
+  //   //   PropertiesHandlerDocument.incrementFromList([PropertiesHandlerDocument.key.TELEFOANESUNATE, PropertiesHandlerDocument.key.TELEFOANERASPUNSE]);
+  //   // } else {
+  //   //   PropertiesHandlerDocument.increment(PropertiesHandlerDocument.key.TELEFOANERASPUNSE);
+  //   // }
+  //   MeetingCreator.createMeeting();
+  //   //TODO 
+  //   // ContacteSheet.setDataValidationFor(event.range, ANALIZA);
+  //   // TextUtils.changeColors(event.range, color.WHITE, color.BLUE);
+  //   // PropertiesHandlerDocument.incrementFromList([PropertiesHandlerDocument.key.TELEFOANESUNATE, PropertiesHandlerDocument.key.TELEFOANERASPUNSE]);
+  //   // this.updateInteractionDate();
+  // }
+
+  // static consultanta_(event) {
+  //   //TODO
+  //   ContacteSheet.setDataValidationFor(event.range, ANALIZA);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.BLUE);;
+  //   this.updateInteractionDate();
+  // }
+
+  // static contract_(event) {
+  //   //TODO
+  //   ContacteSheet.setDataValidationFor(event.range, ANALIZA);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.BLUE);
+  //   this.updateInteractionDate();
+  // }
+  
+  // static nuMaiRaspunde_(event) {
+  //   let isThisWeek = this.isLastInteractionThisWeek();
+
+  //   if (isThisWeek == false && (lastValueGlobal == REVINEELEA || lastValueGlobal == REVINPESTE)) {
+  //     PropertiesHandlerDocument.increment(PropertiesHandlerDocument.key.TELEFOANESUNATE);
+  //   }
+
+  //   ContacteSheet.setDataValidationFor(event.range, NUMAIRASPUNDE);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.GREY);
+  //   this.updateInteractionDate(event);
+  // }
+
+  // static absentIntalnire_(event) {
+  //   ContacteSheet.setDataValidationFor(event.range, ABSENTINTALNIRE);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.GREY);
+  //   this.updateInteractionDate(event);
+  // }
+
+
+  // static refuzOferta_(event) {
+  //   ContacteSheet.setDataValidationFor(event.range, REFUZOFERTA);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.GREY);
+  //   this.updateInteractionDate();
+  // }
+
+  // static deReprogramatIntalnire_(event) {
+  //   //TODO
+  //   ContacteSheet.setDataValidationFor(event.range, DEREPROGRAMATINTALNIRE);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.LIGHTBLUE);
+  //   this.updateInteractionDate();
+  // }
+
+  // static revinCuOfertaPana_(event) {
+  //   //TODO
+  //   ContacteSheet.setDataValidationFor(event.range, REVINCUOFERTAPANA);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.LIGHTPURPLE);
+  //   this.updateInteractionDate();
+  // }
+
+  // static client_(event) {
+  //   // TODO 
+  //   ContacteSheet.setDataValidationFor(event.range, CLIENT);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.PUROKE);
+  //   this.updateInteractionDate();
+  // }
+
+  // static service_(event) {
+  //   // TODO 
+  //   ContacteSheet.setDataValidationFor(event.range, SERVICE);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.BLUE);
+  //   this.updateInteractionDate();
+  // }
+
+  // static clientPierdut_(event) {
+  //   // TODO
+  //   ContacteSheet.setDataValidationFor(event.range, CLIENTPIERDUT);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.GREY);
+  //   this.updateInteractionDate();
+  // }
+
+  // static potentialClient_(event) {
+    
+  //   ContacteSheet.setDataValidationFor(event.range, POTENTIALCLIENT);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.PURPLE);
+  //   this.updateInteractionDate();
+
+  //   let response = UIUtils.question("Doriti sa setati un reminder pentru cand ati reveni?");
+  //   if (response == true) {
+  //     // TODO: Set Reminder
+  //   }
+  // }
+
+  // static potentialColaborator_(event) {
+  //   // TODO: 
+  //   ContacteSheet.setDataValidationFor(event.range, POTENTIALCOLABORATOR);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.PURPLE);
+  //   this.updateInteractionDate();
+
+  //   let response = UIUtils.question("Doriti sa setati un reminder pentru cand ati vrea sa recrutati?");
+  //   if (response == true) {
+  //     // TODO: Set Reminder
+  //   }
+  // }
+
+  // static potentialRecomandator_(event) {
+  //   ContacteSheet.setDataValidationFor(event.range, POTENTIALRECOMANDATOR);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.PURPLE);
+  //   this.updateInteractionDate();
+  // }
+
+  // static abandonez_(event) {
+  //   // TODO: NeSunat case + to see others
+  //   if (lastValueGlobal == NESUNAT) {
+  //     let response = UIUtils.question("Sunteti sigur ca doriti sa abandonati un contact pe care nu l-ati sunat?");
+  //     if (response == false) {
+  //       ContacteSheet.setDataValidationFor(event.range, NESUNAT);
+  //      TextUtils.changeColors(event.range, color.WHITE, color.GREEN);
+  //      this.updateInteractionDate();
+  //      return;
+  //     }
+  //   }
+  //   ContacteSheet.setDataValidationFor(event.range, ABANDONEZ);
+  //   TextUtils.changeColors(event.range, color.WHITE, color.GREY);
+  //   this.updateInteractionDate();
+  // }
+
+  // static resetezStatusul_(event) {
+  //   // TODO
+  // }
+}

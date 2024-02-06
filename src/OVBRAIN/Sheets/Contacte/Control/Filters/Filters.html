@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      button {
+        display: flex;
+        width: 100%;                  
+        margin-bottom: 15px;
+        color: white;
+        /* border: none; */
+        justify-content: center;
+        padding: 12px 0px;
+        
+
+      }
+      .sl-button {
+        background-color: rgb(126, 182, 46, 255);
+      }
+      .programari-button {
+        background-color: rgba(0, 183, 229, 255);
+      }
+      .oportuni-button {
+        background-color: rgba(102, 51, 153, 255);
+      }
+      .clienti-button {
+        background-color: rgba(204, 0, 102, 255);
+      }
+      .sterge-button {
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="sl-button" onclick="submitShortList()">Short List</button>
+    <button class="programari-button" onclick="submitProgramari()">Programari</button>
+    <button class="oportuni-button" onclick="submitOportuni()">Oportuni</button>
+    <button class="clienti-button" onclick="submitClienti()">Clienti</button>
+    <button class="sterge-button" onclick="submitStergeFiltru()">Sterge filtre</button>
+  </body>
+
+  <script>            
+    function submitShortList() { google.script.run.filter_Choose("ShortList");google.script.host.clos();}            
+    function submitProgramari() { google.script.run.filter_Choose("Programari");google.script.host.close();}
+    function submitOportuni() { google.script.run.filter_Choose("Oportuni");google.script.host.close();}
+    function submitClienti() { google.script.run.filter_Choose("Clienti"); google.script.host.close();}       
+    function submitStergeFiltru() { google.script.run.filter_Choose("StergeFiltru");google.script.host.close();}            
+  </script>
+</html>

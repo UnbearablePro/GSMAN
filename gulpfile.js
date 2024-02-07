@@ -3,6 +3,7 @@ const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
 const shell = require('gulp-shell');
 const print = require('gulp-print').default;
+const countFiles = require('gulp-count');
 // const debug = require('gulp-debug');
 // const filter = require('gulp-filter');
 const rename = require('gulp-rename');
@@ -13,12 +14,14 @@ const fs = require('fs');
 /* PATHS */
 const src = "src";
 const externalLibrariesPath = src + '/ExternalLibrary/*.js';
+const saintTestLibraryPath = src + '/SaintTestLibrary/*.js';
 const buildPath = "build";
 const gsForceLibraryPath = src + "/GSForceLibrary/**/*.js";
-const ovbrainPath = [src + "/OVBRAIN/**/*.js", src + "/OVBRAIN/**/**/*.js"];
+const ovbrainPath = src + "/OVBRAIN/**/*.js";
 const frontEndPath = src + "/**/*.html";
-const appscriptJsonPath = src + "appscript.json";
-const claspConfigPath = '.clasp.json';
+const appscriptJsonPath = src + "/appsscript.json";
+const claspConfigPath = ".clasp.json";
+const playgroundPath = [src + "/PlayGround.js", src + "/TestGround.js"];
 
 gulp.task('default', async function () {
     console.log(GULPBANNER);
@@ -32,14 +35,25 @@ gulp.task('help', async function () {
 
 gulp.task('b', async function () {
     buildExternalLibraries();
+    buildSaintTestLibrary();
     buildGsForceLibrary();
     buildOVBRAIN();
     buildFrontEnd();
+    buildPlayGround();
+    buildAppsscriptJson();
+});
+
+gulp.task('bwt', async function () { 
+    //TODO: In progess
+    buildExternalLibraries();
+    buildGsForceLibraryWithoutTests();
+    buildOVBRAINWithoutTests();
+    buildFrontEndWithoutTests();
     buildAppscriptJson();
 });
 
 gulp.task('clasp-to-build', (done) => {
-    changeClaspRootDir(build);
+    changeClaspRootDir(buildPath);
     done();
 });
 
@@ -50,7 +64,7 @@ gulp.task('clasp-to-src', (done) => {
 
 gulp.task('clasp-push', shell.task(['clasp push']));
 
-gulp.task('bpwatch', function() { // TODO: Fixme
+gulp.task('bpwatch', function () { // TODO: Fixme
     gulp.watch(`src/index.html`, gulp.series('bp'));
 })
 
@@ -58,44 +72,53 @@ gulp.task('bp', gulp.series('b', 'clasp-to-build', 'clasp-push', 'clasp-to-src')
 
 function buildExternalLibraries() {
     gulp.src(externalLibrariesPath)
-        // .pipe(debug({title : " -- Building External Libraries... "}))
+        .pipe(countFiles('External Libraries files builded: ##'))
         .pipe(concat('1ExternalLibraries.js'))
         .pipe(uglify())
-        .pipe(gulp.dest(buildPath))
-        .on('end', function () {
-            console.log('Start of pipeline');
-            print();
-            console.log('End of pipeline');
-        })
-    console.log(" -- External Libraries build successfully!");
+        .pipe(gulp.dest(buildPath));
+}
+
+function buildSaintTestLibrary() {
+    gulp.src(saintTestLibraryPath)
+        .pipe(countFiles('SaintTest Library files builded: ##'))
+        .pipe(concat('2SaintTestLibrary.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(buildPath));
 }
 
 function buildGsForceLibrary() {
-    console.log(" -- Building GSForce Library... ");
     gulp.src(gsForceLibraryPath)
-        .pipe(concat('2GsForce.js'))
+        .pipe(countFiles('GSForce Library files builded: ##'))
+        .pipe(concat('3GsForce.js'))
         .pipe(uglify())
-        .pipe(gulp.dest(buildPath))
-    console.log(" -- GSForce Library build successfully!");
+        .pipe(gulp.dest(buildPath));
 }
 
 function buildOVBRAIN() {
-    console.log(" -- Building OVBRAIN... ");
     gulp.src(ovbrainPath)
-        .pipe(concat('3OVBRAIN.js'))
+        .pipe(countFiles('OVBRAIN files builded: ##'))
+        .pipe(concat('4OVBRAIN.js'))
         .pipe(uglify())
         .pipe(gulp.dest(buildPath))
-    console.log(" -- OVBRAIN build successfully!");
 }
 
 function buildFrontEnd() {
     gulp.src(frontEndPath)
+        .pipe(countFiles('Front end files builded: ##'))
         .pipe(gulp.dest(buildPath));
 }
 
-function buildAppscriptJson() {
+function buildAppsscriptJson() {
     gulp.src(appscriptJsonPath)
+        .pipe(countFiles('Apps script files builded: ##'))
         .pipe(gulp.dest(buildPath));
+}
+
+function buildPlayGround() {
+    gulp.src(playgroundPath)
+        .pipe(countFiles('Play ground files builded: ##'))
+        .pipe(gulp.dest(buildPath));
+
 }
 
 function changeClaspRootDir(rootDirNewValue) {
@@ -107,6 +130,8 @@ function changeClaspRootDir(rootDirNewValue) {
 
     // Overwrite the modified clasp.json file
     fs.writeFileSync(claspConfigPath, JSON.stringify(claspConfig, null, 2));
+
+    console.log(`Changed CLASP rootDir to ${rootDirValue} successfully.`)
 }
 
 const GULPBANNER =
@@ -122,8 +147,8 @@ const GULPBANNER =
 ======================================================================================================                                                                                                   
 `;
 
-const GULPHELP = 
-`
+const GULPHELP =
+    `
 gulp help - show list of commands
 `
 

@@ -1,14 +1,11 @@
 /**
- * UIUtils provides functionality to deal with message displayers.
- * 
- * @version 0.0.1
- * @lastUpdate 18.11.2023
+ * Messager provides functionality to manage message displayers.
  */
-class UIUtils {
+class Messager {
 
   /** @private */
   constructor() {
-    throw new Error("UIUtils object cannot be created because it has only static fields.");
+    throw new Error("Messager object cannot be created because it has only static fields.");
   }
 
   static initialize() {
@@ -83,26 +80,29 @@ class UIUtils {
     const response = ui.prompt(title, message, ui.ButtonSet.YES_NO);
     if (response.getSelectedButton() == ui.Button.YES) {
       Logger.log(`Input field initialize with title""${title}" message""${message}" response:"${response.getResponseText()}".`);
+
       return response.getResponseText();
     }
+
     return undefined;
   }
 
   /**
-   * The function "question" displays a message to the user and returns true if the user clicks "Yes"
+   * The function "ask" displays a message to the user and returns true if the user clicks "Yes"
    * and false if the user clicks "No".
-   * @param {string} [message="no message"] - The "message" parameter is a string that represents the question or
+   * @param {string} [question="no message"] - The "message" parameter is a string that represents the ask or
    * prompt that will be displayed to the user. It is an optional parameter, and if no value is
    * provided, the default message will be "no message".
-   * @returns {boolean} a boolean value. If the user responds with "Yes" to the question, it will return true.
+   * @returns {boolean} a boolean value. If the user responds with "Yes" to the ask, it will return true.
    * Otherwise, it will return false.
    */
-  static question(message = "no message") {
+  static ask(question = "no message") {
     this.initialize();
-    
-    var response = ui.alert(message, ui.ButtonSet.YES_NO);
-    Logger.log(`❓ Question for the User: ${message}. Response: ${response == ui.Button.YES}`);
-    return response == ui.Button.YES ? true : false;
+
+    let response = ui.alert(question, ui.ButtonSet.YES_NO);
+    Logger.log(`❓ Ask the User: ${question}. Response: ${response == ui.Button.YES}`);
+
+    return response == ui.Button.YES;
   }
 
   

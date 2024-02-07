@@ -1,0 +1,3 @@
+const testFlag = {
+    interactionTest: false
+}

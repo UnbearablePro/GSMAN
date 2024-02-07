@@ -1,3 +1,0 @@
-TestManager.flag = {
-    interactionTesting: false
-}

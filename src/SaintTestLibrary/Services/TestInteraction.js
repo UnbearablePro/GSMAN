@@ -6,7 +6,7 @@ class TestInteraction {
 
     static askIfResultWasCorrect(resultQuestion = "The expected interaction is correct?") {
         let response = SpreadsheetApp.getUi().alert(resultQuestion, SpreadsheetApp.getUi().ButtonSet.YES_NO);
-        return response == ui.Button.YES;
+        return response == SpreadsheetApp.getUi().Button.YES;
     }
 
 }

@@ -1,4 +1,4 @@
-class CalendarEventHandler {
+class CalendarEvent {
     
     constructor() {
         eventId = eventId();

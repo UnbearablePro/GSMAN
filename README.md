@@ -60,16 +60,16 @@ TODO
 ```
 4.2 Install GULP in your project.
 ```bash
-npm install --save-dev-gulp
+npm install --save-dev gulp
 ```
 4.3 Install GULP functionalities.
 ```bash
-npm install --save-dev-gulp-uglify
-npm install --save-dev-gulp-concat
-npm install --save-dev-gulp-shell
-npm install --save-dev-gulp-rename
-npm install --save-dev-gulp-print
-npm install --save-dev-gulp-count
-npm install --save-dev-gulp-filter
-npm install --save-dev-gulp-debug
+npm install --save-dev gulp-uglify
+npm install --save-dev gulp-concat
+npm install --save-dev gulp-shell
+npm install --save-dev gulp-rename
+npm install --save-dev gulp-print
+npm install --save-dev gulp-count
+npm install --save-dev gulp-filter
+npm install --save-dev gulp-debug
 ```

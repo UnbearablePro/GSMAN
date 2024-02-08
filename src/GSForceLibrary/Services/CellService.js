@@ -4,7 +4,7 @@
  * @version 0.0.1
  * @lastUpdate 18.11.2023
 */
-class CellManipulator {
+class CellService {
 
   /**
    * Has the purpose to change color in a range.

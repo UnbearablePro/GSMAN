@@ -1,11 +1,11 @@
 /**
- * Messager provides functionality to manage message displayers.
+ * Displayer provides functionality to manage message displayers.
  */
-class Messager {
+class Displayer {
 
   /** @private */
   constructor() {
-    throw new Error("Messager object cannot be created because it has only static fields.");
+    throw new Error("Displayer object cannot be created because it has only static fields.");
   }
 
   static initialize() {
@@ -133,7 +133,6 @@ class Messager {
     Logger.log(`👍 Complete: ${message}. Shown successfully`);
   }
 }
-  var ui = null;
 
 // ❌: ERROR
 // ⚠️: Warning

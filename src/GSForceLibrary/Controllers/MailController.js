@@ -3,7 +3,7 @@
  * 
  * @TODO - Testing create a mail template
  */
-class MailService{
+class MailController{
 
   static isRemainingDailyQuotaOn() {
     (MailApp.getRemainingDailyQuota < 2) ? false : true;
@@ -42,6 +42,5 @@ function testMailUtils() {
     "Subiect",
     
   )
-  MailService.sendMail(mailMessage);
-  MailService
+  
 }

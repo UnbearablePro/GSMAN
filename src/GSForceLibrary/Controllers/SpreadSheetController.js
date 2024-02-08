@@ -29,11 +29,4 @@ class SpreadSheetController {
   }
 }
 
-/** 
- * ActiveSpreadSheet 
- * ```
- * app=SpreadsheetApp.getActiveSpreadsheet();
- * 
- * ```
-*/
-var app = SpreadsheetApp.getActiveSpreadsheet();
+

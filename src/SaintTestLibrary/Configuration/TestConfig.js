@@ -1,3 +1,2 @@
-const testFlag = {
-    interactionTest: false
-}
+var current = null;
+var testReport = new TestReport();

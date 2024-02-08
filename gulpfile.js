@@ -14,9 +14,9 @@ const fs = require('fs');
 /* PATHS */
 const src = "src";
 const externalLibrariesPath = src + '/ExternalLibrary/*.js';
-const saintTestLibraryPath = src + '/SaintTestLibrary/*.js';
+const saintTestLibraryPath = src + '/SaintTestLibrary/**/*.js';
 const buildPath = "build";
-const gsForceLibraryPath = src + "/GSForceLibrary/**/*.js";
+const gsForceLibraryPath = src + "/GSForceLibrary/*.js";
 const ovbrainPath = src + "/OVBRAIN/**/*.js";
 const frontEndPath = src + "/**/*.html";
 const appscriptJsonPath = src + "/appsscript.json";
@@ -129,9 +129,9 @@ function changeClaspRootDir(rootDirNewValue) {
     claspConfigContent.rootDir = rootDirNewValue;
 
     // Overwrite the modified clasp.json file
-    fs.writeFileSync(claspConfigPath, JSON.stringify(claspConfig, null, 2));
+    fs.writeFileSync(claspConfigPath, JSON.stringify(claspConfigContent, null, 2));
 
-    console.log(`Changed CLASP rootDir to ${rootDirValue} successfully.`)
+    console.log(`Changed CLASP rootDir to ${rootDirNewValue} successfully.`)
 }
 
 const GULPBANNER =

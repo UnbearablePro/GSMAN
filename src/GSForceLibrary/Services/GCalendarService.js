@@ -1,4 +1,4 @@
-class GoogleCalendar {
+class GCalendarService {
 
   constructor(calendarName) {
     calendar = this.getCalendar(calendarName);

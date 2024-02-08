@@ -1,11 +1,11 @@
 /**
- * PropertiesHandlerDocument is singleton class that provide functionality to work with properties from PropertiesService.class.
+ * PropertiesDocumentController is singleton class that provide functionality to work with properties from PropertiesService.class.
  */
-class PropertiesHandlerDocument {
+class PropertiesDocumentController { PropertiesDocumentController
 
   static getAllProperties() {
     this.initialize_();
-    return PropertiesHandlerDocument.properties;
+    return PropertiesDocumentController.properties;
   }
   
    /**
@@ -69,7 +69,3 @@ class PropertiesHandlerDocument {
   }
 }
 
-/** Properties of document properties.*
- * @type {Object.<string,string>}
- */
-PropertiesHandlerDocument.properties = null;

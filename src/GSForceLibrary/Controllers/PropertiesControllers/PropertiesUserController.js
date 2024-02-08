@@ -5,7 +5,7 @@
  * @version 0.0.0
  * @date 11-07-2023
  */
-class PropertiesHandlerUser {
+class PropertiesUserController {
 
   /** @private */
   constructor() {}
@@ -68,5 +68,3 @@ class PropertiesHandlerUser {
  
 }
 
-/** Properties of user properties. */
-PropertiesHandlerUser.properties = null;

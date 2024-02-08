@@ -22,5 +22,3 @@ class Settings {
 
 }
 
-/** @private */
-Settings.prefference = null;

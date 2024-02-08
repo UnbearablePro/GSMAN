@@ -1,8 +1,8 @@
 /**
- * Encryption has the functionality for encrypting data.
+ * Encryptor has the functionality for encrypting data.
  * 
  */
-class Encryption {
+class Encryptor {
 
   /**
    * Hash a piece of text.

@@ -6,12 +6,10 @@ class TestUtils {
     this.testsPassed = 0;
   }
 
-  static logModuleStarting(target) {
-    Logger.log(`================================================ ${target} ================================================ `)
-  }
+  
 
   static passed(target, testCase) {
-    Logger.log(`✅ Passed test | ${target} : ${testCase}`);
+    
     this.testsPassed += 1;
   }
   static failed(target, testCase, reason) {

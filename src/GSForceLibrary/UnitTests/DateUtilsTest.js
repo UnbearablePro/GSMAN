@@ -4,7 +4,7 @@ function testDateUtils() {
   let finalListOfTests = [];
 
     let normalTests = [
-        // General
+    // General
     luxonZoneShouldBeRomaniaByDefault_,
 
     //toDay()

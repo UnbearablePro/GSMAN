@@ -1,19 +1,34 @@
+
+
+//    ###################################################### 
+//    ##                                                  ##
+//    ##                      Imports                     ##
+//    ##                                                  ##
+//    ######################################################
+
 const gulp = require('gulp');
 const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
 const shell = require('gulp-shell');
 const print = require('gulp-print').default;
 const countFiles = require('gulp-count');
+const gutil = require('gulp-util');
 // const debug = require('gulp-debug');
 // const filter = require('gulp-filter');
 const rename = require('gulp-rename');
 const process = require('process');
 const fs = require('fs');
-// const del = require('del');
+const del = require('del');
 
 
-/* PATHS */
+//    ###################################################### 
+//    ##                                                  ##
+//    ##                       Paths                      ##
+//    ##                                                  ##
+//    ######################################################
+
 const src = "src";
+
 const externalLibrariesPath = src + '/ExternalLibrary/*.js';
 const saintTestLibraryPath = src + '/SaintTestLibrary/**/*.js';
 const buildPath = "build";
@@ -24,9 +39,15 @@ const appscriptJsonPath = src + "/appsscript.json";
 const claspConfigPath = ".clasp.json";
 const playgroundPath = [src + "/PlayGround.js", src + "/SaintTest.js"];
 
+//    ###################################################### 
+//    ##                                                  ##
+//    ##                     GULP TASKS                   ##
+//    ##                                                  ##
+//    ######################################################
+
+
 gulp.task('default', async function () {
-    console.log(GULPBANNER);
-    console.log(GULPHELP);
+    gutil.log(cyan(GULPBANNER), magenta(GULPHELP));
 });
 
 gulp.task('help', async function () {
@@ -35,7 +56,7 @@ gulp.task('help', async function () {
 }); 
 
 gulp.task('b', async function () {
-    // deleteBuildContent();
+    deleteBuildContent();
     buildExternalLibraries();
     buildSaintTestLibrary();
     buildGsForceLibrary();
@@ -45,14 +66,14 @@ gulp.task('b', async function () {
     buildAppsscriptJson();
 });
 
-// gulp.task('bwt', async function () { 
-//     //TODO: In progess
-//     buildExternalLibraries();
-//     buildGsForceLibraryWithoutTests();
-//     buildOVBRAINWithoutTests();
-//     buildFrontEndWithoutTests();
-//     buildAppscriptJson();
-// });
+gulp.task('bwt', async function () { 
+    //TODO: In progess
+    buildExternalLibraries();
+    buildGsForceLibraryWithoutTests();
+    buildOVBRAINWithoutTests();
+    buildFrontEndWithoutTests();
+    buildAppscriptJson();
+});
 
 gulp.task('clasp-to-build', (done) => {
     changeClaspRootDir(buildPath);
@@ -71,8 +92,8 @@ gulp.task('bpwatch', function () { // TODO: Fixme
 })
 
 gulp.task('displayLinks', async function() {
-    console.log(`Google Sheet: https://docs.google.com/spreadsheets/d/1pZz9arl4ISsnNiEu7sfFsg6INHNteFutXEp73XIJfuA/edit#gid=1187718938`);
-    console.log(`Apps Script: https://script.google.com/u/0/home/projects/1sxPaQBU46RjhM8g2mjtqj37A6BSToo_YSZYnlqBdpl2U6Bjjkw_PfrI1/edit `);
+    glog(`Google Sheet: https://docs.google.com/spreadsheets/d/1pZz9arl4ISsnNiEu7sfFsg6INHNteFutXEp73XIJfuA/edit#gid=1187718938`);
+    glog(`Apps Script: https://script.google.com/u/0/home/projects/1sxPaQBU46RjhM8g2mjtqj37A6BSToo_YSZYnlqBdpl2U6Bjjkw_PfrI1/edit `);
 });
 
 gulp.task('bp', gulp.series('b', 'clasp-to-build', 'clasp-push', 'clasp-to-src', 'displayLinks'));
@@ -80,6 +101,12 @@ gulp.task('bp', gulp.series('b', 'clasp-to-build', 'clasp-push', 'clasp-to-src',
 // function deleteBuildContent() {
 //     return del("build/**/*");
 // }
+
+//    ###################################################### 
+//    ##                                                  ##
+//    ##                    Functionality                 ##
+//    ##                                                  ##
+//    ######################################################
 
 function buildExternalLibraries() {
     gulp.src(externalLibrariesPath)
@@ -134,7 +161,7 @@ function buildPlayGround() {
 
 function changeClaspRootDir(rootDirNewValue) {
     // Read the clasp.json file
-    let claspConfigContent = JSON.parse(fs.readFileSync(claspConfigPath));
+    let claspConfigContent = JSON.parse(fs.readFile(claspConfigPath));
 
     // Change clasp config content rootDir to new value
     claspConfigContent.rootDir = rootDirNewValue;
@@ -177,3 +204,34 @@ gulp bp - Build, prepare and push the application to google acript aps
 
   ==========================
 `;
+
+
+//    ###################################################### 
+//    ##                                                  ##
+//    ##                    GULP UTILS                    ##
+//    ##                                                  ##
+//    ######################################################
+
+function green(message) {
+    return gutil.colors.green(message);
+}
+
+function red(message) {
+    return gutil.colors.red(message);
+}
+
+function magenta(message) {
+    return gutil.colors.magenta(message);
+}
+
+function cyan(message) {
+    return gutil.colors.cyan(message);
+}
+
+function blue(message) {
+    return gutil.colors.blue(message);
+}
+
+function yellow(message) {
+    return gutil.colors.yellow(message);
+}

@@ -1,3 +1,4 @@
+/** @class */
 class TestExecutor {
 
     static executeTestFiles(testFiles) {

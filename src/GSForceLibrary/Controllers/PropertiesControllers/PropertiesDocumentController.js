@@ -18,7 +18,7 @@ class PropertiesDocumentController { PropertiesDocumentController
     let modifiedListOfProperties = {};
     listOfPropertiesKeys.forEach(key => {
       // FIXME: 
-      modifiedListOfProperties[key] = StringUtils.addTwoStrings(this.properties[key], incrementingNumber.toString()); 
+      // modifiedListOfProperties[key] = StringUtils.addTwoStrings(this.properties[key], incrementingNumber.toString()); 
     })
     // FIXME: 
     // @ts-ignore
@@ -27,14 +27,15 @@ class PropertiesDocumentController { PropertiesDocumentController
 
   static increment(propertyKey, incrementingNumber = "1") {
     this.initialize_();
-    let result = StringUtils.addTwoStrings(this.properties[propertyKey], incrementingNumber);
-    PropertiesService.getDocumentProperties().setProperty(propertyKey, result.toString());
+    
+    // let result = StringUtils.addTwoStrings(this.properties[propertyKey], incrementingNumber);
+    // PropertiesService.getDocumentProperties().setProperty(propertyKey, result.toString());
   }
 
   static decrement(propertyKey, decrementNumber = "1") {
     this.initialize_();
-    let result = StringUtils.subtractTwoStrings(this.properties[propertyKey], decrementNumber);
-    PropertiesService.getDocumentProperties().setProperty(propertyKey, result.toString());
+    // let result = StringUtils.subtractTwoStrings(this.properties[propertyKey], decrementNumber);
+    // PropertiesService.getDocumentProperties().setProperty(propertyKey, result.toString());
   }
 
   static deleteAll() {
@@ -43,7 +44,7 @@ class PropertiesDocumentController { PropertiesDocumentController
 
   /** Display all properties. */
   static displayProperties() {
-    UIUtils.initialize();
+    
     let message = "";
     var documentProperties = PropertiesService.getDocumentProperties();
     var propAllFields = documentProperties.getProperties();
@@ -55,7 +56,7 @@ class PropertiesDocumentController { PropertiesDocumentController
         message = message + propKeys + " " + propValue + "\n";
       });
 
-    UIUtils.debug(message);
+    // UIUtils.debug(message);
     }
 
   /** @private */

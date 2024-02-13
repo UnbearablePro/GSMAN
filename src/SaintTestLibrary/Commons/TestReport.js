@@ -1,3 +1,4 @@
+/** @class */
 class TestReport {
 
     constructor(testsPassed = 0, testsFailed = 0, testsError = 0, notTested = 0){

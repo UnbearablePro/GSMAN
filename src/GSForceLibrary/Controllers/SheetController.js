@@ -1,4 +1,5 @@
 /** 
+ * @class
  * SheetController purpose is to provide utils for manipulating sheet operations 
  */
 class SheetController {

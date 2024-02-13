@@ -1,9 +1,8 @@
 /**
  * HtmlCreator provides functionality for creating html outputs.
- * 
+ * @class
  * @version 1.0.0
  */
-
 class HtmlController {
   
   static openHtmlPopup(htmlFileName, title,  width, height) {

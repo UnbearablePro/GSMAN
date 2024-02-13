@@ -9,6 +9,8 @@ class Menu {
       .addToUi();
   }
 
+  
+
   /** @private */
   static createAdminMenu() {
     SpreadsheetApp.getUi()
@@ -51,3 +53,4 @@ class Menu {
     SpreadsheetApp.getActiveSpreadsheet().removeMenu("ADMIN");
   }
 }
+

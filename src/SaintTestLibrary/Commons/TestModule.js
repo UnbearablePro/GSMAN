@@ -1,3 +1,4 @@
+/** @class */
 class TestModule {
 
     constructor(listOfTests, testModuleName) {

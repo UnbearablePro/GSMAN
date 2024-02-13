@@ -1,3 +1,4 @@
+/** @class */
 class TestInteraction {
 
     static showExpectedResultMessage(explainExpectedResultMessage) {

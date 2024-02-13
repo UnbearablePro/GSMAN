@@ -1,3 +1,4 @@
+/** @class */
 class UserEvent {
 
     constructor(event) {

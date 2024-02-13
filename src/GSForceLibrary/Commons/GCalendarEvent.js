@@ -1,3 +1,4 @@
+/** @class */
 class GCalendarEvent {
     constructor(event) {
         this.range = event.range;

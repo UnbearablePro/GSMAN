@@ -1,3 +1,4 @@
+/** @class */
 class TestLauncher {
 
     static startTestFromFile(testFiles) {

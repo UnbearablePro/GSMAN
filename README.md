@@ -72,4 +72,5 @@ npm install --save-dev gulp-print
 npm install --save-dev gulp-count
 npm install --save-dev gulp-filter
 npm install --save-dev gulp-debug
+npm install del --save-dev
 ```

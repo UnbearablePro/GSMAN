@@ -1,12 +1,12 @@
 /**
  * @module MailService
- * 
+ * @class
  * @TODO - Testing create a mail template
  */
 class MailController{
 
   static isRemainingDailyQuotaOn() {
-    (MailApp.getRemainingDailyQuota < 2) ? false : true;
+    (MailApp.getRemainingDailyQuota() < 2) ? false : true;
   }
 
   static sendMail(recipient, subject, body) {
@@ -15,13 +15,13 @@ class MailController{
       subject: subject,
       body: body,
     });
-    UIUtils.system("Mail sented successfully");
+    // UIUtils.system("Mail sented successfully");
   }
 
-  static sendMail(mailMessage) {
-    MailApp.sendEmail(mailMessage);
-    UIUtils.system("Mail sented successfully");
-  }
+  // static sendMail(mailMessage) {
+  //   MailApp.sendEmail(mailMessage);
+  //   UIUtils.system("Mail sented successfully");
+  // }
 
   static sendFeedbackMail(subject, body) {
     this.sendMail(Developer.mail, subject, body);
@@ -34,13 +34,4 @@ class MailController{
   static sendMailToYourself(subject, body) {
     this.sendMail(User.mail, subject, body);
   }
-}
-
-function testMailUtils() {
-  var mailMessage = ObjectCreator.createMailMessage(
-    Developer.mail,
-    "Subiect",
-    
-  )
-  
 }

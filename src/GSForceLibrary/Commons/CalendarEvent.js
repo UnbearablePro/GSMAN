@@ -1,8 +1,7 @@
 class CalendarEvent {
     
-    constructor() {
-        eventId = eventId();
+    constructor(eventId) {
+        this.eventId = eventId;
     }
-
     
 }

@@ -9,6 +9,7 @@ const countFiles = require('gulp-count');
 const rename = require('gulp-rename');
 const process = require('process');
 const fs = require('fs');
+// const del = require('del');
 
 
 /* PATHS */
@@ -16,7 +17,7 @@ const src = "src";
 const externalLibrariesPath = src + '/ExternalLibrary/*.js';
 const saintTestLibraryPath = src + '/SaintTestLibrary/**/*.js';
 const buildPath = "build";
-const gsForceLibraryPath = src + "/GSForceLibrary/*.js";
+const gsForceLibraryPath = src + "/GSForceLibrary/**/*.js";
 const ovbrainPath = src + "/OVBRAIN/**/*.js";
 const frontEndPath = src + "/**/*.html";
 const appscriptJsonPath = src + "/appsscript.json";
@@ -31,14 +32,15 @@ gulp.task('default', async function () {
 gulp.task('help', async function () {
     console.log(GULPHELP);
     console.log(GULPCOMMANDS);
-});
+}); 
 
 gulp.task('b', async function () {
+    // deleteBuildContent();
     buildExternalLibraries();
     buildSaintTestLibrary();
     buildGsForceLibrary();
-    buildOVBRAIN();
-    buildFrontEnd();
+    // buildOVBRAIN();
+    // buildFrontEnd();
     buildPlayGround();
     buildAppsscriptJson();
 });
@@ -68,7 +70,16 @@ gulp.task('bpwatch', function () { // TODO: Fixme
     gulp.watch(`src/index.html`, gulp.series('bp'));
 })
 
-gulp.task('bp', gulp.series('b', 'clasp-to-build', 'clasp-push', 'clasp-to-src'));
+gulp.task('displayLinks', async function() {
+    console.log(`Google Sheet: https://docs.google.com/spreadsheets/d/1pZz9arl4ISsnNiEu7sfFsg6INHNteFutXEp73XIJfuA/edit#gid=1187718938`);
+    console.log(`Apps Script: https://script.google.com/u/0/home/projects/1sxPaQBU46RjhM8g2mjtqj37A6BSToo_YSZYnlqBdpl2U6Bjjkw_PfrI1/edit `);
+});
+
+gulp.task('bp', gulp.series('b', 'clasp-to-build', 'clasp-push', 'clasp-to-src', 'displayLinks'));
+
+// function deleteBuildContent() {
+//     return del("build/**/*");
+// }
 
 function buildExternalLibraries() {
     gulp.src(externalLibrariesPath)

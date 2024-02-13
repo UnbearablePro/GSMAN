@@ -1,6 +1,6 @@
 /**
  * ApplicationControl provides SpreadsheetApp functionality
- * 
+ * @class
  * @version
  * @lastModification
  */

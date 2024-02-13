@@ -1,6 +1,6 @@
 /** 
  * TextUtils provides functionality to deal with text manipulation. 
- * 
+ * @class
  * @version 0.0.1
  * @lastUpdate 18.11.2023
 */

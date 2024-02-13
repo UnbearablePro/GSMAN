@@ -1,6 +1,6 @@
 /**
  * TriggersUtils provides template triggers and active them.
- * 
+ * @class
  * @WYP
  * @version 0.0.1
  * @lastUpdate 18.11.2023
@@ -59,13 +59,13 @@ class TriggersUtils {
    * .after(millis)
    * ```
    */
-  static createAfterTimeTriggered(functionName, millis = duration.HOURINMILLIS) {
-    ScriptApp.newTrigger(functionName)
-      .timeBased()
-      .after(millis)
-      .create();
-    Logger.log(`After time trigger created successfully with functionName: ${functionName}, millis:${everyMinutes}.`);
-  }
+  // static createAfterTimeTriggered(functionName, millis = DurationTime.HOURINMILLIS) {
+  //   ScriptApp.newTrigger(functionName)
+  //     .timeBased()
+  //     .after(millis)
+  //     .create();
+  //   Logger.log(`After time trigger created successfully with functionName: ${functionName}, millis:${everyMinutes}.`);
+  // }
 
   /**
    * Create a time trigger that executes when the user opens the spreadsheet aplication.
@@ -76,25 +76,25 @@ class TriggersUtils {
    * .onOpen()
    * ```
    */
-  static createOnOpenTrigger(functionName) {
-    ScriptApp.newTrigger(functionName)
-      .forSpreadsheet()
-      .onOpen()
-      .create();
-    Logger.log(`On open trigger created successfully with functionName: ${functionName}.`);
-  }
+  // static createOnOpenTrigger(functionName) {
+  //   ScriptApp.newTrigger(functionName)
+  //     .forSpreadsheet()
+  //     .onOpen()
+  //     .create();
+  //   Logger.log(`On open trigger created successfully with functionName: ${functionName}.`);
+  // }
 
   /**
    * WYP
    */
-  static createTimeOnOpenTrigger(functionName, date, hour, minute) {
-    ScriptApp.newTrigger(functionName)
-      .timeBased()
-      .atDate(date)
-      .create()
-    // TODO Log entire trigger.
-    Logger.log(" TimeTrigger created successfully");
-  }
+  // static createTimeOnOpenTrigger(functionName, date, hour, minute) {
+  //   ScriptApp.newTrigger(functionName)
+  //     .timeBased()
+  //     .atDate(date)
+  //     .create()
+  //   // TODO Log entire trigger.
+  //   Logger.log(" TimeTrigger created successfully");
+  // }
 
   /**
    * WYP

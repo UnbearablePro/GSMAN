@@ -1,3 +1,4 @@
+//@ts-nocheck
 function assert(result, expected, reason) {
     if (result == expected) {
         testReport.passed(currentTest);
@@ -16,6 +17,7 @@ function assertInteraction(sut, explainedExpectedResultMessage, customAskingForT
     } catch (e) {
         testReport.error(currentTest, e);
     }
+
     let result = TestInteraction.askIfResultWasCorrect(customAskingForTheResult);
 
     assert(result, true, explainedExpectedResultMessage);

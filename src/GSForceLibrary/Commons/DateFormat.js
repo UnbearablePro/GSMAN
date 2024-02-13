@@ -4,6 +4,5 @@
  * @return {string}
  */
 const DateFormat = {
-    ROMANIADATE: "dd.MM.yyyy"
-  }
-  
+  ROMANIADATE: "dd.MM.yyyy"
+}

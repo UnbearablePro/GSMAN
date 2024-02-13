@@ -1,9 +1,11 @@
+/** @class */
 class Test {
 
     constructor(functionToTest,  type = TestType.UNITTEST) {
-        if (functionToTest == null || functiontoTest == "") {
+        if (functionToTest == null || functionToTest == "") {
             throw Error("No function provided for testing");
         }
+        
 
         // FIXME: Most probably can't call a function from here
         this.functionToTest = functionToTest;

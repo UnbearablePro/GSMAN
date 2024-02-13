@@ -6,8 +6,6 @@ class TestUtils {
     this.testsPassed = 0;
   }
 
-  
-
   static passed(target, testCase) {
     
     this.testsPassed += 1;
@@ -15,6 +13,7 @@ class TestUtils {
   static failed(target, testCase, reason) {
     Logger.log(`🟥 Failed test | ${target} : ${testCase} | Reason: ${reason}`);
     this.testsFailed = 0;
+    TestLogger.logNotTestedTest
   }
   /**
    * 

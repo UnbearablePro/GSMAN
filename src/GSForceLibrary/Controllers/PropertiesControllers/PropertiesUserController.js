@@ -1,6 +1,6 @@
 /**
  * PropertiesHandler is singleton class that provide functionality to work with properties from PropertiesService.class.
- * 
+ * @class
  * @todo WYP
  * @version 0.0.0
  * @date 11-07-2023
@@ -53,7 +53,7 @@ class PropertiesUserController {
 
   /** Display all properties. */
   static displayProperties() {
-    UIUtils.initialize();
+    // UIUtils.initialize();
     let message = "\n";
     var documentProperties = PropertiesService.getUserProperties();
     var propAllFields = documentProperties.getProperties();
@@ -63,7 +63,7 @@ class PropertiesUserController {
         let propValue = propAllFields[propKeys];
         message = message + propKeys + " = " + propValue + "\n";
       });
-    UIUtils.debug(message);
+    // UIUtils.debug(message);
   }
  
 }

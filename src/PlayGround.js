@@ -1,3 +1,3 @@
 function playGround() {
-  return false;
+  return true;
 }

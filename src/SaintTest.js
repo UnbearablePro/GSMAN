@@ -6,6 +6,8 @@ function startTests() {
     TestLauncher.startTestFromFile(testStarter);
 }
 
+
+
 let testStarter = 
 [
 // introdu starterul de

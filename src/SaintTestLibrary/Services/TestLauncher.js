@@ -7,12 +7,11 @@ class TestLauncher {
         TestLogger.logFinalTestingReport(testReport);
     }
 
-    static startFromCustomTestModule(testModule) {
-        TestLogger.logStartTesting();
-        TestExecutor.executeTestModule(testModule)
-        TestLogger.logFinalTestingReport(testReport);
-    }
-
+    // static startFromCustomTestModule(testModule) {
+    //     TestLogger.logStartTesting();
+    //     TestExecutor.executeTestModule(testModule)
+    //     TestLogger.logFinalTestingReport(testReport);
+    // }
 
 }
 

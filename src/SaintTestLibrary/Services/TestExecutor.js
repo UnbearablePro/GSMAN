@@ -9,25 +9,24 @@ class TestExecutor {
     static createTestModulesFromFiles(testFiles) {
         let listOfTestModules = [];
         testFiles.forEach(testFile => {
-            listOfTestModules.append(testFile());
+            listOfTestModules.push(testFile());
         });
         return listOfTestModules;
     }
 
     static executeTestModules(listOfTestModules) {
-        listOfTestModules.forEach(testModule => this.executeTestModules());
+        listOfTestModules.forEach(testModule => this.executeTestModules(testModule));
     }
 
     static executeTestModule(testModule) {
-        TestLogger.logStartTesting(testModule.name);   
-        testModule.listOfTests.forEach(test => executeTest(testCase));
+        TestLogger.logModuleStarting(testModule.name);   
+        testModule.listOfTests.forEach(testCase => this.executeTest(testCase));
     }
 
     static executeTest(testCase) {
         let permission = TestPermission.checkPermissionOn(testCase);
         if (permission == true) {
-            currentTest = testCase;
-
+            let currentTest = testCase; // TODO: See why like this?
             testCase.functionToTest();// FIXME: Most probably cannot launch this.
         } else {
             testReport.notTested(testCase);

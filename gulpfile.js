@@ -173,6 +173,8 @@ async function build() {
     if (argv.gsforce) {flagIfToBuildAll = false; buildOf(gsForceLibraryPaths);};
     // @ts-ignore
     if (argv.production) {flagIfToBuildAll = false; buildOf(buildProductionPaths);};
+    // @ts-ignore
+    if (argv.default) {flagIfToBuildAll = false; buildOf(defaultPaths);};
 
     flagIfToBuildAll ? buildOf(buildPaths) : buildOf(defaultPaths);
 }

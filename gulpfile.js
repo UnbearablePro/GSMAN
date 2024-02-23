@@ -1,5 +1,3 @@
-
-
 //    ###################################################### 
 //    ##                                                  ##
 //    ##                      Imports                     ##
@@ -18,29 +16,95 @@ const gutil = require('gulp-util');
 const rename = require('gulp-rename');
 const process = require('process');
 const fs = require('fs');
-const yargs = require('yargs');
+const del = require('gulp-clean');
+const gulpIf = require('gulp-if');
+const insert = require('gulp-insert');
+const argv = require('yargs').argv;
 const open = require('gulp-open');
-
-// const del = require('del');
-const clean = require('gulp-clean');
-
 
 //    ###################################################### 
 //    ##                                                  ##
-//    ##                       Paths                      ##
+//    ##              Configuration & Paths               ##
 //    ##                                                  ##
 //    ######################################################
 
-const src = "src";
-const externalLibrariesPath = src + '/ExternalLibrary/*.js';
-const saintTestLibraryPath = src + '/SaintTestLibrary/**/*.js';
-const buildPath = "build";
-const gsForceLibraryPath = src + "/GSForceLibrary/**/*.js";
-const ovbrainPath = src + "/OVBRAIN/**/*.js";
-const frontEndPath = src + "/**/*.html";
-const appscriptJsonPath = src + "/appsscript.json";
-const claspConfigPath = ".clasp.json";
-const playgroundPath = [src + "/PlayGround.js", src + "/SaintTest.js"];
+const GOOGLE_SHEET_LINK = `https://docs.google.com/spreadsheets/d/1pZz9arl4ISsnNiEu7sfFsg6INHNteFutXEp73XIJfuA/edit#gid=1187718938`;
+const GOOGLE_APPSSCRIPT = `https://script.google.com/u/0/home/projects/1sxPaQBU46RjhM8g2mjtqj37A6BSToo_YSZYnlqBdpl2U6Bjjkw_PfrI1/edit`;
+const SCRIPTID = `1sxPaQBU46RjhM8g2mjtqj37A6BSToo_YSZYnlqBdpl2U6Bjjkw_PfrI1`;
+
+const OPEN_EXCEL = {
+    uri: GOOGLE_SHEET_LINK,
+    app: 'chrome',
+};
+
+const OPEN_APPSCRIPT = {
+    uri: GOOGLE_APPSSCRIPT,
+    app: 'chrome',
+};
+
+var fileToBuild = 0;
+var fileBuilded = 0;
+
+const paths = {
+    src: "src",
+    dest: "build",
+    delDest: "build/**/*",
+    claspConfig: ".clasp.json",
+}
+
+const ACTIONS = {
+    LIBRARY: 'LIBRARY',
+    CONFIG: 'CONFIG',
+    LAUNCHER: 'LAUNCHER',
+    FRONTEND: 'FRONTEND',
+    NONE: 'NONE'
+}
+const externalLibraryPaths = {
+    externalLibraryLibrary: [['src/ExternalLibrary/*.js', '!src/**/Configuration/*.js'], `ExternalLibrary.js`, ACTIONS.LIBRARY]
+}
+
+const saintTestLibraryPaths = {
+    saintTestLibrary: [['src/SaintTestLibrary/**/*.js', '!src/**/Configuration/*.js'], `SaintTestLibrary.js`, ACTIONS.LIBRARY],
+    saintTest: ["src/SaintTest.js", `SaintTest.js`, ACTIONS.LAUNCHER]
+}
+
+const gsForceLibraryPaths = {
+    gsForceLibrary: [["src/GSForceLibrary/**/*.js", '!src/**/Configuration/*.js'], `GSForce.js`, ACTIONS.LIBRARY]
+}
+
+const ovbrainPaths = {
+    ovbrain: [["src/OVBRAIN/**/*.js", '!src/**/Configuration/*.js'], `OVBRAIN.js`, ACTIONS.LIBRARY]
+}
+
+const defaultPaths = {
+    configuration: ["src/**/Configuration.js", "Configuration.js", ACTIONS.CONFIG],
+    appscriptJson: [`src/appsscript.json`, `appsscript.json`, ACTIONS.NONE],
+    playground: ["src/PlayGround.js", `PlayGround.js`, ACTIONS.LAUNCHER]
+}
+
+const buildPaths = {
+    externalLibraries: [['src/ExternalLibrary/*.js', '!src/**/Configuration/*.js'], `ExternalLibrary.js`, ACTIONS.LIBRARY],
+    saintTestLibrary: [['src/SaintTestLibrary/**/*.js', '!src/**/Configuration/*.js'], `SaintTestLibrary.js`, ACTIONS.LIBRARY],
+    gsForceLibrary: [["src/GSForceLibrary/**/*.js", '!src/**/Configuration/*.js'], `GSForce.js`, ACTIONS.LIBRARY],
+    ovbrain: [["src/OVBRAIN/**/*.js", '!src/**/Configuration/*.js'], `OVBRAIN.js`, ACTIONS.LIBRARY],
+    frontEnd: ["src/**/**/*.html", `FrontEnd.html`, ACTIONS.FRONTEND],
+    configuration: ["src/**/Configuration.js", "Configuration.js", ACTIONS.CONFIG],
+    appscriptJson: [`src/appsscript.json`, `appsscript.json`, ACTIONS.NONE],
+    playground: ["src/PlayGround.js", `PlayGround.js`, ACTIONS.LAUNCHER],
+    saintTest: ["src/SaintTest.js", `SaintTest.js`, ACTIONS.LAUNCHER]
+}
+
+// TODO: Change productionPaths to be uglify
+const buildProductionPaths = {
+    externalLibraries: [['src/ExternalLibrary/*.js', '!src/**/Configuration/*.js', '!src/**/Tests/*.js'], `ExternalLibrary.js`, ACTIONS.LIBRARY],
+    gsForceLibrary: [["src/GSForceLibrary/**/*.js", '!src/**/Configuration/*.js', '!src/**/Tests/*.js'], `GSForce.js`, ACTIONS.LIBRARY],
+    ovbrain: [["src/OVBRAIN/**/*.js", '!src/**/Configuration/*.js', '!src/**/Tests/*.js'], `OVBRAIN.js`, ACTIONS.LIBRARY],
+    frontEnd: ["src/**/**/*.html", `FrontEnd.html`, ACTIONS.FRONTEND],
+    configuration: ["src/**/Configuration.js", "Configuration.js", ACTIONS.CONFIG],
+    appscriptJson: [`src/appsscript.json`, `appsscript.json`, ACTIONS.NONE],
+    playground: ["src/PlayGround.js", `PlayGround.js`, ACTIONS.LAUNCHER],
+
+}
 
 //    ###################################################### 
 //    ##                                                  ##
@@ -50,67 +114,42 @@ const playgroundPath = [src + "/PlayGround.js", src + "/SaintTest.js"];
 
 
 gulp.task('default', async function () {
-    gutil.log(cyan(GULP_BANNER), magenta(GULP_HELP));
+    gutil.log(cyan(GULPBANNER), magenta(GULPHELP));
 });
 
+// TODO: Build help after finish
 gulp.task('help', async function () {
-    console.log(GULP_HELP);
-    console.log(GULP_COMMANDS);
+    console.log(GULPHELP);
+    console.log(GULPCOMMANDS);
 });
 
-gulp.task('clean', done => {
-    deleteBuildContent();
-    done();
-});
+gulp.task('build', build);
+gulp.task('b', build)
 
-gulp.task('c', async function () {
-    deleteBuildContent();
-});
+gulp.task('delete', cleanBuild);
+gulp.task('d', cleanBuild);
 
-gulp.task('build', done => {
-    buildApplication(done);
-});
+gulp.task('clasp-push', claspPush);
+gulp.task('p', claspPush);
 
-gulp.task('b', done => {
-    buildApplication(done);
-});
+gulp.task('watch',  watch);
+
+gulp.task('links', displayLinks);
+
+gulp.task('open', openLinks);
+gulp.task('o', openLinks);
+
+gulp.task('test', runTests);
 
 gulp.task('toBuild', (done) => {
-    changeClaspRootDir(buildPath);
+    changeClaspRootDir(paths.dest);
     done();
 });
 
 gulp.task('toSrc', (done) => {
-    changeClaspRootDir(src);
+    changeClaspRootDir(paths.src);
     done();
 });
-
-gulp.task('push', shell.task(['clasp push']));
-
-gulp.task('p', shell.task(['clasp push']));
-
-gulp.task('links', async function () {
-    gutil.log(`${blue(`===== Links =====`)}`);
-    gutil.log(`${green(`Google Sheet:`)} ${GOOGLE_SHEET_LINK}`);
-    gutil.log(`${green(`Apps Script: `)} ${GOOGLE_APPSSCRIPT}`);
-});
-
-gulp.task('o', async function () {
-    gulp.src('./')
-    .pipe(open(OPEN_APPSCRIPT));
-});
-gulp.task('oe', async function () {
-    gulp.src('./')
-    .pipe(open(OPEN_EXCEL));
-});
-
-//    ###################################################### 
-//    ##                                                  ##
-//    ##                  GULP TASK CHAINS                ##
-//    ##                                                  ##
-//    ######################################################
-
-gulp.task('bp', gulp.series('clean', 'build'));
 
 //    ###################################################### 
 //    ##                                                  ##
@@ -118,96 +157,189 @@ gulp.task('bp', gulp.series('clean', 'build'));
 //    ##                                                  ##
 //    ######################################################
 
-function buildApplication(done) {
-    return gulp.series(
-        buildExternalLibraries,
-        // buildSaintTestLibrary,
-        buildGsForceLibrary,
-        // buildOVBRAIN,
-        // buildFrontEnd,
-        buildPlayGround,
-        buildAppsscriptJson
-    )(done);
+async function build() {
+
+    let flagIfToBuildAll = true;
+    // @ts-ignore
+    if (argv.external) {flagIfToBuildAll = false; buildOf(externalLibraryPaths)};
+    // @ts-ignore
+    if (argv.saint) {flagIfToBuildAll = false; buildOf(externalLibraryPaths)};
+    // @ts-ignore
+    if (argv.ovbrain) {flagIfToBuildAll = false; buildOf(externalLibraryPaths)};
+    // @ts-ignore
+    if (argv.gsforce) {flagIfToBuildAll = false; buildOf(externalLibraryPaths)};
+    // @ts-ignore
+    if (argv.production) {flagIfToBuildAll = false; buildOf(externalLibraryPaths)};
+
+    flagIfToBuildAll ? buildOf(buildPaths) : buildOf(defaultPaths);
 }
 
-function deleteBuildContent(done) {
-    gulp.src('build/*', { read: false, allowEmpty: true })
-        .pipe(countFiles('Deleted files ##'))
-        .pipe(clean());
+async function buildOf(buildConfig) {
+
+    //TODO: Make it simple
+    let count = -1;
+    Object.keys(buildConfig).forEach(key => {
+        fileToBuild = fileToBuild + 1;
+        const [path, newName, action] = buildConfig[key];
+        if (count < 6) {
+            count = count + 1;
+        }
+        switch (action) {
+            case ACTIONS.LIBRARY: buildUglified(path, newName, count.toString()); break;
+            case ACTIONS.NONE: buildNone(path, newName); break;
+            case ACTIONS.CONFIG: buildConcat(path, newName, '8'); break;
+            case ACTIONS.LAUNCHER: buildNone(path, newName, '9'); break;
+            case ACTIONS.FRONTEND: buildFE(path, newName); break;
+            default:
+                gutil.log(yellow(`No action provided for ${newName} building with path: `) + `${path}`);
+                buildNone(path, newName);
+                break;
+        }
+    });
 }
 
-function buildExternalLibraries(done) {
-    gulp.src(externalLibrariesPath)
-        .pipe(countFiles('External Libraries files builded: ##'))
-        .pipe(concat('1ExternalLibraries.js'))
+//TODO: Combine all types of builds
+async function buildUglified(path, newName, count = '0') {
+    let nrOfFiles = 0;
+    gulp.src(path)
+        .on('data', function (file) {
+            nrOfFiles += 1;
+            // console.log('File Name:', file.relative);
+        })
+        .pipe(concat(count + newName))
         .pipe(uglify())
-        .pipe(gulp.dest(buildPath));
-    done();
+        .pipe(gulp.dest(paths.dest))
+        .on('end', function () {
+            if (fileBuilded == 0) {
+                gutil.log(`===================== ${blue(`Building Started`)} =====================`)
+            }
+            fileBuilded = fileBuilded + 1;
+            gutil.log(`${magenta(`${fileBuilded}/${fileToBuild}`)} ${cyan(`${newName}`)} build complete! Files builded: ${magenta(`${nrOfFiles}`)}`);
+        });
 }
 
-function buildSaintTestLibrary(done) {
-    gulp.src(saintTestLibraryPath)
-        .pipe(countFiles('SaintTest Library files builded: ##'))
-        .pipe(concat('2SaintTestLibrary.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest(buildPath));
-    done();
+async function buildNone(path, newName = 'NoName', count = '') {
+    let nrOfFiles = 0;
+    gulp.src(path)
+        .on('data', function (data) {
+            nrOfFiles += 1;
+        })
+        .pipe(rename(count + newName))
+        .pipe(gulp.dest(paths.dest))
+        .on('end', function () {
+            if (fileBuilded == 0) {
+                gutil.log(`===================== ${blue(`Building started`)} =====================`)
+            }
+            fileBuilded += 1;
+            gutil.log(`${magenta(`${fileBuilded}/${fileToBuild}`)} ${cyan(`${newName}`)} build complete! Files builded: ${magenta(`${nrOfFiles}`)}`);
+        });
 }
 
-function buildGsForceLibrary(done) {
-    gulp.src(gsForceLibraryPath)
-        .pipe(countFiles('GSForce Library files builded: ##'))
-        .pipe(concat('3GsForce.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest(buildPath));
-    done();
+async function buildFE(path, newName = 'NoName') {
+    let nrOfFiles = 0;
+    gulp.src(path)
+        .on('data', function (data) {
+            nrOfFiles += 1;
+        })
+        .pipe(rename({ dirname: '' }))
+        .pipe(gulp.dest(paths.dest))
+        .on('end', function () {
+            if (fileBuilded == 0) {
+                gutil.log(`===================== ${blue(`Building started`)} =====================`)
+            }
+            fileBuilded += 1;
+            gutil.log(`${magenta(`${fileBuilded}/${fileToBuild}`)} ${cyan(`${newName}`)} build complete! Files builded: ${magenta(`${nrOfFiles}`)}`);
+        });
 }
 
-function buildOVBRAIN(done) {
-    gulp.src(ovbrainPath)
-        .pipe(countFiles('OVBRAIN files builded: ##'))
-        .pipe(concat('4OVBRAIN.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest(buildPath))
-    done();
+async function buildConcat(path, newName = 'NoName', count = '') {
+    let nrOfFiles = 0;
+    gulp.src(path)
+        .on('data', function (data) {
+            nrOfFiles += 1;
+        })
+        .pipe(insert.transform(function (contents, file) {
+            //TODO: Make it better
+            // Get the path segments
+            const pathSegments = file.relative.split('\\');
+            // Get the second folder name
+            const secondFolderName = pathSegments.length > 1 ? pathSegments[0] : '';
+            // Prepend a comment line with the second folder name
+            return `/* =========================== ${secondFolderName} Configuration =========================== */\n${contents}`;
+        }))
+        .pipe(concat(count + newName))
+        .pipe(gulp.dest(paths.dest))
+        .on('end', function () {
+            if (fileBuilded == 0) {
+                gutil.log(`===================== ${blue(`Building started`)} =====================`)
+            }
+            fileBuilded = fileBuilded + 1;
+            gutil.log(`${magenta(`${fileBuilded}/${fileToBuild}`)} ${cyan(`${newName}`)} build complete! Files builded: ${magenta(`${nrOfFiles}`)}`);
+        });
 }
 
-function buildFrontEnd(done) {
-    gulp.src(frontEndPath)
-        .pipe(countFiles('Front end files builded: ##'))
-        .pipe(gulp.dest(buildPath));
-    done();
+async function cleanBuild() {
+    let nrOfFiles = 0;
+    gulp.src(paths.delDest, { read: false, allowEmpty: false })
+        .on('data', () => nrOfFiles += 1)
+        .pipe(del())
+        .on('finish', function () {
+            gutil.log(`===================== ${blue(`Cleaning build folder started`)} =====================`)
+            nrOfFiles ? gutil.log(`Deleted ${magenta(`${nrOfFiles}`)} files successfully.`) :
+                gutil.log(yellow(`Deletion failed cause folder is empty.`));
+        });
 }
 
-function buildAppsscriptJson(done) {
-    gulp.src(appscriptJsonPath)
-        .pipe(countFiles('Apps script files builded: ##'))
-        .pipe(gulp.dest(buildPath));
-    done();
+async function watch() {
+    gutil.log(`===================== ${blue(`Watch changes on src and build`)} =====================`)
+    gulp.watch(paths.src, gulp.series('b'));
+    gulp.watch(paths.dest, gulp.series('p'));
 }
 
-function buildPlayGround(done) {
-    gulp.src(playgroundPath)
-        .pipe(countFiles('Play ground files builded: ##'))
-        .pipe(gulp.dest(buildPath));
-    done();
+async function claspPush() {
+    gutil.log(`===================== ${blue(`Clasp Push starting`)} =====================`);
+    shell.task(['clasp push']).apply();
 }
 
-function changeClaspRootDir(rootDirNewValue) {
+async function changeClaspRootDir(rootDirNewValue) {
+    gutil.log(`===================== ${blue(`Changing CLASP rootDir to ${rootDirNewValue} started`)} =====================`);
     // Read the clasp.json file
     //@ts-ignore
-    let claspConfigContent = JSON.parse(fs.readFileSync(claspConfigPath));
-
+    let claspConfigContent = JSON.parse(fs.readFileSync(paths.claspConfig));
     // Change clasp config content rootDir to new value
     claspConfigContent.rootDir = rootDirNewValue;
-
     // Overwrite the modified clasp.json file
-    fs.writeFileSync(claspConfigPath, JSON.stringify(claspConfigContent, null, 2));
-
-    console.log(`Changed CLASP rootDir to ${rootDirNewValue} successfully.`)
+    fs.writeFileSync(paths.claspConfig, JSON.stringify(claspConfigContent, null, 2));
+    console.log(`Changed CLASP rootDir to ${magenta(rootDirNewValue)} successfully!`);
 }
 
-const GULP_BANNER =
+async function displayLinks() {
+    gutil.log(`===================== ${blue(`Links`)} =====================`);
+    gutil.log(`${green(`Google Sheet:`)} ${GOOGLE_SHEET_LINK}`);
+    gutil.log(`${green(`Apps Script: `)} ${GOOGLE_APPSSCRIPT}`);
+}
+
+async function openLinks(target, ) {
+    openLink(OPEN_APPSCRIPT);
+    openLink(OPEN_EXCEL);
+}
+
+async function openLink(target) {
+    gulp.src('./')
+    .pipe(open(target));
+}
+
+async function runTests() {
+    //TODO: implement this to run tests
+}
+
+//    ###################################################### 
+//    ##                                                  ##
+//    ##                    GULP UTILS                    ##
+//    ##                                                  ##
+//    ######################################################
+
+const GULPBANNER =
     `
 ======================================================================================================
  #####  #     # #       ######     ###  #####     ######  #     # #     # #     # ### #     #  #####  
@@ -220,25 +352,14 @@ const GULP_BANNER =
 ======================================================================================================                                                                                                   
 `;
 
-const GULP_HELP =
+const GULPHELP =
     `
 gulp help - show list of commands
 `
 
-const GULP_COMMANDS =
+const GULPCOMMANDS =
     `
   ===  GULP All Commands ===
-gulp default - Ping if the gulp is running
-gulp b - Build and prepare the application to be delivered ogulp
- the Google app script
-gulp clasp-to-build - change rootDir from clasp config file to build folder
-gulp clasp-push - push the build product to the google script app
-gulp clasp-to-src - change rootDir from clasp configuration file to src folder
-gulp bp - Build, prepare and push the application to google acript aps
-`;
-
-const GULP_SERIES =
-    `
 
 gulp default - Ping if the gulp is running
 gulp b - Build and prepare the application to be delivered ogulp
@@ -247,30 +368,9 @@ gulp clasp-to-build - change rootDir from clasp config file to build folder
 gulp clasp-push - push the build product to the google script app
 gulp clasp-to-src - change rootDir from clasp configuration file to src folder
 gulp bp - Build, prepare and push the application to google acript aps
+
   ==========================
 `;
-
-
-
-const GOOGLE_SHEET_LINK = `https://docs.google.com/spreadsheets/d/1pZz9arl4ISsnNiEu7sfFsg6INHNteFutXEp73XIJfuA/edit#gid=1187718938`;
-const GOOGLE_APPSSCRIPT = `https://script.google.com/u/0/home/projects/1sxPaQBU46RjhM8g2mjtqj37A6BSToo_YSZYnlqBdpl2U6Bjjkw_PfrI1/edit`;
-const SCRIPID = `1sxPaQBU46RjhM8g2mjtqj37A6BSToo_YSZYnlqBdpl2U6Bjjkw_PfrI1`;
-
-const OPEN_EXCEL = {
-    uri: GOOGLE_SHEET_LINK,
-    app: 'chrome',
-};
-
-const OPEN_APPSCRIPT = {
-    uri: GOOGLE_APPSSCRIPT,
-    app: 'chrome',
-};
-
-//    ###################################################### 
-//    ##                                                  ##
-//    ##                    GULP UTILS                    ##
-//    ##                                                  ##
-//    ######################################################
 
 function green(message) {
     return gutil.colors.green(message);

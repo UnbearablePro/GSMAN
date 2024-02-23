@@ -89,10 +89,15 @@ npm install --save-dev gulp-filter
 npm install --save-dev gulp-debug
 npm install --save-def gulp-util
 npm install --save-dev gulp-open
+npm install --save-dev gulp-clean
+npm install --save-dev gulp-if
+npm install --save-dev gulp-insert
+
 ```
 
 #### 4.4 Install other plugins
 
 ```bash
+npm install --save-dev yargs
 npm install del --save-dev
 ```

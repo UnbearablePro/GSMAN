@@ -21,6 +21,7 @@ const gulpIf = require('gulp-if');
 const insert = require('gulp-insert');
 const argv = require('yargs').argv;
 const open = require('gulp-open');
+// const gulpSequence = require('gulp-sequence');
 
 //    ###################################################### 
 //    ##                                                  ##
@@ -129,7 +130,7 @@ gulp.task('b', build)
 gulp.task('delete', cleanBuild);
 gulp.task('d', cleanBuild);
 
-gulp.task('clasp-push', claspPush);
+gulp.task('push', claspPush);
 gulp.task('p', claspPush);
 
 gulp.task('watch',  watch);
@@ -151,6 +152,8 @@ gulp.task('toSrc', (done) => {
     done();
 });
 
+gulp.task('dbp', deleteBuildPush);
+
 //    ###################################################### 
 //    ##                                                  ##
 //    ##                    Functionality                 ##
@@ -158,18 +161,18 @@ gulp.task('toSrc', (done) => {
 //    ######################################################
 
 async function build() {
-
     let flagIfToBuildAll = true;
+
     // @ts-ignore
-    if (argv.external) {flagIfToBuildAll = false; buildOf(externalLibraryPaths)};
+    if (argv.external) {flagIfToBuildAll = false; buildOf(externalLibraryPaths);};
     // @ts-ignore
-    if (argv.saint) {flagIfToBuildAll = false; buildOf(externalLibraryPaths)};
+    if (argv.saint) {flagIfToBuildAll = false; buildOf(saintTestLibraryPaths);};
     // @ts-ignore
-    if (argv.ovbrain) {flagIfToBuildAll = false; buildOf(externalLibraryPaths)};
+    if (argv.ovbrain) {flagIfToBuildAll = false; buildOf(ovbrainPaths);};
     // @ts-ignore
-    if (argv.gsforce) {flagIfToBuildAll = false; buildOf(externalLibraryPaths)};
+    if (argv.gsforce) {flagIfToBuildAll = false; buildOf(gsForceLibraryPaths);};
     // @ts-ignore
-    if (argv.production) {flagIfToBuildAll = false; buildOf(externalLibraryPaths)};
+    if (argv.production) {flagIfToBuildAll = false; buildOf(buildProductionPaths);};
 
     flagIfToBuildAll ? buildOf(buildPaths) : buildOf(defaultPaths);
 }
@@ -310,7 +313,7 @@ async function changeClaspRootDir(rootDirNewValue) {
     claspConfigContent.rootDir = rootDirNewValue;
     // Overwrite the modified clasp.json file
     fs.writeFileSync(paths.claspConfig, JSON.stringify(claspConfigContent, null, 2));
-    console.log(`Changed CLASP rootDir to ${magenta(rootDirNewValue)} successfully!`);
+    gutil.log(`Changed CLASP rootDir to ${magenta(rootDirNewValue)} successfully!`);
 }
 
 async function displayLinks() {
@@ -331,6 +334,17 @@ async function openLink(target) {
 
 async function runTests() {
     //TODO: implement this to run tests
+}
+
+async function deleteBuildPush() {
+    cleanBuild();
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    build();
+    changeClaspRootDir(paths.dest);
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    claspPush();
+    await new Promise(resolve => setTimeout(resolve, 16000));
+    displayLinks();
 }
 
 //    ###################################################### 

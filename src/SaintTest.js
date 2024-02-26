@@ -3,12 +3,11 @@ TestFlags.GS = true;
 TestFlags.INTERACTION = false;
 
 function startTests() {
-    TestLauncher.startTestFromFile(testStarter);
+    TestLauncher.startTestingFrom(filesToTest);
 }
 
-
-
-let testStarter = 
-[
-// introdu starterul de
+let filesToTest = 
+[   "DisplayerTest",
+    // "DummyInteractionTest",
+    "DummyNormalTest"
 ];

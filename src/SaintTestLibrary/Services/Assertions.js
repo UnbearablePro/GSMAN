@@ -1,24 +1,13 @@
-//@ts-nocheck
 function assert(result, expected, reason) {
-    if (result == expected) {
-        testReport.passed(currentTest);
-    } else {
-        if (reason == null || reason == "") {
-            reason = `Result is : ${result} but expected was ${expected}.`;
-        }
-        testReport.failed(currentTest, reason);
-    }
+    result == expected ? TestReporter.passed(result, expected) : TestReporter.failed(result, expected, reason); 
 }
 
-function assertInteraction(sut, explainedExpectedResultMessage, customAskingForTheResult = undefined,  ...params) {
+function explainExpectedResult(explainedExpectedResultMessage = "No interactio explaining") {
     TestInteraction.showExpectedResultMessage(explainedExpectedResultMessage);
-    try {
-        sut(); // TODO: how to implement the params in sut
-    } catch (e) {
-        testReport.error(currentTest, e);
-    }
+    currentExplainedExpectedResult = explainedExpectedResultMessage;
+}
 
+function assertInteraction(customAskingForTheResult = "No interaciton asking", reason = currentExplainedExpectedResult) {
     let result = TestInteraction.askIfResultWasCorrect(customAskingForTheResult);
-
-    assert(result, true, explainedExpectedResultMessage);
+    assert(result, true, reason);
 }

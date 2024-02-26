@@ -1,17 +1,12 @@
 /** @class */
 class TestLauncher {
 
-    static startTestFromFile(testFiles) {
-        TestLogger.logStartTesting();
+    static startTestingFrom(testFiles) {
+        testFiles = TestChecker.checkTestFiles(testFiles);
+        TestLogger.logStartTesting(testFiles);
         TestExecutor.executeTestFiles(testFiles);
-        TestLogger.logFinalTestingReport(testReport);
+        TestLogger.logFinalTestingReport();
     }
-
-    // static startFromCustomTestModule(testModule) {
-    //     TestLogger.logStartTesting();
-    //     TestExecutor.executeTestModule(testModule)
-    //     TestLogger.logFinalTestingReport(testReport);
-    // }
 
 }
 

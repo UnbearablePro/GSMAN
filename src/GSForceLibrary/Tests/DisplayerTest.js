@@ -1,22 +1,24 @@
-// function DisplayerTest() {
-    
-//     let listOfTests = [
-//         Test.createInteractionTest(executeErrorWithoutError_),
-//     ];
+function DisplayerTest() {
+    let listOfTests = [
+        Test.createInteractionTest("showDebugAlertWithoutError"),
+        Test.createInteractionTest("executeWarningWithoutError"),
+    ];
+    return new TestModule(listOfTests, "Displayer");
+}
 
-//     return TestModule(listOfTests, "UIUtils");
-// }
+function showDebugAlertWithoutError() {
+    Displayer.debug("Test debug");
+    assertInteraction("Do debug alert showned?", "No debug alert showned");
+}
 
-// function executeErrorWithoutError_() {
-//     assertThat();
-// }
+function executeWarningWithoutError() {
+    Displayer.warning("Test warning");
+    assertInteraction("Do warning alert showned?", "No warning alert showned");
+}
 
-// function executeDebugWithoutError_() {
-//     Displayer.debug("test-message");
-// }
-
-// function executeRecommendWithoutError_() {
-//     Displayer.recommend("test-message");
-// }
+function executeRecommendWithoutError_() {
+    Displayer.debug("Test debug");
+    assertInteraction("Do debug alert showned?", "No debug alert showned");
+}
 
 

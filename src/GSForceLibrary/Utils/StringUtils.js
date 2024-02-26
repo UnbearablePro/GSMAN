@@ -7,7 +7,7 @@ class StringUtils {
         if (!isNaN(num1) && !isNaN(num2)) {
             return num1 + num2;
         } else {
-            return 'Error: Both inputs must be convertible to integers.';
+            throw new Error(`The two string provided for substract are not convertible to number format. String: ${num1} / ${num2}`)
         }
     }
 
@@ -18,6 +18,6 @@ class StringUtils {
         if (!isNaN(num1) && !isNaN(num2)) {
             return num1 - num2;
         } else {
-            return 'Error: Both inputs must be convertible to integers.';
+            throw new Error(`The two string provided for substract are not convertible to number format. String: ${num1} / ${num2}`)
         }
 }   }

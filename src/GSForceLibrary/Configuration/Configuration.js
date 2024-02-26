@@ -8,14 +8,6 @@ ErrorHandler.contactErrorMessage = `\n\n In cazul unei erori grave ma puteti con
 
 var ui = null;
 
-/** Properties of document properties.*
- * @type {Object.<string,string>}
- */
-PropertiesDocumentController.properties = undefined;
-
-/** Properties of user properties. * @type {Object.<string,string>} */
-PropertiesUserController.properties = undefined;
-
 /** @private */
 Settings.prefference = null;
 
@@ -27,3 +19,5 @@ Settings.prefference = null;
  * ```
 */
 var app = SpreadsheetApp.getActiveSpreadsheet();
+
+PropertiesController.service = undefined;

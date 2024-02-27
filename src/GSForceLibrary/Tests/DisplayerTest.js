@@ -16,9 +16,9 @@ function executeWarningWithoutError() {
     assertInteraction("Do warning alert showned?", "No warning alert showned");
 }
 
-function executeRecommendWithoutError_() {
-    Displayer.debug("Test debug");
-    assertInteraction("Do debug alert showned?", "No debug alert showned");
+function executeRecommendWithoutError() {
+    Displayer.recommend("Test recommandation");
+    assertInteraction("Do recommandation showned?", "No recommandation showned");
 }
 
 

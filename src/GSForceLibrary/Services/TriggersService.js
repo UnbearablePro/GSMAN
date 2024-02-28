@@ -130,7 +130,6 @@ class TriggerService {
     Logger.log(`All triggers deleted successfully ${nrOfTriggers}`);
   }
 
-
   /**
    * WYP
    */

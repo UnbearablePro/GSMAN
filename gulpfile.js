@@ -96,7 +96,9 @@ const SAINT_LAUNCHER_PATH = [`src/SaintTest.js`];
 const APPSSCRIPT_PATH = [`src/appsscript.json`];
 
 const externalLibraryBuildConfig = {
-    externalLibrary: [EXTERNALLIBRARY_PATH, `ExternalLibrary.js`, ACTIONS.LIBRARY]
+    externalLibrary: [EXTERNALLIBRARY_PATH, `ExternalLibrary.js`, ACTIONS.LIBRARY],
+    appscriptJson: [APPSSCRIPT_PATH, `appsscript.json`, ACTIONS.SIMPLE],
+    playground: [PLAYGROUND_LAUNCHER_PATH, `PlayGround.js`, ACTIONS.LAUNCHER]
 }
 
 const saintTestLibraryBuildConfig = {

@@ -105,6 +105,11 @@ class Displayer extends AbstractHtmlDisplayer {
     return response == ui.Button.YES;
   }
 
+  static problem(message = "no message", timeShown = 8) {
+    SpreadSheetService.getActiveSpreadSheet().toast(message, "🟠", timeShown);
+    Logger.log(`🟠 Problem: ${message}`);
+  }
+
   
   /**
    * The `quote` function displays a toast message with a given message and time duration, and logs the

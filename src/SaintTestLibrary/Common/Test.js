@@ -1,25 +1,29 @@
 /** @class */
 class Test {
 
-    constructor(functionToTest, type = TestType.NORMAL) {
-        if (functionToTest == null || functionToTest == "") {
+    constructor(name, type = TestType.NORMAL) {
+        if (name == null || name == "") {
             return null;
         }
         
-        this.functionToTest = functionToTest;
+        this.name = name;
         this.type = type;
     }
 
-    static of(functionToTest, type) {
-        return new this(functionToTest, type);
+    static of(name, type) {
+        return new this(name, type);
     }
 
-    static createNormalTest(functionToTest) {
-        return new this(functionToTest, TestType.NORMAL);
+    static createNormalTest(name) {
+        return new this(name, TestType.NORMAL);
     }
 
-    static createInteractionTest(functionToTest) {
-        return new this(functionToTest, TestType.INTERACTION);
+    static createInteractionTest(name) {
+        return new this(name, TestType.INTERACTION);
+    }
+
+    static createSheetTest(name) {
+        return new this(name, TestType.SHEET);
     }
 
 }

@@ -1,8 +1,18 @@
 /** @class */
-class TestInteraction {
+class UserInteractor {
 
     static showExpectedResultMessage(explainExpectedResultMessage) {
         SpreadsheetApp.getUi().alert(explainExpectedResultMessage);
+    }
+
+    static askIfToContinueTesting(message) {
+        TestLogger.logCheck('Responde to continue!');
+        const ui = SpreadsheetApp.getUi();
+
+        let response = ui.alert("⁉" + message, ui.ButtonSet.YES_NO);
+        if (response != ui.Button.YES) {
+            throw Error(message);
+        }
     }
 
     static askIfResultWasCorrect(resultQuestion = "The expected interaction is correct?") {

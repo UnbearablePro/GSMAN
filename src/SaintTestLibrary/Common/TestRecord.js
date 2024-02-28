@@ -1,4 +1,4 @@
-class TestReport {
+class TestRecord {
 
     constructor(testResultList = []){
         this.testResultList = [];
@@ -10,22 +10,27 @@ class TestReport {
         this.nrOfTestsNotTested = 0;
         this.totalNumberOfTests = testResultList.length;
 
-        this.updateReportOnTestResultList(testResultList);
+        this.updateRecordOnTestResultList(testResultList);
     }
 
-    updateTestReport() {
-        this.updateReportOnTestResultList(this.testResultList);
+    updateTestRecord() {
+        this.updateRecordOnTestResultList(this.testResultList);
     };
 
-    updateReportOnTestResultList(testResultList) {
-        testResultList.forEach(testResult => this.updateReportOnTestResult(testResult))
+    updateRecordOnTestResultList(testResultList) {
+        testResultList.forEach(testResult => this.updateRecordOnTestResult(testResult))
+
+    }
+
+    addTestModule() {
+        
     }
 
     addTestResult(testResult) {
         this.testResultList.push(testResult);
     }
 
-    updateReportOnTestResult(testResult) {
+    updateRecordOnTestResult(testResult) {
         this.updateTotalNumberOfTests();
         
         if (testResult.status == TestStatus.PASSED) {this.incrementPassedTests(); return;}

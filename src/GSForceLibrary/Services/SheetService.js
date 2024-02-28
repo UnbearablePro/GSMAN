@@ -11,6 +11,12 @@ class AbstractSheetService {
     this.sheet.getRange(row, column).setValue(value);
   }
 
+  /**
+   * 
+   * @param {String[][]} values 
+   * @param {Number} rows 
+   * @param {Number} columns 
+   */
   static setValues(values, rows, columns) {
     this.initialize();
     this.sheet.getRange(rows, columns).setValues(values);

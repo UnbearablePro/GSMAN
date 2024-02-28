@@ -1,5 +1,6 @@
 const TestFlags = {
     NORMAL : false,
     GS : false,
-    INTERACTION : false
+    INTERACTION : false,
+    SHEET: false
 }

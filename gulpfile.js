@@ -58,43 +58,73 @@ const paths = {
 }
 
 const ACTIONS = {
+    /** BUILD MULTIPLE FILES/CONCAT */
     CONCAT: 'CONCAT',
+    /** BUILD MULTIPLE FILES/CONCAT AND UGLIFY THEM */
     UGLIFY: 'UGLIFY',
+    /** BUILD MULTIPLE FILES WITHOUT COUNTING */
     SIMPLE: 'SIMPLE',
+    /** BUILD MULTIPLE FILES WITH COUNTING */
     MULTIPLE: 'MULTIPLE',
-    // CUSTOM
+    /** BUILD MULTIPLE FILES/CONCAT AND UGLIFY THEM */
     LIBRARY: 'LIBRARY',
+    /** BUILD ONE FILE */
     LAUNCHER: 'LAUNCHER',
     FE: 'FE', // TODO: Implement a custom for FE
+    /** BUILD MULTIPLE FILES/CONCAT AND SEPARATE THEM BY FATHER FOLDER NAME */
     CONFIG: 'CONFIG',
 }
-const externalLibraryPaths = {
-    externalLibraryLibrary: [['src/ExternalLibrary/*.js', '!src/**/Configuration/*.js'], `ExternalLibrary.js`, ACTIONS.LIBRARY]
+const NO_TEST_PATH = '!src/**/Tests/*.js';
+const NO_CONFIG_PATH = '!src/**/Configuration/*.js'
+
+const EXTERNALLIBRARY_PATH = ['src/ExternalLibrary/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
+
+const SAINT_PATH = ['src/SaintTestLibrary/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
+const SAINT_TEST_PATH = ['src/SaintTestLibrary/Test/*.js'];
+const SAINT_CONFIGURATION_PATH = ['src/SaintTestLibrary/Configuration/*.js'];
+
+const GSFORCE_PATH = ['src/GSForceLibrary/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
+const GSFORCE_TEST_PATH = ['src/GSForceLibrary/Tests/*.js'];
+const GSFORCE_CONFIGURATION_PATH = ['src/GSForceLibrary/Configuration/*.js'];
+
+const OVBRAIN_PATH = ['src/OVBRAIN/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
+const OVBRAIN_TEST_PATH = ['src/OVBRAIN/Tests/*.js'];
+const OVBRAIN_CONFIGURATION_PATH = ['src/OVBRAIN/Configuration/*.js'];
+
+const PLAYGROUND_LAUNCHER_PATH = [`src/PlayGround.js`]
+const SAINT_LAUNCHER_PATH = [`src/SaintTest.js`];
+const APPSSCRIPT_PATH = [`src/appsscript.json`];
+
+const externalLibraryBuildConfig = {
+    externalLibrary: [EXTERNALLIBRARY_PATH, `ExternalLibrary.js`, ACTIONS.LIBRARY]
 }
 
-const saintTestLibraryPaths = {
-    saintTestLibrary: [['src/SaintTestLibrary/**/*.js', '!src/**/Configuration/*.js'], `SaintTestLibrary.js`, ACTIONS.CONCAT],
-    saintTest: ["src/SaintTest.js", `SaintTest.js`, ACTIONS.LAUNCHER],
-    appscriptJson: [`src/appsscript.json`, `appsscript.json`, ACTIONS.SIMPLE],
-    playground: ["src/PlayGround.js", `PlayGround.js`, ACTIONS.LAUNCHER],
-    configuration: ["src/SaintTestLibrary/Configuration/Configuration.js", "Configuration.js", ACTIONS.CONFIG]
+const saintTestLibraryBuildConfig = {
+    saintTestLibrary: [SAINT_PATH, `SaintTestLibrary.js`, ACTIONS.MULTIPLE],
+    saintTest: [SAINT_LAUNCHER_PATH, `SaintTest.js`, ACTIONS.LAUNCHER],
+    saintTests: [SAINT_TEST_PATH, ``, ACTIONS.MULTIPLE],
+    appscriptJson: [APPSSCRIPT_PATH, `appsscript.json`, ACTIONS.SIMPLE],
+    playground: [PLAYGROUND_LAUNCHER_PATH, `PlayGround.js`, ACTIONS.LAUNCHER],
+    configuration: [SAINT_CONFIGURATION_PATH, "Configuration.js", ACTIONS.CONFIG]
 }
 
-const gsForceLibraryPaths = {
-    externalLibraryLibrary: [['src/ExternalLibrary/*.js', '!src/**/Configuration/*.js'], `ExternalLibrary.js`, ACTIONS.LIBRARY],
-    gsForceLibrary: [["src/GSForceLibrary/**/*.js", '!src/**/Configuration/*.js'], `GSForce.js`, ACTIONS.LIBRARY]
+const gsForceLibraryBuildConfig = {
+    externalLibraryLibrary: [EXTERNALLIBRARY_PATH, `ExternalLibrary.js`, ACTIONS.LIBRARY],
+    saintTestLibrary: [SAINT_PATH, `SaintTestLibrary.js`, ACTIONS.LIBRARY],
+    gsForceLibrary: [GSFORCE_PATH, `GSForce.js`, ACTIONS.MULTIPLE],
+
+    appscriptJson: [APPSSCRIPT_PATH, `appsscript.json`, ACTIONS.SIMPLE],
+    playground: [PLAYGROUND_LAUNCHER_PATH, `PlayGround.js`, ACTIONS.LAUNCHER],
+    saintTest: [SAINT_LAUNCHER_PATH, `SaintTest.js`, ACTIONS.LAUNCHER],
+
+    configuration: [SAINT_CONFIGURATION_PATH, GSFORCE_CONFIGURATION_PATH, "Configuration.js", ACTIONS.CONFIG],
+    tests: [GSFORCE_TEST_PATH, 'Test.js', ACTIONS.MULTIPLE]
 }
 
 const ovbrainPaths = {
     gsForceLibrary: [["src/GSForceLibrary/**/*.js", '!src/**/Configuration/*.js'], `GSForce.js`, ACTIONS.CONCAT],
     externalLibraryLibrary: [['src/ExternalLibrary/*.js', '!src/**/Configuration/*.js'], `ExternalLibrary.js`, ACTIONS.CONCAT],
     ovbrain: [["src/OVBRAIN/**/*.js", '!src/**/Configuration/*.js'], `OVBRAIN.js`, ACTIONS.SIMPLE]
-}
-
-const defaultPaths = {
-    configuration: ["src/**/Configuration.js", "Configuration.js", ACTIONS.CONFIG],
-    appscriptJson: [`src/appsscript.json`, `appsscript.json`, ACTIONS.SIMPLE],
-    playground: ["src/PlayGround.js", `PlayGround.js`, ACTIONS.LAUNCHER]
 }
 
 const buildPaths = {
@@ -177,30 +207,30 @@ async function build() {
     let flagIfToBuildAll = true;
 
     // @ts-ignore
-    if (argv.external) { flagIfToBuildAll = false; buildOf(externalLibraryPaths); };
+    if (argv.external) { flagIfToBuildAll = false; buildOf(externalLibraryBuildConfig); };
     // @ts-ignore
-    if (argv.saint) { flagIfToBuildAll = false; buildOf(saintTestLibraryPaths); return};
+    if (argv.saint) { flagIfToBuildAll = false; buildOf(saintTestLibraryBuildConfig); return};
     // @ts-ignore
     if (argv.ovbrain) { flagIfToBuildAll = false; buildOf(ovbrainPaths); };
     // @ts-ignore
-    if (argv.gsforce) { flagIfToBuildAll = false; buildOf(gsForceLibraryPaths); };
+    if (argv.gsforce) { flagIfToBuildAll = false; buildOf(gsForceLibraryBuildConfig); };
     // @ts-ignore
     if (argv.production) { flagIfToBuildAll = false; buildOf(buildProductionPaths); };
     // @ts-ignore
     if (argv.default) { flagIfToBuildAll = false; buildOf(defaultPaths); };
 
-    flagIfToBuildAll ? buildOf(buildPaths) : buildOf(defaultPaths);
+    flagIfToBuildAll ? buildOf(buildPaths) : console.log("Nothing to build!");
 }
 
 async function buildOf(buildConfig) {
 
     //TODO: Make it simple
-    let count = -1;
+    let count = 8;
     Object.keys(buildConfig).forEach(key => {
         fileToBuild = fileToBuild + 1;
         const [path, newName, action] = buildConfig[key];
-        if (count < 6) {
-            count = count + 1;
+        if (count >= 3) {
+            count = count - 1;
         }
         switch (action) {
 
@@ -208,9 +238,9 @@ async function buildOf(buildConfig) {
             case ACTIONS.UGLIFY: buildUglify(path, newName, count.toString());
             case ACTIONS.MULTIPLE: buildSimple(path, newName, count.toString()); break;
             case ACTIONS.SIMPLE: buildSimple(path, newName); break;
-            case ACTIONS.LAUNCHER: buildSimple(path, newName, '9'); break;
+            case ACTIONS.LAUNCHER: buildSimple(path, newName, '0'); break;
             case ACTIONS.LIBRARY: buildUglyCat(path, newName, count.toString()); break;
-            case ACTIONS.CONFIG: buildConfiguration(path, newName, '8'); break;
+            case ACTIONS.CONFIG: buildConfiguration(path, newName); break;
             case ACTIONS.FE: buildSimple(path, newName); break;
             default:
                 gutil.log(yellow(`No action provided for ${newName} building with path: `) + `${path}`);

@@ -4,6 +4,10 @@ class SpreadSheetService {
     return SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
   }
 
+  static getActiveSpreadSheet() {
+    return SpreadsheetApp.getActiveSpreadsheet();
+  }
+
   static getCurrentSheetName() {
     return SpreadsheetApp.getActiveSpreadsheet().getSheetName();
   }

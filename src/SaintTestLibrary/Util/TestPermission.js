@@ -2,15 +2,14 @@ class TestPermission {
 
     static buildTestTypePermission() {
         this.typePermissedTests = [];
-        if (TestFlags.NORMAL){
-            this.typePermissedTests.push(TestType.NORMAL);
+
+        for (const flag in TestFlags) {
+            if (TestFlags.hasOwnProperty(flag) && TestFlags[flag]) {
+                this.typePermissedTests.push(TestType[flag]);
+            }
         }
-        if (TestFlags.GS){
-            this.typePermissedTests.push(TestType.GS);
-        }
-        if (TestFlags.INTERACTION){
-            this.typePermissedTests.push(TestType.INTERACTION);
-        }
+
+        TestLogger.logProgress(`Test permissions builded with permissions: ${this.typePermissedTests}`);
     }
 
     static checkPermissionOn(testCase) {

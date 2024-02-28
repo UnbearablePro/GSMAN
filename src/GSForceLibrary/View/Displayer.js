@@ -1,7 +1,7 @@
 /**
  * Displayer provides functionality to manage message displayers.
  */
-class Displayer extends HtmlDisplayer {
+class Displayer extends AbstractHtmlDisplayer {
 
   constructor() {
     super();
@@ -35,7 +35,7 @@ class Displayer extends HtmlDisplayer {
    */
   static recommend(message = "no message", timeShown = 8) {
     Logger.log(`💡 Recomandare ${message}.`);
-    app.toast(message, "💡 Recomandare", timeShown);
+    SpreadSheetService.getActiveSpreadSheet().toast(message, "💡 Recomandare", timeShown);
   }
 
   /**
@@ -49,7 +49,7 @@ class Displayer extends HtmlDisplayer {
    */
   static system(message = "no message", timeShown = 8) {
     Logger.log(`⚙️ System ${message}.`);
-    app.toast(message, "⚙️ System", timeShown);
+    SpreadSheetService.getActiveSpreadSheet().toast(message, "⚙️ System", timeShown);
   }
 
   /**
@@ -115,7 +115,7 @@ class Displayer extends HtmlDisplayer {
    * toast message will be displayed on the screen.
    */
   static quote(message = "no message", timeShown = 8) {
-    app.toast(message, "💡", timeShown);
+    SpreadSheetService.getActiveSpreadSheet().toast(message, "💡", timeShown);
     Logger.log(`💡 Quote: ${message}. Shown successfully`);
   }
 
@@ -129,7 +129,7 @@ class Displayer extends HtmlDisplayer {
    * message will be displayed on the screen.
    */
   static complete(message = "no message", timeShown = 5) {
-    app.toast(message, "👍", timeShown);
+    SpreadSheetService.getActiveSpreadSheet().toast(message, "👍", timeShown);
     Logger.log(`👍 Complete: ${message}. Shown successfully`);
   }
 }

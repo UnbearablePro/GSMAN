@@ -1,4 +1,4 @@
-class HtmlDisplayer {
+class AbstractHtmlDisplayer {
   
   static openHtmlPopup(htmlFileName, title,  width, height) {
     let html = this.createHtmlFromFile_(htmlFileName, width, height);

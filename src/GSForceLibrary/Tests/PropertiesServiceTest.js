@@ -1,4 +1,4 @@
-function PropertiesControllerTest() {
+function PropertiesServiceTest() {
     let listOfTests = [
         Test.createNormalTest("getPropertySuccessfully"),
         Test.createNormalTest("getAllPropertiesSuccessfully"),
@@ -15,7 +15,7 @@ function PropertiesControllerTest() {
     return new TestModule(listOfTests, "PropertiesService");
 }
 
-function PropertiesControllerTestSetup() {
+function PropertiesServiceTestSetup() {
     PropertiesService.getScriptProperties().setProperty("test-property", "10");
     PropertiesService.getScriptProperties().setProperty("test-property2", "Luca");
     PropertiesService.getDocumentProperties().setProperty("test-property3", "132f1332");
@@ -28,7 +28,7 @@ function PropertiesControllerTestClear() {
 }
 
 function getPropertySuccessfully() {
-    PropertiesControllerTestSetup();
+    PropertiesServiceTestSetup();
     const sut = PropertiesScriptService;
     
     let expected = "10";
@@ -39,13 +39,14 @@ function getPropertySuccessfully() {
 }
 
 function getAllPropertiesSuccessfully() {
-    PropertiesControllerTestSetup();
+    PropertiesServiceTestSetup();
     const sut = PropertiesScriptService;
     
     let expected = PropertiesService.getScriptProperties().getProperties();
     let result = sut.getAll();
     
-    assert(expected, result);
+    assert(expected.length, result.length);
+    
     PropertiesControllerTestClear();
 }
 
@@ -62,56 +63,55 @@ function setPropertySuccessfully() {
 function setListPropertiesSuccessfully() {
     const sut = PropertiesScriptService;
 
-    const propertyList = {
+    const expected = {
         "prop1" : "value1",
         "prop2" : "value2",
         "prop3" : "value3"
     }
 
-    let expected = 3 + PropertiesService.getScriptProperties().getKeys().length;
-    sut.setByList(propertyList);
+    sut.setByList(expected);
     let resultList = PropertiesService.getScriptProperties().getProperties();
 
-    assert(expected, resultList.length);
+    assert(expected.prop1, resultList.prop1);
+    assert(expected.prop2, resultList.prop2);
+    assert(expected.prop2, resultList.prop2);
 }
 
 function deletePropertySuccessfully() {
-    PropertiesControllerTestSetup();
+    PropertiesServiceTestSetup();
     const sut = PropertiesScriptService;
     
-    let expected = PropertiesService.getScriptProperties().getKeys().length - 1;
     sut.delete("test-property");
     let resultList = PropertiesService.getScriptProperties().getProperties();
 
-    assert(expected, resultList.length);
+    assertNull(resultList["test-property"]);
     PropertiesControllerTestClear();
 }
 
 function deleteAllPropertiesSuccessfully() {
     let savedCurrenctProperties = PropertiesService.getScriptProperties().getProperties();
-    PropertiesControllerTestSetup();
+    PropertiesServiceTestSetup();
     const sut = PropertiesScriptService;
     
-    let expected = 0;
     sut.deleteAll();
     let resultList = PropertiesService.getScriptProperties().getProperties();
 
-    assert(expected, resultList.length);
+    assertNull(resultList.length);
     PropertiesControllerTestClear();
     PropertiesService.getScriptProperties().setProperties(savedCurrenctProperties);
 }
 
 function incrementPropertySuccessfully() {
-    PropertiesControllerTestSetup();
+    PropertiesServiceTestSetup();
     const sut = PropertiesScriptService;
     
-    let expected = "11";
+    let expected = "11.0";
     sut.increment("test-property");
     let result = PropertiesService.getScriptProperties().getProperty("test-property");
 
     assert(expected, result);
 
-    expected = "21";
+    expected = "21.0";
     sut.incrementBy("test-property", "10");
     result = PropertiesService.getScriptProperties().getProperty("test-property");
 
@@ -120,17 +120,17 @@ function incrementPropertySuccessfully() {
 }
 
 function decrementPropertySuccessfully() {
-    PropertiesControllerTestSetup();
+    PropertiesServiceTestSetup();
     const sut = PropertiesScriptService;
     
-    let expected = "9";
-    sut.increment("test-property");
+    let expected = "9.0";
+    sut.decrement("test-property");
     let result = PropertiesService.getScriptProperties().getProperty("test-property");
 
     assert(expected, result);
 
-    expected = "-1";
-    sut.incrementBy("test-property", "10");
+    expected = "-1.0";
+    sut.decrementBy("test-property", "10.0");
     result = PropertiesService.getScriptProperties().getProperty("test-property");
 
     assert(expected, result);
@@ -138,17 +138,17 @@ function decrementPropertySuccessfully() {
 }
 
 function initializeSuccessfully() {
-    PropertiesControllerTestSetup();
+    PropertiesServiceTestSetup();
     const sut = PropertiesScriptService;
     
     sut.initialize();
-    // assertNotNull(expected, result); //TODO: Implement assertNotNull + assertType
+    assertNotNull(sut.service);
 
     PropertiesControllerTestClear();
 }
 
 function logSuccessfully() {
-    PropertiesControllerTestSetup();
+    PropertiesServiceTestSetup();
     const sut = PropertiesScriptService;
     
     sut.log();
@@ -158,7 +158,7 @@ function logSuccessfully() {
 }
 
 function displaySuccessfully() {
-    PropertiesControllerTestSetup();
+    PropertiesServiceTestSetup();
     const sut = PropertiesScriptService;
     
     sut.display();
@@ -167,3 +167,24 @@ function displaySuccessfully() {
     PropertiesControllerTestClear();
 }
 
+function addTwoStrings(str1, str2) {
+    const num1 = parseInt(str1);
+    const num2 = parseInt(str2);
+
+    if (!isNaN(num1) && !isNaN(num2)) {
+        return num1 + num2;
+    } else {
+        throw new Error(`The two string provided for substract are not convertible to number format. String: ${num1} / ${num2}`)
+    }
+}
+
+function subtractTwoStrings(str1, str2) {
+    const num1 = parseInt(str1);
+    const num2 = parseInt(str2);
+
+    if (!isNaN(num1) && !isNaN(num2)) {
+        return num1 - num2;
+    } else {
+        throw new Error(`The two string provided for substract are not convertible to number format. String: ${num1} / ${num2}`)
+    }
+}

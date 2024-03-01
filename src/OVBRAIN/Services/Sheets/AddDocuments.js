@@ -1,7 +1,6 @@
-// /**
-//  * Deprecated
-//  */
-
+class AddDocuments {
+    
+}
 
 // // Check for documents
 // function callButtonAdaugaDocumente(){

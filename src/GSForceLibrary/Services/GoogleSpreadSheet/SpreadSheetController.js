@@ -4,6 +4,10 @@ class SpreadSheetService {
     return SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
   }
 
+  static removeMenu(menuName) {
+    SpreadsheetApp.getActiveSpreadsheet().removeMenu(menuName);
+  }
+
   static getActiveSpreadSheet() {
     return SpreadsheetApp.getActiveSpreadsheet();
   }

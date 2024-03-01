@@ -1,4 +1,8 @@
+class AddContactsService {
 
+
+    
+}
 // function addContacts_record(recomandator, contacteList) {
 //   var listOfContacte = splitLines(contacteList);
 //   var result;

@@ -1,61 +1,47 @@
-/**
- * Admin provides functionality to active admin mode
- */
-// TODO: remake this
 class Admin {
   /** private */
   constructor() {
     throw Error("You are not allowed to have an Admin object!");
   }
 
-  // static requestAdminMode() {
-  //   if (this.isAdminModeOn()) {
-  //     UIUtils.system("Admin mode is already on.");
-  //     return;
-  //   }
+  static setAdminModeOn() {
+    PropertiesDocumentService.set("admin-mode", "1");
+  }
 
-  //   let inputPassword = this.requestAdminPassword_();
-    
-  //   if (Encryptor.hash(inputPassword) == this.getAdminPassword_()) {
-  //     this.enableAdminMode_();
-  //   } else {
-  //     UIUtils.warning("Admin mode rejected. Wrong password");
-  //   }
-  // }
+  static setAdminModeOff() {
+    PropertiesDocumentService.set("admin-mode", "0");
+  }
 
-  // static setAdminModeOn() {
-  //   PropertiesHandlerUser.setProperty("admin-mode","1");
-  // }
+  static isAdminModeOn() {
+    return PropertiesDocumentService.get("admin-mode") == "1";
+  }
 
-  // static setAdminModeOff() {
-  //   PropertiesHandlerUser.setProperty("admin-mode","0");
-  // }
-  
-  // static isAdminModeOn() {
-  //   return PropertiesHandlerUser.getProperty("admin-mode") == "1" ? true: false;
-  // }
+  static requestAdminPassword() {
+    return Displayer.inputField("Enable Admin mode", "Introdu parola de Admin:");
+  }
 
-  // static disableAdminMode() {
-  //   Menu.deleteAdminMenu();
-  //   this.setAdminModeOff();
-  //   UIUtils.system("Admin mode disabled successfully");
-  // }
+  static getAdminPassword() {
+    return PropertiesDocumentService.get("admin-password");
+  }
 
-  // /** @private */
-  // static requestAdminPassword_() {
-  //   return UIUtils.inputField("Enable Admin mode", "Introdu parola de Admin:");
-  // }
-  // /** @private */
-  // static getAdminPassword_() {
-  //   return PropertiesHandlerUser.getProperty("admin-password");
-  // }
+  static disableAdminMode() {
+    SpreadSheetService.removeMenu("ADMIN");
+    Admin.setAdminModeOff();
+    Displayer.system("Admin mode disabled successfully");
+  }
 
-  // /** private */
-  // static enableAdminMode_() {
-  //   Menu.createAdminMenu();
-  //   this.setAdminModeOn();
-  //   TriggersUtils.createAfterTimeTriggered(menuButtonDisableAdminMode, duration.HOURINMILLIS);
-  //   UIUtils.system("Admin mode enabled successfully");
-  // } 
+  static enableAdminMode(inputPassword) {
+    if (Encryptor.hash(inputPassword) == Admin.getAdminPassword()) {
+      MenuBuilder.createMenu(MenusTemplate.ADMIN);
+      Admin.setAdminModeOn();
+      TriggerService.createOneTimeTriggerAfter('disabledAdminMode', DurationTime.HOURINMILLIS);
+      Displayer.system("Admin mode enabled successfully");
+
+    } else {
+      Displayer.warning("Admin mode rejected. Wrong password");
+    }
+  }
+
+
 
 }

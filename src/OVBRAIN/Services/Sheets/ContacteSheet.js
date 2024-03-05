@@ -13,6 +13,15 @@ class ContacteSheet extends AbstractSheetService {
     this.setValue(this.sheet, DateUtils.toDay(), row,  this.headers.Status);
   }
 
+  static setAndGetNrContacte() {
+    // TODO: Not implemented yet but not sure if i should
+  }
+
+
+  static addContacts() {
+    // TODO: Implement this
+  }
+
 
 }
 

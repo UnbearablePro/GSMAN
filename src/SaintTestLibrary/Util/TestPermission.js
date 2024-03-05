@@ -22,4 +22,17 @@ class TestPermission {
 
         return this.typePermissedTests.toString().includes(testCase.type);
     }
+
+    static setAllPermissionOn() {
+        for (const flag in TestFlags) {
+            TestFlags[flag] = true;
+        }
+    }
+
+    static setAllPermissionWithout(permisionDenied) {
+        this.setAllPermissionOn()
+        for (const flag in permisionDenied) {
+            TestFlags[flag] = false;
+        }
+    }
 }

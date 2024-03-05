@@ -6,14 +6,17 @@ class Settings {
     }
   }
 
-  static isSentMailAutomaticalyToDeveloperWhenErrorOccursOn() {
+  static getFlag(flag, defaultValue = null) {
     this.initialize();
-    return DataUtils.getIfNotEmpty(this.prefference.isSentMailAutomaticalyToDeveloperWhenErrorOccursOn);
+    return DataUtils.getIfNotEmpty(this.prefference[flag], defaultValue);
+  }
+
+  static isSentMailAutomaticalyToDeveloperWhenErrorOccursOn() {
+    return this.getFlag("isSentMailAutomaticalyToDeveloperWhenErrorOccursOn", false);
   }
 
   static isActiveErrorHandlingOn() {
-    this.initialize();
-    return DataUtils.getIfNotEmpty(this.prefference.isActiveErrorHandlingOn);
+    return this.getFlag("isActiveErrorHandlingOn", false);
   }
 
   static updateSettings(settingsList) {

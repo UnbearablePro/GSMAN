@@ -10,8 +10,8 @@ class DataUtils {
    * if it is not empty.
    * @returns {data|null}
    */
-  static getIfNotEmpty(data) {
-    return (data == null || data === undefined || data == "" || data == " ") ? null : data;
+  static getIfNotEmpty(data, defaultValue = null) {
+    return (data == null || data === undefined || data == "" || data == " ") ? defaultValue : data;
   }
 
   /**

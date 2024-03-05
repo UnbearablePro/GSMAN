@@ -1,4 +1,4 @@
-const CentralizareHeaderIndex = {
+const CentralizareHeaders= {
     PREZENTA : 3,
     NRCONTACTE : 4,
     NRCONTACTESHORTLIST: 5,

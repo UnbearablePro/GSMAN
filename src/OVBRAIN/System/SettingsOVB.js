@@ -1,42 +1,25 @@
-class SettingsOVB {
+class SettingsOVB extends Settings {
 
-  static checkflagContacteAutocomplete() {
-    return Settings.checkFlag("flagContacteAutocomplete");
+  static isflagContacteAutocomplete() {
+    return this.getFlag("flagContacteAutocomplete", false);
   }
 
-  static checkflagFreezeHeaders() {
-    return Settings.checkFlag("flagFreezeHeaders");
+  static isFlagFreezeHeaders() {
+    return this.getFlag("flagFreezeHeaders");
   }
 
-  static checkflagSendMailWhenErrorOccurs() {
-    return Settings.checkFlag("flagSendMailWhenErrorOccurs");
+  static isQuoteServiceOn() {
+    return this.getFlag("quoteService", true);
   }
 
-
-  static updateSettings() {
-    Settings.updateSettings(this.getAllSettingsFromSheet());
-    UIUtils.system("Settings updated successfully!")
+  static updateSettings(listOfSettings = this.getAllSettingsFromSheet()) {
+    Settings.updateSettings(listOfSettings);
+    Displayer.system("Settings updated successfully!")
   }
 
   static getAllSettingsFromSheet() {
-    var values = SheetsController.getDataFromColumns(SheetsController.getSheetByName("Setari",), "A", "B");
-
-    values = DataUtils.mapArrayIntoKeyValueObject(values);
-    Logger.log("Settings extracted from sheet:");
-    Logger.log(values);
-
-    return values;
+    let values = SettingsSheet.getDataFromColumns("A", "B"); // TODO: Convert into SettingsHeaders
+    return DataUtils.mapArrayIntoKeyValueObject(values);
   }
 
-  static deleteAll() {
-    var settingsArray = this.getAllSettingsFromSheet();
-    Object.keys(settingsArray).forEach(k => {
-      PropertiesHandlerUser.deleteProperty(k);
-    })
-  }
-}
-
-
-function tta() {
-  SettingsOVB.deleteAll();
 }

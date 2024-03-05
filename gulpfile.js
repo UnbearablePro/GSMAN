@@ -74,22 +74,24 @@ const ACTIONS = {
     /** BUILD MULTIPLE FILES/CONCAT AND SEPARATE THEM BY FATHER FOLDER NAME */
     CONFIG: 'CONFIG',
 }
+
+
+const TEST_PATH = 'src/**/Tests/*.js';
+const CONFIG_PATH = 'src/**/Configuration/*.js'
 const NO_TEST_PATH = '!src/**/Tests/*.js';
-const NO_CONFIG_PATH = '!src/**/Configuration/*.js'
+const NO_CONFIG_PATH = '!src/**/Configuration/*.js';
+const NO_SAINT_PATH = '!src/SaintTestLibrary/**/*.js';
+const FE_PATH = 'src/**/*.html';
 
-const EXTERNALLIBRARY_PATH = ['src/ExternalLibrary/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
+const ALLJS_PATH = ['src/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
+const ALLJS_PRODUCTION_PATH = ['src/!(SaintTestLibrary)/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
 
+const EXTERNALLIBRARY_PATH = ['src/ExternalLibrary/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
 const SAINT_PATH = ['src/SaintTestLibrary/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
-const SAINT_TEST_PATH = ['src/SaintTestLibrary/Test/*.js'];
-const SAINT_CONFIGURATION_PATH = ['src/SaintTestLibrary/Configuration/*.js'];
-
 const GSFORCE_PATH = ['src/GSForceLibrary/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
-const GSFORCE_TEST_PATH = ['src/GSForceLibrary/Tests/*.js'];
-const GSFORCE_CONFIGURATION_PATH = ['src/GSForceLibrary/Configuration/*.js'];
-
 const OVBRAIN_PATH = ['src/OVBRAIN/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
-const OVBRAIN_TEST_PATH = ['src/OVBRAIN/Tests/*.js'];
-const OVBRAIN_CONFIGURATION_PATH = ['src/OVBRAIN/Configuration/*.js'];
+
+
 
 const PLAYGROUND_LAUNCHER_PATH = [`src/PlayGround.js`]
 const SAINT_LAUNCHER_PATH = [`src/SaintTest.js`];
@@ -101,27 +103,27 @@ const externalLibraryBuildConfig = {
     playground: [PLAYGROUND_LAUNCHER_PATH, `PlayGround.js`, ACTIONS.LAUNCHER]
 }
 
-const saintTestLibraryBuildConfig = {
-    saintTestLibrary: [SAINT_PATH, `SaintTestLibrary.js`, ACTIONS.MULTIPLE],
-    saintTest: [SAINT_LAUNCHER_PATH, `SaintTest.js`, ACTIONS.LAUNCHER],
-    saintTests: [SAINT_TEST_PATH, ``, ACTIONS.MULTIPLE],
-    appscriptJson: [APPSSCRIPT_PATH, `appsscript.json`, ACTIONS.SIMPLE],
-    playground: [PLAYGROUND_LAUNCHER_PATH, `PlayGround.js`, ACTIONS.LAUNCHER],
-    configuration: [SAINT_CONFIGURATION_PATH, "Configuration.js", ACTIONS.CONFIG]
-}
+// const saintTestLibraryBuildConfig = {
+//     saintTestLibrary: [SAINT_PATH, `SaintTestLibrary.js`, ACTIONS.MULTIPLE],
+//     saintTest: [SAINT_LAUNCHER_PATH, `SaintTest.js`, ACTIONS.LAUNCHER],
+//     saintTests: [SAINT_TEST_PATH, ``, ACTIONS.MULTIPLE],
+//     appscriptJson: [APPSSCRIPT_PATH, `appsscript.json`, ACTIONS.SIMPLE],
+//     playground: [PLAYGROUND_LAUNCHER_PATH, `PlayGround.js`, ACTIONS.LAUNCHER],
+//     configuration: [SAINT_CONFIGURATION_PATH, "Configuration.js", ACTIONS.CONFIG]
+// }
 
-const gsForceLibraryBuildConfig = {
-    externalLibraryLibrary: [EXTERNALLIBRARY_PATH, `ExternalLibrary.js`, ACTIONS.LIBRARY],
-    saintTestLibrary: [SAINT_PATH, `SaintTestLibrary.js`, ACTIONS.LIBRARY],
-    gsForceLibrary: [GSFORCE_PATH, `GSForce.js`, ACTIONS.MULTIPLE],
+// const gsForceLibraryBuildConfig = {
+//     externalLibraryLibrary: [EXTERNALLIBRARY_PATH, `ExternalLibrary.js`, ACTIONS.LIBRARY],
+//     saintTestLibrary: [SAINT_PATH, `SaintTestLibrary.js`, ACTIONS.LIBRARY],
+//     gsForceLibrary: [GSFORCE_PATH, `GSForce.js`, ACTIONS.MULTIPLE],
 
-    appscriptJson: [APPSSCRIPT_PATH, `appsscript.json`, ACTIONS.SIMPLE],
-    playground: [PLAYGROUND_LAUNCHER_PATH, `PlayGround.js`, ACTIONS.LAUNCHER],
-    saintTest: [SAINT_LAUNCHER_PATH, `SaintTest.js`, ACTIONS.LAUNCHER],
+//     appscriptJson: [APPSSCRIPT_PATH, `appsscript.json`, ACTIONS.SIMPLE],
+//     playground: [PLAYGROUND_LAUNCHER_PATH, `PlayGround.js`, ACTIONS.LAUNCHER],
+//     saintTest: [SAINT_LAUNCHER_PATH, `SaintTest.js`, ACTIONS.LAUNCHER],
 
-    configuration: [SAINT_CONFIGURATION_PATH, GSFORCE_CONFIGURATION_PATH, "Configuration.js", ACTIONS.CONFIG],
-    tests: [GSFORCE_TEST_PATH, 'Test.js', ACTIONS.MULTIPLE]
-}
+//     configuration: [SAINT_CONFIGURATION_PATH, GSFORCE_CONFIGURATION_PATH, "Configuration.js", ACTIONS.CONFIG],
+//     tests: [GSFORCE_TEST_PATH, 'Test.js', ACTIONS.MULTIPLE]
+// }
 
 const ovbrainPaths = {
     gsForceLibrary: [["src/GSForceLibrary/**/*.js", '!src/**/Configuration/*.js'], `GSForce.js`, ACTIONS.CONCAT],
@@ -129,27 +131,23 @@ const ovbrainPaths = {
     ovbrain: [["src/OVBRAIN/**/*.js", '!src/**/Configuration/*.js'], `OVBRAIN.js`, ACTIONS.SIMPLE]
 }
 
-const buildPaths = {
-    externalLibraries: [['src/ExternalLibrary/*.js', '!src/**/Configuration/*.js'], `ExternalLibrary.js`, ACTIONS.LIBRARY],
-    saintTestLibrary: [['src/SaintTestLibrary/**/*.js', '!src/**/Configuration/*.js'], `SaintTestLibrary.js`, ACTIONS.LIBRARY],
-    gsForceLibrary: [["src/GSForceLibrary/**/*.js", '!src/**/Configuration/*.js'], `GSForce.js`, ACTIONS.LIBRARY],
-    ovbrain: [["src/OVBRAIN/**/*.js", '!src/**/Configuration/*.js'], `OVBRAIN.js`, ACTIONS.LIBRARY],
-    frontEnd: ["src/**/**/*.html", `FrontEnd.html`, ACTIONS.FE],
-    configuration: ["src/**/Configuration.js", "Configuration.js", ACTIONS.CONFIG],
-    appscriptJson: [`src/appsscript.json`, `appsscript.json`, ACTIONS.SIMPLE],
-    playground: ["src/PlayGround.js", `PlayGround.js`, ACTIONS.LAUNCHER],
-    saintTest: ["src/SaintTest.js", `SaintTest.js`, ACTIONS.LAUNCHER]
+const buildDevelopment = {
+    externalLibraries: [EXTERNALLIBRARY_PATH, `ExternalLibrary.js`, ACTIONS.LIBRARY],
+    saintTestLibrary: [SAINT_PATH, `SaintTestLibrary.js`, ACTIONS.CONCAT],
+    gsForceLibrary: [GSFORCE_PATH, `GSForce.js`, ACTIONS.LIBRARY],
+    ovbrain: [OVBRAIN_PATH, `OVBRAIN.js`, ACTIONS.LIBRARY],
+    frontEnd: [FE_PATH, `FrontEnd.html`, ACTIONS.FE],
+    configuration: [CONFIG_PATH, "Configuration.js", ACTIONS.CONFIG],
+    appscriptJson: [APPSSCRIPT_PATH, `appsscript.json`, ACTIONS.SIMPLE],
+    playground: [PLAYGROUND_LAUNCHER_PATH, `PlayGround.js`, ACTIONS.LAUNCHER],
+    saintTest: [SAINT_LAUNCHER_PATH, `SaintTest.js`, ACTIONS.LAUNCHER]
 }
 
-// TODO: Change productionPaths to be uglify
-const buildProductionPaths = {
-    externalLibraries: [['src/ExternalLibrary/*.js', '!src/**/Configuration/*.js', '!src/**/Tests/*.js'], `ExternalLibrary.js`, ACTIONS.LIBRARY],
-    gsForceLibrary: [["src/GSForceLibrary/**/*.js", '!src/**/Configuration/*.js', '!src/**/Tests/*.js'], `GSForce.js`, ACTIONS.LIBRARY],
-    ovbrain: [["src/OVBRAIN/**/*.js", '!src/**/Configuration/*.js', '!src/**/Tests/*.js'], `OVBRAIN.js`, ACTIONS.LIBRARY],
-    frontEnd: ["src/**/**/*.html", `FrontEnd.html`, ACTIONS.FE],
-    configuration: ["src/**/Configuration.js", "Configuration.js", ACTIONS.CONFIG],
-    appscriptJson: [`src/appsscript.json`, `appsscript.json`, ACTIONS.SIMPLE],
-    playground: ["src/PlayGround.js", `PlayGround.js`, ACTIONS.LAUNCHER],
+const buildProductionBuildPath = {
+    application : [ALLJS_PRODUCTION_PATH, `App.js`, ACTIONS.LIBRARY],
+    configuration: [[CONFIG_PATH, NO_SAINT_PATH], "Configuration.js", ACTIONS.CONFIG],
+    playground: [PLAYGROUND_LAUNCHER_PATH, `PlayGround.js`, ACTIONS.LAUNCHER],
+    appscriptJson: [APPSSCRIPT_PATH, `appsscript.json`, ACTIONS.SIMPLE]
 }
 
 //    ###################################################### 
@@ -217,11 +215,11 @@ async function build() {
     // @ts-ignore
     if (argv.gsforce) { flagIfToBuildAll = false; buildOf(gsForceLibraryBuildConfig); };
     // @ts-ignore
-    if (argv.production) { flagIfToBuildAll = false; buildOf(buildProductionPaths); };
+    if (argv.production) { flagIfToBuildAll = false; buildOf(buildProductionBuildPath); };
     // @ts-ignore
     if (argv.default) { flagIfToBuildAll = false; buildOf(defaultPaths); };
 
-    flagIfToBuildAll ? buildOf(buildPaths) : console.log("Nothing to build!");
+    flagIfToBuildAll ? buildOf(buildDevelopment) : buildDevelopment;
 }
 
 async function buildOf(buildConfig) {
@@ -258,7 +256,6 @@ async function buildUglyCat(path, newName, count = '') {
     gulp.src(path)
         .on('data', function (file) {
             nrOfFiles += 1;
-            // console.log('File Name:', file.relative);
         })
         .pipe(concat(count + newName))
         .pipe(uglify())
@@ -275,7 +272,7 @@ async function buildUglyCat(path, newName, count = '') {
 async function buildConcat(path, newName = 'NoName', count = '') {
     let nrOfFiles = 0;
     gulp.src(path)
-        .on('data', function (data) {
+        .on('data', function (file) {
             nrOfFiles += 1;
         })
         .pipe(concat(count + newName))
@@ -377,6 +374,10 @@ async function cleanBuild() {
     gulp.src(paths.delDest, { read: false, allowEmpty: false })
         .on('data', () => nrOfFiles += 1)
         .pipe(del())
+        .pipe(del())
+        .pipe(del())
+        .pipe(del())
+        .pipe(del())
         .on('finish', function () {
             gutil.log(`===================== ${blue(`Cleaning build folder started`)} =====================`)
             nrOfFiles ? gutil.log(`Deleted ${magenta(`${nrOfFiles}`)} files successfully.`) :
@@ -429,7 +430,7 @@ async function runTests() {
 
 async function deleteBuildPush() {
     cleanBuild();
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 3000));
     build();
     changeClaspRootDir(paths.dest);
     await new Promise(resolve => setTimeout(resolve, 2000));

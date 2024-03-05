@@ -1,5 +1,6 @@
 const SheetNames = {
     CONTACTE : "Contacte",
     CENTRALIZARE : "Centralizare",
-    ACASA : "Acasa"
+    ACASA : "Acasa",
+    SETTINGS: "Setari"
 }

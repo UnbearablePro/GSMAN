@@ -1,11 +1,11 @@
 class MenuService {
 
-    static createMenu(template) {
+    static createMenuFromTemplate(template) {
         MenuBuilder.createMenu(template);
     }
 
     static createAdminMenu() {
-        this.createMenu(MenusTemplate.ADMIN);
+        this.createMenuFromTemplate(MenusTemplate.ADMIN);
     }
 
 }

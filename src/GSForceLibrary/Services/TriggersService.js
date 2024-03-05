@@ -145,4 +145,8 @@ class TriggerService {
       `);
     }
   }
+
+  static display() {
+    
+  }
 }

@@ -14,6 +14,12 @@ class DataUtils {
     return (data == null || data === undefined || data == "" || data == " ") ? defaultValue : data;
   }
 
+  static reuquireNotNull(data, message) {
+    if (data == null || data === undefined || data == "" || data == " ") {
+      throw new InvalidDataError(message);
+    };
+  }
+
   /**
    * The function checks if a given data is not empty.
    * @param {*} data - The parameter "data" is a variable that represents the data that we want to check if
@@ -53,20 +59,4 @@ class DataUtils {
     return mappedValues;
   }
 
-  /**
-   * The function `requireNonNull` checks if an object is null or undefined and throws an error if it
-   * is.
-   * @param {*} obj - The `obj` parameter is the object that needs to be checked for null or undefined
-   * values.
-   * @param {string} message - The `message` parameter is an optional parameter that represents the error
-   * message to be thrown if the `obj` parameter is null or undefined. If no `message` is provided, a
-   * default error message will be used.
-   * @returns {*} The `obj` parameter is being returned.
-   */
-  static requireNonNull(obj, message) {
-    if (obj === null || typeof obj === 'undefined') {
-      throw new Error(message || 'Argument cannot be null or undefined');
-  }
-  return obj;
-  }
 }

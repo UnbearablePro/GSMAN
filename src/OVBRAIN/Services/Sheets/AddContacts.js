@@ -1,6 +1,14 @@
-class AddContactsService {
+class AddContacts {
 
+    static openAdaugaContacte() {
+        const [httpName, title, width, height] = HtmlFiles.ADDCONTACTS;
 
+        Displayer.openHtmlPopup(httpName, title, width, height);
+    }
+
+    static addContacts(recommandar, contacts) {
+
+    }
     
 }
 // function addContacts_record(recomandator, contacteList) {

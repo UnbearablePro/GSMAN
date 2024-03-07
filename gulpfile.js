@@ -125,17 +125,17 @@ const externalLibraryBuildConfig = {
 //     tests: [GSFORCE_TEST_PATH, 'Test.js', ACTIONS.MULTIPLE]
 // }
 
-const ovbrainPaths = {
+const ovbrainBuildConfig = {
     gsForceLibrary: [["src/GSForceLibrary/**/*.js", '!src/**/Configuration/*.js'], `GSForce.js`, ACTIONS.CONCAT],
     externalLibraryLibrary: [['src/ExternalLibrary/*.js', '!src/**/Configuration/*.js'], `ExternalLibrary.js`, ACTIONS.CONCAT],
     ovbrain: [["src/OVBRAIN/**/*.js", '!src/**/Configuration/*.js'], `OVBRAIN.js`, ACTIONS.SIMPLE]
 }
 
 const buildDevelopment = {
-    externalLibraries: [EXTERNALLIBRARY_PATH, `ExternalLibrary.js`, ACTIONS.LIBRARY],
+    externalLibraries: [EXTERNALLIBRARY_PATH, `ExternalLibrary.js`, ACTIONS.CONCAT],
     saintTestLibrary: [SAINT_PATH, `SaintTestLibrary.js`, ACTIONS.CONCAT],
-    gsForceLibrary: [GSFORCE_PATH, `GSForce.js`, ACTIONS.LIBRARY],
-    ovbrain: [OVBRAIN_PATH, `OVBRAIN.js`, ACTIONS.LIBRARY],
+    gsForceLibrary: [GSFORCE_PATH, `GSForce.js`, ACTIONS.CONCAT],
+    ovbrain: [OVBRAIN_PATH, `OVBRAIN.js`, ACTIONS.CONCAT],
     frontEnd: [FE_PATH, `FrontEnd.html`, ACTIONS.FE],
     configuration: [CONFIG_PATH, "Configuration.js", ACTIONS.CONFIG],
     appscriptJson: [APPSSCRIPT_PATH, `appsscript.json`, ACTIONS.SIMPLE],
@@ -232,10 +232,10 @@ async function buildOf(buildConfig) {
         if (count >= 3) {
             count = count - 1;
         }
-        switch (action) {
 
-            case ACTIONS.CONCAT: buildConcat(path, newName, count.toString());
-            case ACTIONS.UGLIFY: buildUglify(path, newName, count.toString());
+        switch (action) {
+            case ACTIONS.CONCAT: buildConcat(path, newName, count.toString()); break;
+            case ACTIONS.UGLIFY: buildUglify(path, newName, count.toString()); break;
             case ACTIONS.MULTIPLE: buildSimple(path, newName, count.toString()); break;
             case ACTIONS.SIMPLE: buildSimple(path, newName); break;
             case ACTIONS.LAUNCHER: buildSimple(path, newName, '0'); break;
@@ -269,7 +269,7 @@ async function buildUglyCat(path, newName, count = '') {
         });
 }
 
-async function buildConcat(path, newName = 'NoName', count = '') {
+function buildConcat(path, newName = 'NoName', count = '') {
     let nrOfFiles = 0;
     gulp.src(path)
         .on('data', function (file) {

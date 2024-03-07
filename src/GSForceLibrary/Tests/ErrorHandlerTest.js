@@ -9,7 +9,8 @@ function ErrorHandlerTest() {
 }
 
 function handleErrorActively() {
-    Settings.isActiveErrorHandlingOn = true;
+    Settings.initialize();
+    Settings.prefference.isActiveErrorHandlingOn = true;
     ErrorHandler.contactErrorMessage = "Press yes to continue the test";
     const sut = ErrorHandler;
     explainExpectedResult("Next test is for handling errors and contact developer. Press yes when alert appears and check if developer catch a message");
@@ -24,7 +25,8 @@ function handleErrorActively() {
 }
 
 function handlingErrorShouldNotSendEmailToDeveloperWhenUserRefused() {
-    Settings.isActiveErrorHandlingOn = true;
+    Settings.initialize();
+    Settings.prefference.isActiveErrorHandlingOn = true;
     ErrorHandler.contactErrorMessage = "Press no to continue the test";
     
     const sut = ErrorHandler;
@@ -40,8 +42,10 @@ function handlingErrorShouldNotSendEmailToDeveloperWhenUserRefused() {
 }
 
 function handlingErrorShouldBeSendAutomaticaly() {
-    Settings.isActiveErrorHandlingOn = false;
-    Settings.isSentMailAutomaticalyToDeveloperWhenErrorOccursOn = true;
+    Settings.initialize();
+    Settings.prefference.isActiveErrorHandlingOn = false;
+    Settings.prefference.isSentMailAutomaticalyToDeveloperWhenErrorOccursOn = true;
+
     ErrorHandler.contactErrorMessage = "Press no to continue the test";
     
     const sut = ErrorHandler;
@@ -56,8 +60,9 @@ function handlingErrorShouldBeSendAutomaticaly() {
 }
 
 function handlingErrorShouldBeSendAtAll() {
-    Settings.isActiveErrorHandlingOn = false;
-    Settings.isSentMailAutomaticalyToDeveloperWhenErrorOccursOn = false;
+    Settings.initialize();
+    Settings.prefference.isActiveErrorHandlingOn = false;
+    Settings.prefference.isSentMailAutomaticalyToDeveloperWhenErrorOccursOn = false;
     ErrorHandler.contactErrorMessage = "Press no to continue the test";
     
     const sut = ErrorHandler;

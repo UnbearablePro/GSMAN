@@ -2,7 +2,6 @@ class AbstractSheetService {
 
   constructor() {
     throw new Error("SheetController cannot be createt. Reason: SheetController is a static abstract class.");
-    SpreadsheetApp.getActiveSheet().getLastColumn
   }
 
   static initialize() { };
@@ -85,6 +84,24 @@ class AbstractSheetService {
   static setValues(values, rows, columns) {
     this.initialize();
     this.sheet.getRange(rows, columns).setValues(values);
+  }
+
+  static setColumnWidth(col, width) {
+    this.initialize();
+    if (width == null) {
+      this.sheet.autoResizeColumn(col);
+    } else {
+      this.sheet.setColumnWidth(col, width)
+    }
+  }
+
+  static setRowWidth(row, width) {
+    this.initialize();
+    if (width == null) {
+      this.sheet.autoResizeRow(row);
+    } else {
+      this.sheet.setRowWidth(row, width)
+    }
   }
 
   static appendRow(rowData) {

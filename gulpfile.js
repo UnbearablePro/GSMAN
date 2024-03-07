@@ -125,17 +125,17 @@ const externalLibraryBuildConfig = {
 //     tests: [GSFORCE_TEST_PATH, 'Test.js', ACTIONS.MULTIPLE]
 // }
 
-const ovbrainBuildConfig = {
+const ovbrainPaths = {
     gsForceLibrary: [["src/GSForceLibrary/**/*.js", '!src/**/Configuration/*.js'], `GSForce.js`, ACTIONS.CONCAT],
     externalLibraryLibrary: [['src/ExternalLibrary/*.js', '!src/**/Configuration/*.js'], `ExternalLibrary.js`, ACTIONS.CONCAT],
     ovbrain: [["src/OVBRAIN/**/*.js", '!src/**/Configuration/*.js'], `OVBRAIN.js`, ACTIONS.SIMPLE]
 }
 
 const buildDevelopment = {
-    externalLibraries: [EXTERNALLIBRARY_PATH, `ExternalLibrary.js`, ACTIONS.CONCAT],
-    saintTestLibrary: [SAINT_PATH, `SaintTestLibrary.js`, ACTIONS.CONCAT],
-    gsForceLibrary: [GSFORCE_PATH, `GSForce.js`, ACTIONS.CONCAT],
-    ovbrain: [OVBRAIN_PATH, `OVBRAIN.js`, ACTIONS.CONCAT],
+    externalLibraries: [EXTERNALLIBRARY_PATH, `ExternalLibrary.js`, ACTIONS.LIBRARY],
+    saintTestLibrary: [SAINT_PATH, `SaintTestLibrary.js`, ACTIONS.LIBRARY],
+    gsForceLibrary: [GSFORCE_PATH, `GSForce.js`, ACTIONS.LIBRARY],
+    ovbrain: [OVBRAIN_PATH, `OVBRAIN.js`, ACTIONS.LIBRARY],
     frontEnd: [FE_PATH, `FrontEnd.html`, ACTIONS.FE],
     configuration: [CONFIG_PATH, "Configuration.js", ACTIONS.CONFIG],
     appscriptJson: [APPSSCRIPT_PATH, `appsscript.json`, ACTIONS.SIMPLE],
@@ -225,20 +225,20 @@ async function build() {
 async function buildOf(buildConfig) {
 
     //TODO: Make it simple
-    let count = 8;
+    let count = -1;
     Object.keys(buildConfig).forEach(key => {
         fileToBuild = fileToBuild + 1;
         const [path, newName, action] = buildConfig[key];
-        if (count >= 3) {
-            count = count - 1;
+        if (count <= 7) {
+            count = count + 1;
         }
-
         switch (action) {
-            case ACTIONS.CONCAT: buildConcat(path, newName, count.toString()); break;
-            case ACTIONS.UGLIFY: buildUglify(path, newName, count.toString()); break;
+
+            case ACTIONS.CONCAT: buildConcat(path, newName, count.toString());
+            case ACTIONS.UGLIFY: buildUglify(path, newName, count.toString());
             case ACTIONS.MULTIPLE: buildSimple(path, newName, count.toString()); break;
             case ACTIONS.SIMPLE: buildSimple(path, newName); break;
-            case ACTIONS.LAUNCHER: buildSimple(path, newName, '0'); break;
+            case ACTIONS.LAUNCHER: buildSimple(path, newName, '9'); break;
             case ACTIONS.LIBRARY: buildUglyCat(path, newName, count.toString()); break;
             case ACTIONS.CONFIG: buildConfiguration(path, newName); break;
             case ACTIONS.FE: buildSimple(path, newName); break;
@@ -269,7 +269,7 @@ async function buildUglyCat(path, newName, count = '') {
         });
 }
 
-function buildConcat(path, newName = 'NoName', count = '') {
+async function buildConcat(path, newName = 'NoName', count = '') {
     let nrOfFiles = 0;
     gulp.src(path)
         .on('data', function (file) {

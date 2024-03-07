@@ -16,6 +16,10 @@ class SpreadSheetService {
     return SpreadsheetApp.getActiveSpreadsheet().getSheetName();
   }
 
+  static createValidation(validationList, isAllow = false) {
+    return SpreadsheetApp.newDataValidation().requireValueInList(validationList).setAllowInvalid(isAllow).build();
+  }
+
   static isUserOn() {
     if(SpreadsheetApp.getActiveSpreadsheet()){
       return true;

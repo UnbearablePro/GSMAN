@@ -1,12 +1,16 @@
 class EditHandler {
 
     static handleEvent(event) {
-        let userEvent = this.getUserEventFrom(event);
-        this.chooseSheetHandler(userEvent);
+        try {
+            let userEvent = this.getUserEventFrom(event);
+            this.chooseSheetHandler(userEvent);
+        } catch(e) {
+            ErrorHandler.handleError(e);
+        }    
     }
 
     static getUserEventFrom(event) {
-        return new UserEvent(event);
+        return new UserEvent(event, SpreadSheetService.getCurrentSheetName());
     }
 
     static chooseSheetHandler(userEvent) {

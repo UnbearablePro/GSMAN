@@ -109,14 +109,10 @@ class AbstractSheetService {
     this.sheet.appendRow(rowData);
   }
 
-  static setDataValidation(range, referenceValueToSetValidators, getValidationRuleFunction) {
-    range.setDataValidation(this.createValidation_(referenceValueToSetValidators, getValidationRuleFunction));
+  static setDataValidation(range, validationList) {
+    range.setDataValidation(SpreadSheetService.createValidation(validationList));
   }
-
-  static createValidation_(refferenceValueToSetValidators, getValidationRuleFunction) {
-    return SpreadsheetApp.newDataValidation().requireValueInList(getValidationRuleFunction(refferenceValueToSetValidators)).setAllowInvalid(false).build();
-  }
-
+  
   static deleteColumn(column) {
     this.initialize();
     this.sheet.deleteColumn(column);

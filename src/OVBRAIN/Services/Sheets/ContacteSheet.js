@@ -8,9 +8,13 @@ class ContacteSheet extends AbstractSheetService {
     }
   }
 
-  //TODO: Not implemented yet and not good
   static updateInteractionDate(row = this.getCurrentCell()) {
-    this.setValue(this.sheet, DateUtils.toDay(), row,  this.headers.Status);
+    this.setValue(DateTime.toDay(), row,  ContacteHeaders.ULTIMA_INTERACTIUNE);
+  }
+
+  static setStatusDataValidation(range, statusValue) {
+    const statusDataValidation = contateStatusValidationSupplier(statusValue);
+    this.setDataValidation(range, statusValue, statusDataValidation);
   }
 
   static setAndGetNrContacte() {

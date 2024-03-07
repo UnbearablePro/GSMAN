@@ -2,7 +2,7 @@ class ContacteEventHandler {
 
   static handleEvent(event) {
     if (DataUtils.isEmpty(event)) {
-      throw new Error("Cannot handle empty event for Contacte.");
+      throw new Error("Cannot handle empty event from Contacte");
     } else {
       this.checkForStatusEvent(event);
     }
@@ -13,13 +13,10 @@ class ContacteEventHandler {
   */
   static checkForStatusEvent(event) {
     if (event.row == ContacteIndex.STARTING_ROW && event.col == ContacteHeaders.STATUS) {
-      this.handleStatusEvent(event);
+      ContacteStatusController.handleStatusEvent(event);
     }
   }
 
-  static handleStatusEvent(event) {
-    
-  }
 }
 
 // // FIXME: flag is not good
@@ -52,18 +49,4 @@ class ContacteEventHandler {
 //       contacteSheet.getRange(row, indexC_Status).setValue("Nesunat");
 //     }
 //   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

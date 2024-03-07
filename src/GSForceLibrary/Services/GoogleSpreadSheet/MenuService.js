@@ -1,7 +1,8 @@
 class MenuService {
 
     static createMenuFromTemplate(template) {
-        MenuBuilder.createMenu(template);
+        MenuBuilder.createMenu(template).addToUi();
+
     }
 
     static createAdminMenu() {

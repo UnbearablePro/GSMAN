@@ -1,3 +1,5 @@
+
+
 function testAllTrigger() {
     TestPermission.setAllPermissionOn();
     startTests();

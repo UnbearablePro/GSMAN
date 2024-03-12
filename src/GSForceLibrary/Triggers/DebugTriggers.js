@@ -1,4 +1,4 @@
-function checkSystemWorks() {
+function debugCheckSystemWorks() {
     try {
         Displayer.debug("System works perfectly");
     } catch (e) {
@@ -6,29 +6,7 @@ function checkSystemWorks() {
     }
 }
 
-function debugUserProperties() {
-    try {
-        PropertiesUserService.display();
-    } catch (e) {
-        Displayer.debug(e.message + e.stack);
-    }
-}
 
-function debugDocumentProperties() {
-    try {
-        PropertiesDocumentService.display();
-    } catch (e) {
-        Displayer.debug(e.message + e.stack);
-    }
-}
-
-function debugScriptProperties() {
-    try {
-        PropertiesScriptService.display();
-    } catch (e) {
-        Displayer.debug(e.message + e.stack);
-    }
-}
 
 function debugTriggers() {
     try {

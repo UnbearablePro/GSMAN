@@ -1,10 +1,15 @@
 class SystemController {
 
     static disabledAdminMode() {
-        try { System.disabledAdminMode(); } catch (e) { ErrorHandler.handleError(e) };
+        System.disabledAdminMode();
     };
 
     static enableAdminMode() {
-        try { System.requestAdminMode(); } catch (e) { ErrorHandler.handleError(e) };
+        System.requestAdminMode();
+    }
+    
+    static enableTestMenu() {
+        Permisioner.requireAdminPermsission();
+        System.enableTestMenu();
     }
 }

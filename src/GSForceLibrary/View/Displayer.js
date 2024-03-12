@@ -47,9 +47,9 @@ class Displayer extends AbstractHtmlDisplayer {
    * @param {number} [timeShown=8] - The parameter "timeShown" represents the duration in seconds for which the
    * system message will be displayed as a toast notification.
    */
-  static system(message = "no message", timeShown = 8) {
-    Logger.log(`⚙️ System ${message}.`);
-    SpreadSheetService.getActiveSpreadSheet().toast(message, "⚙️ System", timeShown);
+  static system(message = "no message", timeShown = 8 , icon = "⚙️") {
+    Logger.log(`${icon} System ${message}.`);
+    SpreadSheetService.getActiveSpreadSheet().toast(message, `${icon} System`, timeShown);
   }
 
   /**

@@ -20,7 +20,7 @@ class Owner extends PropertiesUserService {
     }
 
     static setDefaultValues() {
-
+        this.of(["Default-FirstName", "Default-LastName", "Default-Email", "0744 444 444", "default@gmail.com", "01/01/2000","Default-LeaderName", "Defaul-leaderId"]);
     }
 
     static of(ownerData) {

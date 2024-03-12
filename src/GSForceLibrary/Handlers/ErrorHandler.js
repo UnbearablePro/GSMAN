@@ -33,7 +33,7 @@ class ErrorHandler {
   }
 
   static askIfWannaContactDev(message) {
-    return SpreadsheetApp.getUi().alert("❌ ERROR", message + this.contactErrorMessage, ui.ButtonSet.YES_NO) == ui.Button.YES;
+    return SpreadsheetApp.getUi().alert("❌ ERROR", message + this.contactErrorMessage, SpreadsheetApp.getUi().ButtonSet.YES_NO) == SpreadsheetApp.getUi().Button.YES;
   }
 
   static sendMessageToDeveloper(error, userMessage) {

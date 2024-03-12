@@ -7,6 +7,14 @@ class Lug {
     static info(message) {
       console.log(`📄 : ${message}`);
     }
+
+    static build(message){
+      console.log(`🔨 : ${message}`);
+    }
+
+    static debug(message){
+      console.log(`🐞 : ${message}`);
+    }
   
     static warning(message) {
       console.log(`⚠️ : ${message}`);

@@ -10,7 +10,7 @@ class EditHandler {
     }
 
     static getUserEventFrom(event) {
-        return new UserEvent(event, SpreadSheetService.getCurrentSheetName());
+        return new UserEvent(event);
     }
 
     static chooseSheetHandler(userEvent) {

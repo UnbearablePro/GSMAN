@@ -91,8 +91,6 @@ const SAINT_PATH = ['src/SaintTestLibrary/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH
 const GSFORCE_PATH = ['src/GSForceLibrary/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
 const OVBRAIN_PATH = ['src/OVBRAIN/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
 
-
-
 const PLAYGROUND_LAUNCHER_PATH = [`src/PlayGround.js`]
 const SAINT_LAUNCHER_PATH = [`src/SaintTest.js`];
 const APPSSCRIPT_PATH = [`src/appsscript.json`];
@@ -132,12 +130,13 @@ const ovbrainPaths = {
 }
 
 const buildDevelopment = {
-    externalLibraries: [EXTERNALLIBRARY_PATH, `ExternalLibrary.js`, ACTIONS.LIBRARY],
-    saintTestLibrary: [SAINT_PATH, `SaintTestLibrary.js`, ACTIONS.LIBRARY],
-    gsForceLibrary: [GSFORCE_PATH, `GSForce.js`, ACTIONS.LIBRARY],
-    ovbrain: [OVBRAIN_PATH, `OVBRAIN.js`, ACTIONS.LIBRARY],
+    externalLibraries: [EXTERNALLIBRARY_PATH, `ExternalLibrary.js`, ACTIONS.CONCAT],
+    gsForceLibrary: [GSFORCE_PATH, `GSForce.js`, ACTIONS.CONCAT],
+    ovbrain: [OVBRAIN_PATH, `OVBRAIN.js`, ACTIONS.CONCAT],
+    saintTestLibrary: [SAINT_PATH, `SaintTestLibrary.js`, ACTIONS.CONCAT],
     frontEnd: [FE_PATH, `FrontEnd.html`, ACTIONS.FE],
     configuration: [CONFIG_PATH, "Configuration.js", ACTIONS.CONFIG],
+    tests: [TEST_PATH, "Tests.js", ACTIONS.CONFIG],
     appscriptJson: [APPSSCRIPT_PATH, `appsscript.json`, ACTIONS.SIMPLE],
     playground: [PLAYGROUND_LAUNCHER_PATH, `PlayGround.js`, ACTIONS.LAUNCHER],
     saintTest: [SAINT_LAUNCHER_PATH, `SaintTest.js`, ACTIONS.LAUNCHER]
@@ -234,8 +233,8 @@ async function buildOf(buildConfig) {
         }
         switch (action) {
 
-            case ACTIONS.CONCAT: buildConcat(path, newName, count.toString());
-            case ACTIONS.UGLIFY: buildUglify(path, newName, count.toString());
+            case ACTIONS.CONCAT: buildConcat(path, newName, count.toString()); break;
+            case ACTIONS.UGLIFY: buildUglify(path, newName, count.toString()); break;
             case ACTIONS.MULTIPLE: buildSimple(path, newName, count.toString()); break;
             case ACTIONS.SIMPLE: buildSimple(path, newName); break;
             case ACTIONS.LAUNCHER: buildSimple(path, newName, '9'); break;
@@ -356,7 +355,7 @@ async function buildConfiguration(path, newName = 'NoName', count = '') {
             // Get the second folder name
             const secondFolderName = pathSegments.length > 1 ? pathSegments[0] : '';
             // Prepend a comment line with the second folder name
-            return `/* =========================== ${secondFolderName} Configuration =========================== */\n${contents}`;
+            return `/* =========================== ${secondFolderName} ${newName} =========================== */\n${contents}`;
         }))
         .pipe(concat(count + newName))
         .pipe(gulp.dest(paths.dest))

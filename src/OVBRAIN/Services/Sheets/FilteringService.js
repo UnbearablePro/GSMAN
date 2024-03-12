@@ -1,7 +1,7 @@
 class FilteringService {
 
     static openFilteringContacteByStatus() {
-        const [httpName, title, width, height] = HtmlFiles.CONTACTE_FILTERS;
+        const [httpName, title, width, height] = HtmlFiles.CONTACTE_STATUS_FILTERS;
 
         Displayer.openHtmlPopup(httpName, title, width, height);
     }

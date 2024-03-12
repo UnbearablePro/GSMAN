@@ -9,6 +9,11 @@ class AbstractPropertiesService  {
 
     static setByList(newPropertiesList) {
         this.initialize();
+        const result = Object.keys(newPropertiesList).reduce((acc, key, index) => {
+            acc[key] = Object.values(newPropertiesList)[index];
+            return acc;
+        }, {});
+        //FIXME: Problem
         this.service.setProperties(newPropertiesList);
     };
 
@@ -64,16 +69,14 @@ class AbstractPropertiesService  {
     static display() {
         this.initialize();
         let message = "";
-        var documentProperties = PropertiesService.getDocumentProperties();
-        var propAllFields = documentProperties.getProperties();
         
-        var propKeys = documentProperties.getKeys();
-        propKeys.forEach(propKeys => {
-            let propValue = propAllFields[propKeys];
-            Logger.log(propKeys + " " + propValue);
-            message = message + propKeys + " " + propValue + "\n";
+        var properties = this.service.getProperties();
+        var keys = this.service.getKeys();
+
+        keys.forEach(key => {
+            message = message + key + " : " + properties[key] + "\n";
         });
 
-        //TODO: Make an alert here;
+        Displayer.debug(message);
     };
 }

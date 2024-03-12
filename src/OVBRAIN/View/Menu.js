@@ -1,14 +1,28 @@
-class Menu extends MenuService{
+class MenuOVB extends Menu {
 
   static createOVBMenu() {
-    this.createMenuFromTemplate(MenusOVBTemplate.OVB);
+    let ui = SpreadsheetApp.getUi();
+
+    let ovbMenu = ui.createMenu('OVB');
+    let systemMenu = ui.createMenu('System');
+
+    systemMenu
+    .addItem('Install Admin', 'installAdminTrigger')
+    .addItem('Install Tell Party', 'installTellPartyTrigger');
+
+    ovbMenu
+    .addSubMenu(systemMenu)
+    .addItem('Admin on', 'enableAdminModeTrigger')
+
+    ovbMenu.addToUi();
+
     Lug.progress("OVB Menu created successfully");
   }
 
-  static createAdminMenu() {
-    this.createMenuFromTemplate(MenusOVBTemplate.ADMIN);
-    Lug.progress("ADMIN Menu created successfully");
+  static deleteAll() {
+    Admin.disableAdminMode_();
+    this.delete("OVB");
   }
-  
+
 }
 

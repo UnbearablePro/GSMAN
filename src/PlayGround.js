@@ -1,4 +1,5 @@
 function playGround() {
+  SpreadsheetApp.getUi();
   return true;
 }
 

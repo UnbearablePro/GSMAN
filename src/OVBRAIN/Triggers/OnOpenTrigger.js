@@ -1,7 +1,8 @@
-function onOpen(){
-  if (!Owner.exist()) {
-    Installer.askForInstall();
+function onOpen() {
+  try {
+    OnOpenHandler.handleOpen();
+  } catch (e) {
+    ErrorHandler.handleError(e);
   }
-    Menu.createOVBMenu();
-  }
-  
+  Displayer.system("Bine ai revenit", null, "😄");
+}

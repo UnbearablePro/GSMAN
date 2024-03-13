@@ -1,11 +1,11 @@
 function openFilteringContacteByStatusTrigger() {
-    ContacteSheetController.openFilteringContacteByStatus();
+    ContacteSheetHandler.openFilteringContacteByStatus();
 }
 
-function filterContacteByStatusTrigger(status) {
-    ContacteSheetController.filterContacteByStatusTrigger();
+function filterContacteByStatusTrigger(filterName) {
+    ContacteSheetHandler.setFilterContacteByStatus(filterName);
 }
 
-function filterClearContacte() {
-    
+function filterClearContacteTrigger() {
+    ContacteSheetHandler.filterClear();
 }

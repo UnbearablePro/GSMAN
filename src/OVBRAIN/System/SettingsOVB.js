@@ -22,4 +22,12 @@ class SettingsOVB extends Settings {
     return DataUtils.mapArrayIntoKeyValueObject(values);
   }
 
+  static isSentMailAutomaticalyToDeveloperWhenErrorOccursOn() {
+    return this.getFlag("isSentMailAutomaticalyToDeveloperWhenErrorOccursOn", false);
+  }
+
+  static isActiveErrorHandlingOn() {
+    return this.getFlag("isActiveErrorHandlingOn", false);
+  }
+
 }

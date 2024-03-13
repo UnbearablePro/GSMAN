@@ -1,4 +1,5 @@
 const CentralizareHeaders= {
+    STARTDATE: 2,
     PREZENTA : 3,
     NRCONTACTE : 4,
     NRCONTACTESHORTLIST: 5,

@@ -87,6 +87,23 @@ class Displayer extends AbstractHtmlDisplayer {
     return undefined;
   }
 
+  static inputFieldMandatory(title = "", message = "no message") {
+    this.initialize();
+    let result = "";
+    let response = ui.prompt(title, message, ui.ButtonSet.YES_NO);
+    while(result == "" || result == undefined || result == null || result == " " || response.getSelectedButton() == ui.Button.NO) {
+      response = ui.prompt(title + " INPUT IS MANDATORY ✋🏻", message, ui.ButtonSet.YES_NO);
+    }
+    
+    if (response.getSelectedButton() == ui.Button.YES) {
+      Logger.log(`Input field initialize with title""${title}" message""${message}" response:"${response.getResponseText()}".`);
+
+      return response.getResponseText();
+    }
+
+    return undefined;
+  }
+
   /**
    * The function "ask" displays a message to the user and returns true if the user clicks "Yes"
    * and false if the user clicks "No".
@@ -138,6 +155,8 @@ class Displayer extends AbstractHtmlDisplayer {
     Logger.log(`👍 Complete: ${message}. Shown successfully`);
   }
 }
+
+let ui = undefined;
 
 // ❌: ERROR
 // ⚠️: Warning

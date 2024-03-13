@@ -4,5 +4,3 @@ const HtmlFiles = {
     ADDCONTACTS: ["AddContacts.html","Adauga Contacte", 700, 700],
     PROGRAMMEETING: ["ProgramMeeting.html","Programeaza intalnire", 700, 700]
 }
-
-HtmlService.createHtmlOutput()

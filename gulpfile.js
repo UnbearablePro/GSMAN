@@ -76,6 +76,8 @@ const ACTIONS = {
 }
 
 
+
+
 const TEST_PATH = 'src/**/Tests/*.js';
 const CONFIG_PATH = 'src/**/Configuration/*.js'
 const NO_TEST_PATH = '!src/**/Tests/*.js';
@@ -83,12 +85,16 @@ const NO_CONFIG_PATH = '!src/**/Configuration/*.js';
 const NO_SAINT_PATH = '!src/SaintTestLibrary/**/*.js';
 const FE_PATH = 'src/**/*.html';
 
-const ALLJS_PATH = ['src/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
+// const ALLJS_PATH = ['build/**/*.js', `!build/9SaintTest.js`, `!build/9PlayGround.js`, `8Configuration.js`, `8Tests`];
 const ALLJS_PRODUCTION_PATH = ['src/!(SaintTestLibrary)/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
 
 const EXTERNALLIBRARY_PATH = ['src/ExternalLibrary/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
-const SAINT_PATH = ['src/SaintTestLibrary/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
-const GSFORCE_PATH = ['src/GSForceLibrary/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
+const GSFORCE_API_PATH = ['src/GSForceAPI/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
+const SAINT_PATH = ['src/GSForceTest/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
+const GSFORCE_DEBUG_PATH = ['src/GSForceDebug/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
+const GSFORCE_SECURITY_PATH = ['src/GSForceSecurity/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
+const GSFORCE_UTILS_PATH = ['src/GSForceUtils/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
+const GSFORCE_LIBRARY_PATH = ['src/GSForceLibrary/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
 const OVBRAIN_PATH = ['src/OVBRAIN/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
 
 const PLAYGROUND_LAUNCHER_PATH = [`src/PlayGround.js`]
@@ -130,10 +136,16 @@ const ovbrainPaths = {
 }
 
 const buildDevelopment = {
+
     externalLibraries: [EXTERNALLIBRARY_PATH, `ExternalLibrary.js`, ACTIONS.CONCAT],
-    gsForceLibrary: [GSFORCE_PATH, `GSForce.js`, ACTIONS.CONCAT],
+    gsForceDebug: [GSFORCE_DEBUG_PATH, `GSForceDebug.js`, ACTIONS.CONCAT],
+    gsForceUtils: [GSFORCE_UTILS_PATH, `GSForceUtils.js`, ACTIONS.CONCAT],
+    gsForceSecurity: [GSFORCE_SECURITY_PATH, `GSForceSecurity.js`, ACTIONS.CONCAT],
+    gsForceLibrary: [GSFORCE_LIBRARY_PATH, `GSForce.js`, ACTIONS.CONCAT],
+    gsForceApi: [GSFORCE_API_PATH, `GSForceApi.js`, ACTIONS.CONCAT],
     ovbrain: [OVBRAIN_PATH, `OVBRAIN.js`, ACTIONS.CONCAT],
     saintTestLibrary: [SAINT_PATH, `SaintTestLibrary.js`, ACTIONS.CONCAT],
+    // all: [ALLJS_PATH, 'OVBRAIN.js', ACTIONS.CONCAT],
     frontEnd: [FE_PATH, `FrontEnd.html`, ACTIONS.FE],
     configuration: [CONFIG_PATH, "Configuration.js", ACTIONS.CONFIG],
     tests: [TEST_PATH, "Tests.js", ACTIONS.CONFIG],
@@ -143,7 +155,7 @@ const buildDevelopment = {
 }
 
 const buildProductionBuildPath = {
-    application : [ALLJS_PRODUCTION_PATH, `App.js`, ACTIONS.LIBRARY],
+    application: [ALLJS_PRODUCTION_PATH, `App.js`, ACTIONS.LIBRARY],
     configuration: [[CONFIG_PATH, NO_SAINT_PATH], "Configuration.js", ACTIONS.CONFIG],
     playground: [PLAYGROUND_LAUNCHER_PATH, `PlayGround.js`, ACTIONS.LAUNCHER],
     appscriptJson: [APPSSCRIPT_PATH, `appsscript.json`, ACTIONS.SIMPLE]
@@ -208,7 +220,7 @@ async function build() {
     // @ts-ignore
     if (argv.external) { flagIfToBuildAll = false; buildOf(externalLibraryBuildConfig); };
     // @ts-ignore
-    if (argv.saint) { flagIfToBuildAll = false; buildOf(saintTestLibraryBuildConfig); return};
+    if (argv.saint) { flagIfToBuildAll = false; buildOf(saintTestLibraryBuildConfig); return };
     // @ts-ignore
     if (argv.ovbrain) { flagIfToBuildAll = false; buildOf(ovbrainPaths); };
     // @ts-ignore
@@ -239,7 +251,7 @@ async function buildOf(buildConfig) {
             case ACTIONS.SIMPLE: buildSimple(path, newName); break;
             case ACTIONS.LAUNCHER: buildSimple(path, newName, '9'); break;
             case ACTIONS.LIBRARY: buildUglyCat(path, newName, count.toString()); break;
-            case ACTIONS.CONFIG: buildConfiguration(path, newName); break;
+            case ACTIONS.CONFIG: buildConfiguration(path, newName, '8'); break;
             case ACTIONS.FE: buildSimple(path, newName); break;
             default:
                 gutil.log(yellow(`No action provided for ${newName} building with path: `) + `${path}`);
@@ -312,7 +324,7 @@ async function buildSimple(path, newName = 'NoName', count = '') {
             nrOfFiles += 1;
         })
         .pipe(rename({ dirname: '' }))
-        .pipe(rename(function(path) {
+        .pipe(rename(function (path) {
             path.basename = count + path.basename;
         }))
         .pipe(gulp.dest(paths.dest))

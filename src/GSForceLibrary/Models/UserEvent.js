@@ -10,8 +10,11 @@ class UserEvent {
         this.sheetName = this.range.getSheet().getName();
     }
 
-    static initialize(event) {
+    static of(event) {
         return this.constructor(event);
     }
 
+    restore() {
+        this.range.setValue(this.oldValue);
+    }
 }

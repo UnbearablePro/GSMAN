@@ -1,7 +1,7 @@
 function openAddContactsTrigger() {
-    ContacteSheetController.openAddContacts();
+    ContacteSheetHandler.openAddContacts();
 }
 
 function addContactsTrigger(recommandar, contacts) {
-    ContacteSheetController.addContacts(recommandar, contacts);
+    ContacteSheetHandler.addContacts(recommandar, contacts);
 }

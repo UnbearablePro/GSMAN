@@ -1,3 +1,3 @@
 function updateSettingsTrigger() {
-    SettingsSheetController.updateSettings();
+    SettingsSheetHandler.updateSettings();
 }

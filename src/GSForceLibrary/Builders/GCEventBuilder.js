@@ -1,26 +1,34 @@
 class GCEventBuilder {
 
-    static createCalendarEventFrom(title, start, end, 
-        //TODO: Implements default values
+    static createCalendarEventFrom(
+        defaultGCEvent = DefaultGCEvent,
+        title, 
+        start, 
+        duration,
         description, 
-        reminders = {},
+        reminders,
         color, 
         location,
+        guests,
         guestsCanSeeGuests, 
-        // anyoneCanAddSelf, 
         guestsCanModify, 
-        anyoneCanAddSelf) {
+        anyoneCanAddSelf, 
+        sendInvites) {
 
-        // Extract options or set default values
-        // location = options && options.location ? options.location : "Default Location";
-        // description = options && options.description ? options.description : "No description";
-        // guests = options && options.guests ? options.guests : [];
-        // sendInvites = options && options.sendInvites !== undefined ? options.sendInvites : true;
-        // color = options && options.color ? options.color : CalendarApp.EventColor.DEFAULT;
-        // reminders = options && options.reminders ? options.reminders : {};
-        // guestsCanSeeGuests = options && options.guestsCanSeeGuests !== undefined ? options.guestsCanSeeGuests : true;
-        // anyoneCanAddSelf = options && options.anyoneCanAddSelf !== undefined ? options.anyoneCanAddSelf : false;
-        // guestsCanModify = options && options.guestsCanModify !== undefined ? options.guestsCanModify : true;
+        DataUtils.requireNotNull(title);
+        DataUtils.requireNotNull(start);
+        duration = DataUtils.getIfNotEmpty(duration, defaultGCEvent.duration);
+        description = DataUtils.getIfNotEmpty(description, defaultGCEvent.description);
+        reminders = DataUtils.getIfNotEmpty(reminders, defaultGCEvent.reminders);
+        color = DataUtils.getIfNotEmpty(color, defaultGCEvent.color);
+        location = DataUtils.getIfNotEmpty(location, defaultGCEvent.location);
+        guests = DataUtils.getIfNotEmpty(guests, defaultGCEvent.guests);
+        guestsCanSeeGuests = DataUtils.getIfNotEmpty(guestsCanSeeGuests, defaultGCEvent.guestsCanSeeGuests);
+        sendInvites = DataUtils.getIfNotEmpty(sendInvites, defaultGCEvent.sendInvites);
+        anyoneCanAddSelf = DataUtils.getIfNotEmpty(anyoneCanAddSelf, defaultGCEvent.anyoneCanAddSelf);
+        guestsCanModify = DataUtils.getIfNotEmpty(guestsCanModify, defaultGCEvent.guestsCanModify);
+        
+        const end = DateTime.getDateAfterMinutes(start, duration);
 
         return {
             title: title,
@@ -28,8 +36,8 @@ class GCEventBuilder {
             end: end,
             location: location,
             description: description,
-            // guests: guests,
-            // sendInvites: sendInvites,
+            guests: guests,
+            sendInvites: sendInvites,
             color: color,
             reminders: reminders,
             guestsCanSeeGuests: guestsCanSeeGuests

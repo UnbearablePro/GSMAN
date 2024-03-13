@@ -80,3 +80,6 @@ class AbstractPropertiesService  {
         Displayer.debug(message);
     };
 }
+
+
+AbstractPropertiesService.service = undefined;

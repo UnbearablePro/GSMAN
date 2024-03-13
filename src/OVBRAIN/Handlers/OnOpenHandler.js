@@ -1,6 +1,6 @@
 class OnOpenHandler {
 
-    static handleOpen() {
+    static handleEvent() {
         // if (!Owner.exist()) {
         //     Installer.askForInstall();
         // } else {

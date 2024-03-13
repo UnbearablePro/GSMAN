@@ -131,5 +131,17 @@ class AbstractSheetService {
     this.sheet.deleteRow(row);
   }
 
+  static setColumnFilterCriteria(columnPosition, filterCriteria) {
+    this.initialize();
+    this.sheet.setColumnFilterCriteria(columnPosition, filterCriteria);
+  }
+
+  static removeFilter() {
+    this.initialize();
+    this.sheet.getFilter().remove();
+  }
+
 }
+
+AbstractSheetService.sheet = undefined;
 

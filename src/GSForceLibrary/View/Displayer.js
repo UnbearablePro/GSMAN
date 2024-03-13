@@ -133,8 +133,8 @@ class Displayer extends AbstractHtmlDisplayer {
    * @param {number} [timeShown=5] - The timeShown parameter is the duration in seconds for which the toast
    * message will be displayed on the screen.
    */
-  static complete(message = "no message", timeShown = 5) {
-    SpreadSheetService.getActiveSpreadSheet().toast(message, "👍", timeShown);
+  static complete(message = "no message", title = "", timeShown = 5, ) {
+    SpreadSheetService.getActiveSpreadSheet().toast(message, "👍 " + title, timeShown);
     Logger.log(`👍 Complete: ${message}. Shown successfully`);
   }
 }

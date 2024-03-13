@@ -22,6 +22,10 @@ class Contact {
 
     }
 
+    static of(numePrenume, phoneNumber, recomandator, details) {
+        return new Contact(numePrenume, phoneNumber, recomandator, ContacteStatus.NESUNAT, null , details, null, null, DateTime.toDay().toString());
+    } 
+
     isLastInteractionToday() {
         if (DataUtils.isEmpty(this.ultimaInteractiune)) {
             return false;

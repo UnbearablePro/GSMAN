@@ -159,33 +159,16 @@
           return;
         } else {
           alertEmptyFields.style.display = "none";
-          // google.script.run.addContacts_catchResponse(
-          //   recommender,
-          //   listContacte
-          // );
-          // google.script.host.close();
-          catchResponse(recommender, listRecommends);
+          sendResponse(recommender, listRecommends);
         }
       }
       function closeTheWindow() {
         google.script.host.close();
       }
-      function catchResponse(recommender, listRecommends) {
-        let list = listRecommends.split("\n");
-        list.forEach((element, index) => {
-          list[index] = getTextWithoutBeginningCounts(element);
-        });
-
-        for (let i = 0; i < list.length; i++) {
-          list[i] = list[i].split(/–|_|-|\/|\|/);
-        }
-        console.log(list);
+      function sendResponse(recommender, listRecommends) {
+        google.script.run.addContactsTrigger(recommender, listRecommends);
       }
-      function getTextWithoutBeginningCounts(line) {
-        let indexOfFirstLetter = line.search(/[a-zA-Z]/);
-        return line.slice(indexOfFirstLetter, line.length);
-      }
-      function splitLineUsingSeparator(line) {}
+      
     </script>
   </body>
 </html>

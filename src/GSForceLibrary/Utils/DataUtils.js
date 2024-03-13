@@ -20,6 +20,19 @@ class DataUtils {
     };
   }
 
+  static getIfValidPositiveNumber(data, defaultValue) {
+    if (data == null || data === undefined || data == "" || data == " ") {
+      return defaultValue;
+    }
+    if (isNaN(data)) {
+      return defaultValue;
+    }
+    if (data < 0) {
+      return defaultValue;
+    }
+    return data;
+  }
+
   /**
    * The function checks if a given data is not empty.
    * @param {*} data - The parameter "data" is a variable that represents the data that we want to check if

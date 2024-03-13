@@ -26,8 +26,13 @@ class Installer {
     this.installOwner();
     this.installAdmin();
     this.installTellPartyProperties();
+    this.installCentralizare();
     this.installSettings();
     this.startSystems();
+  }
+
+  static installCentralizare() {
+    TriggerOVBService.startCentralizareCycle();
   }
 
   static installOwner() {

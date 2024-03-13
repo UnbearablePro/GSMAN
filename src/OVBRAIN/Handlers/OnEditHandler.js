@@ -3,6 +3,7 @@ class EditHandler {
     static handleEvent(event) {
         try {
             let userEvent = this.getUserEventFrom(event);
+            Lug.progress("User event builded successfully");
             this.chooseSheetHandler(userEvent);
         } catch(e) {
             ErrorHandler.handleError(e);

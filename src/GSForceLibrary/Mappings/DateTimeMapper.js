@@ -51,7 +51,7 @@ class DateTimeMapper {
     }
 
     static getJSDateFrom(date) {
-      //TODO: Implement this
+      
     }
 
 }

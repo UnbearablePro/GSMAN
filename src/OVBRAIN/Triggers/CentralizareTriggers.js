@@ -1,0 +1,3 @@
+function centralizareCycleTrigger() {
+    CentralizareService.takeWeekSnapshot();
+}

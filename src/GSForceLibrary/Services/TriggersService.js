@@ -39,11 +39,11 @@ class TriggerService {
   static createRecurringWeeklyTimeTrigger(functionName, dayOfWeek, hour = 12, minute = 0) {
     ScriptApp.newTrigger(functionName)
       .timeBased()
-      .onWeekDay(dayOfWeek) // se if js Date object is necessary
+      .onWeekDay(dayOfWeek)
       .atHour(hour)
       .nearMinute(minute)
       .create();
-    Logger.log(`Weekly time trigger created successfully with functionName: ${functionName}, dayOfWeek:${dayOfWeek}, hour:${hour}, minute:${minute}.`);
+    Lug.progress(`Weekly time trigger created successfully with functionName: ${functionName}, dayOfWeek:${dayOfWeek}, hour:${hour}, minute:${minute}`);
   }
 
   /**

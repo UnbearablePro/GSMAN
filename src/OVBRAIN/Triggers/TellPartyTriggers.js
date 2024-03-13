@@ -1,0 +1,3 @@
+function startTellPartyTrigger() {
+    TellPartyService.startTellParty();
+}

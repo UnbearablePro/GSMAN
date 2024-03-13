@@ -4,5 +4,5 @@ class GCEventService  {
         GCEventCreator.createCalendarEvent(calendar, event);
     }
     
-
+    
 }

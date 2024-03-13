@@ -48,11 +48,18 @@ class AbstractSheetService {
 
   // FIXME: this
   static getDataFromColumns(startColumn, endColumn) {
+    this.initialize();
     return this.sheet.getRange(startColumn + ":" + endColumn).getValues();
   }
 
   static getRowData(row) {
+    this.initialize();
     return this.sheet.getRange(parseInt(row), 1, 1, this.sheet.getLastColumn()).getValues();
+  }
+
+  static getColData(col) {
+    this.initialize();
+    return this.sheet.getRange(1, parseInt(col), this.sheet.getLastRow(), 1).getValues();
   }
 
   static getSheet() {
@@ -65,6 +72,7 @@ class AbstractSheetService {
   }
 
   static isCursorInDataRange(startRow = 1, endRow = this.getLastRowIndex(), startCol = 1, endCol = this.getLastColumnIndex()) {
+    this.initialize();
     let currentRowIndex = this.getCurrentRowIndex();
     let currentColumnIndex = this.getCurrentColumnIndex();
 

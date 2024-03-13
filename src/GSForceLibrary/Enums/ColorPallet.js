@@ -12,5 +12,6 @@ const ColorPallet = {
     GREY: "#8e918f",
     PURPLE: "#800080",
     LIGHTPURPLE: "#AA98A9",
-    LIGHTBLUE: "#ADD8E6"
+    LIGHTBLUE: "#ADD8E6",
+    RED: "#A52A2A"
 };

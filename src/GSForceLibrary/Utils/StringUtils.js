@@ -20,4 +20,17 @@ class StringUtils {
         } else {
             throw new Error(`The two string provided for substract are not convertible to number format. String: ${num1} / ${num2}`)
         }
-}   }
+    }
+
+    static splitLines(inputString) {
+        const splitedLines = inputString.split('\n');
+        const result = splitedLines.filter(function(str) {
+            return str.trim() !== "";
+        })
+        return result;
+    }
+
+    static removeLeadingDigits(inputString) {
+        return inputString.replace(/^\d+\.\s*/, '');
+    }
+}

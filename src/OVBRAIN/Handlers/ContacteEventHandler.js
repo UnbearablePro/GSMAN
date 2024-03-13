@@ -1,6 +1,7 @@
 class ContacteEventHandler {
 
   static handleEvent(event) {
+    Lug.build("Looking for type of event in contacte sheet");
     if (DataUtils.isEmpty(event)) {
       throw new Error("Cannot handle empty event from Contacte");
     } else {
@@ -12,8 +13,9 @@ class ContacteEventHandler {
    * @param {UserEvent} event 
   */
   static checkForStatusEvent(event) {
-    if (event.row == ContacteIndex.STARTING_ROW && event.col == ContacteHeaders.STATUS) {
-      ContacteStatusController.handleStatusEvent(event);
+    if (event.row >= ContacteIndex.STARTING_ROW && event.col == ContacteHeaders.STATUS) {
+      Lug.progress("Status event confirmed");
+      ContacteEventStatusHandler.handleStatusEvent(event);
     }
   }
 

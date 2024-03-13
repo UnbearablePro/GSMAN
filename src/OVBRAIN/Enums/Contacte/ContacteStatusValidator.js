@@ -63,9 +63,9 @@ const ContateStatusValidationSupplier = statusValue => {
       case POTENTIALRECOMANDATOR: return [POTENTIALCLIENT, POTENTIALCOLABORATOR, ANALIZA, CONSULTANTA, CONTRACT, SERVICE, NUMAIRASPUNDE, REFUZOFERTA, ABANDONEZ, RESETEZSTATUSUL];
 
       case ABANDONEZ: return [ABANDONEZ, RESETEZSTATUSUL];
-      case RESETEZSTATUSUL: return resetStatus();
+      // case RESETEZSTATUSUL: return resetStatus();
 
       
-      default: return SpreadshDeetApp.newDataValidation().requireValueInList([value, RESETEZSTATUSUL]).setAllowInvalid(false).build();
+      // default: return SpreadshDeetApp.newDataValidation().requireValueInList([value, RESETEZSTATUSUL]).setAllowInvalid(false).build();
     }
   }

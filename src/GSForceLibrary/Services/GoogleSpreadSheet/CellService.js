@@ -91,7 +91,7 @@ static clearFormat(range) {
     range.clearFormat();
 }
 
-static changeColors(range, fontColor, backgroundColor) {
+static setDataValidationBackground(range, fontColor, backgroundColor) {
     range.setFontColor(fontColor);
     range.setBackground(backgroundColor)
   }

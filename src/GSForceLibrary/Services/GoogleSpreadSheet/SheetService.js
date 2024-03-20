@@ -72,7 +72,8 @@ class AbstractSheetService {
   }
 
   static isActive() {
-    return SpreadSheetService.isSheetOpened(this.name);
+    this.initialize()
+    return AbstractSpreadSheetService.isSheetOpened(this.name);
   }
 
   static isCursorInDataRange(startRow = 1, endRow = this.getLastRowIndex(), startCol = 1, endCol = this.getLastColumnIndex()) {
@@ -122,7 +123,7 @@ class AbstractSheetService {
   }
 
   static setDataValidation(range, validationList) {
-    range.setDataValidation(SpreadSheetService.createValidation(validationList));
+    range.setDataValidation(AbstractSpreadSheetService.createValidation(validationList));
     Lug.progress(`Successfully setting data validation with validation list: ${validationList}`);
   }
   

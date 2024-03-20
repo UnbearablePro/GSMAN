@@ -84,6 +84,7 @@ const NO_TEST_PATH = '!src/**/Tests/*.js';
 const NO_CONFIG_PATH = '!src/**/Configuration/*.js';
 const NO_SAINT_PATH = '!src/SaintTestLibrary/**/*.js';
 const FE_PATH = 'src/**/*.html';
+const SATELITE_PATH = 'src/GSForceSatelite/**/*.js';
 
 // const ALLJS_PATH = ['build/**/*.js', `!build/9SaintTest.js`, `!build/9PlayGround.js`, `8Configuration.js`, `8Tests`];
 const ALLJS_PRODUCTION_PATH = ['src/!(SaintTestLibrary)/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
@@ -133,6 +134,13 @@ const ovbrainPaths = {
     gsForceLibrary: [["src/GSForceLibrary/**/*.js", '!src/**/Configuration/*.js'], `GSForce.js`, ACTIONS.CONCAT],
     externalLibraryLibrary: [['src/ExternalLibrary/*.js', '!src/**/Configuration/*.js'], `ExternalLibrary.js`, ACTIONS.CONCAT],
     ovbrain: [["src/OVBRAIN/**/*.js", '!src/**/Configuration/*.js'], `OVBRAIN.js`, ACTIONS.SIMPLE]
+}
+
+const buildSatelite = {
+    gsForceApi: [GSFORCE_API_PATH, 'GSForceAPI.js', ACTIONS.CONCAT],
+    satelite: [SATELITE_PATH, 'SATELITE.js', ACTIONS.CONCAT],
+    playground: [PLAYGROUND_LAUNCHER_PATH, `PlayGround.js`, ACTIONS.LAUNCHER],
+    appscriptJson: [APPSSCRIPT_PATH, `appsscript.json`, ACTIONS.SIMPLE],
 }
 
 const buildDevelopment = {

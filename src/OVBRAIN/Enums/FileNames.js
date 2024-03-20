@@ -1,0 +1,3 @@
+const FileNames = {
+    FOLDER_ACTIVITATE: "FOLDER_ACTIVITATE_ID",
+}

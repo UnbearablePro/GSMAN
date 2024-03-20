@@ -5,7 +5,7 @@ const ContacteStatusFormat = statusValue => {
     const INTALNIRE = [ColorPallet.WHITE, ColorPallet.BLUE];
     const CLIENT = [ColorPallet.WHITE, ColorPallet.LIGHTPURPLE];
     const LOST = [ColorPallet.WHITE, ColorPallet.RED];
-    const OPORTUN = [ColorPallet.WHITE, ColorPallet.PURPLE]
+    const OPORTUN = [ColorPallet.WHITE, ColorPallet.PURPLE];
 
     switch (statusValue) {
         case ContacteStatus.NESUNAT: return START;
@@ -42,6 +42,14 @@ const ContacteStatusFormat = statusValue => {
         case ContacteStatus.POTENTIALRECOMANDATOR: return OPORTUN;
 
         case ContacteStatus.ABANDONEZ: return DEAD;
+
+        case ContacteStatus.REVINPESTEDINOU: return INCERT;
+        case ContacteStatus.REVINEELEADINNOU: return INCERT;
+
+        case ContacteStatus.REPROGRAMEAZAANALIZA: return INTALNIRE;
+        case ContacteStatus.REPROGRAMEAZACONSULTANTA: return INTALNIRE;
+        case ContacteStatus.REPROGRAMEAZACONTRACT: return INTALNIRE;
+        case ContacteStatus.REPROGRAMEAZASERVICE: return INTALNIRE;
     }
 }
     

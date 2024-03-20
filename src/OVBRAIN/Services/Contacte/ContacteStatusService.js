@@ -58,23 +58,23 @@ class ContacteStatusService {
   }
 
   static revineElEa(event) {
-  //   let contacte = Contact.getContactFrom(event.row);
-  //   let isChangedThisWeek = contact.isLastInteractionThisWeek();
+    //   let contacte = Contact.getContactFrom(event.row);
+    //   let isChangedThisWeek = contact.isLastInteractionThisWeek();
 
-  //   if (isChangedThisWeek == false) {
-  //     TellPartyService.incTelefoaneSunate();
-  // TellPartyService.incTelefoaneRaspunse();
-  //   } else {
-  //     TellPartyService.incTelefoaneRaspunse();
-  //   }
-  //   ContacteSheet.setStatusDataValidation(event.range, REVINEELEA);
-  //   CellService.changeColors(event.range, color.WHITE, color.LIGHTGREEN);
-  //   ContacteSheet.updateInteractionDate(event.row);
+    //   if (isChangedThisWeek == false) {
+    //     TellPartyService.incTelefoaneSunate();
+    // TellPartyService.incTelefoaneRaspunse();
+    //   } else {
+    //     TellPartyService.incTelefoaneRaspunse();
+    //   }
+    //   ContacteSheet.setStatusDataValidation(event.range, REVINEELEA);
+    //   CellService.changeColors(event.range, color.WHITE, color.LIGHTGREEN);
+    //   ContacteSheet.updateInteractionDate(event.row);
 
-  //   let response = Displayer.question("Doriti sa setati un reminder?");
-  //   if (response == true) {
-  //     // TODO: Set Reminder
-  //   }
+    //   let response = Displayer.question("Doriti sa setati un reminder?");
+    //   if (response == true) {
+    //     // TODO: Set Reminder
+    //   }
   }
 
   static refuzTelefon(event) {
@@ -238,7 +238,7 @@ class ContacteStatusService {
     ContacteSheet.updateInteractionDate(event.row);
   }
 
-  static reminderResponse(c, status, lastValue, row)  {
+  static reminderResponse(c, status, lastValue, row) {
     let isChangedThisWeek = c.isLastInteractionThisWeek();
 
     if (isChangedThisWeek == false) {
@@ -249,6 +249,30 @@ class ContacteStatusService {
     const range = ContacteSheet.getRange(row, ContacteHeaders.STATUS);
     ContacteSheet.setStatusDataValidation(range, status);
     ContacteSheet.updateInteractionDate(row);
+  }
+
+  static revinPesteDinNou(event) {
+    event.range.setValue(event.oldValue);
+  }
+
+  static revineElEaDinNou(event) {
+
+  }
+
+  static reprogrameazaAnaliza(event) {
+
+  }
+
+  static reprogrameazaConsultanta(event) {
+
+  }
+
+  static reprogrameazaContract(event) {
+
+  }
+
+  static reprogrameazaService(event) {
+
   }
 
 }

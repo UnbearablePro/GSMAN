@@ -22,9 +22,9 @@ const Paths = {
     CENTRALIZARE: "api/centralizare",
     CONSULTANT: "api/consultant"
 }
-const ExecutionPath = [
-    [Paths.CENTRALIZARE, 'getCentralizareDataAPITrigger', [RequiredPermission.CENTRALIZARE_VIEW]],
-    [Paths.CHECKHEALTH, 'checkHealth', []],
-]
+// const ExecutionPath = [
+//     [Paths.CENTRALIZARE, 'getCentralizareDataAPITrigger', [RequiredPermission.CENTRALIZARE_VIEW]],
+//     [Paths.CHECKHEALTH, 'checkHealth', []],
+// ]
 
 

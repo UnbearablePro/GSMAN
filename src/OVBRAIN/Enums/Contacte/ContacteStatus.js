@@ -10,7 +10,7 @@ const ContacteStatus = {
 
     REFUZTELEFON: "RefuzTelefon",
     NRINVALID: "NrInvalid",
-    NRNECUNOSCUT: "NRNECUNOSCUT",
+    NRNECUNOSCUT: "NrNecunoscut",
     DEJACLIENT: "DejaClient",
 
     ANALIZA: "Analiza",
@@ -30,8 +30,15 @@ const ContacteStatus = {
 
     CLIENT: "Client",
     SERVICE: "Service",
-    CLIENTPIERDUT: "PIERDUTCLIENT",
+    CLIENTPIERDUT: "ClientPierdut",
 
     ABANDONEZ: "Abandonez",
-    RESETEZSTATUSUL: "ResetezStatusul"
+
+    REVINPESTEDINOU: "RevinPesteDinNou",
+    REVINEELEADINNOU: "RevineElEaDinNou",
+
+    REPROGRAMEAZAANALIZA: "ReprogramatAnaliza",
+    REPROGRAMEAZACONSULTANTA: "ReprogramatConsultanta",
+    REPROGRAMEAZACONTRACT: "ReprogramatContract",
+    REPROGRAMEAZASERVICE: "ReprogramatService"
 }

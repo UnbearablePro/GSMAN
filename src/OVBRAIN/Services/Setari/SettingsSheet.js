@@ -2,7 +2,7 @@ class SettingsSheet extends AbstractSheetService {
 
     static initialize() {
         if (DataUtils.isEmpty(SettingsSheet.sheet)) {
-          this.sheet = SpreadSheetService.getSheetByName(SheetNames.SETTINGS);
+          this.sheet = OVBRAINSpreadsheet.getSheetByName(SheetNames.SETTINGS);
         }
       }
 

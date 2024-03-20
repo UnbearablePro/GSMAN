@@ -1,9 +1,12 @@
 class ReminderHandler {
 
+    static openReminderForSelectedPerson() {
+        ReminderService.openReminderForSelectedPerson();
+    }
 
-    static setReminderFromStatusEvent(row, currentValue, lastValue, date, hour, details, reminder) {
+    static setReminderFromStatusEvent(row, currentValue, lastValue, numePrenume, day, month, year, hour, minute, details) {
         try {
-            ReminderService.setReminderFromStatusEvent(row, currentValue, lastValue, date, hour, details, reminder);
+            ReminderService.setReminderFromStatusEvent(row, currentValue, lastValue, numePrenume, day, month, year, hour, minute, details);
         } catch (e) {
             let event = {
                 oldValue: lastValue,
@@ -14,7 +17,7 @@ class ReminderHandler {
         }
     }
 
-    static programReminderForSelectedPerson(row, currentValue, numePrenume, day, month, year, hour, minute, details) {
+    static setReminderForSelectedPerson(row, currentValue, numePrenume, day, month, year, hour, minute, details) {
         try {
             ReminderService.setReminderForSelectedPerson(row, currentValue, numePrenume, day, month, year, hour, minute, details);
         } catch (e) {

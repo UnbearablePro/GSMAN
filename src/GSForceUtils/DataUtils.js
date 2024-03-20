@@ -14,7 +14,7 @@ class DataUtils {
     return (data == null || data === undefined || data == "" || data == " ") ? defaultValue : data;
   }
 
-  static requireNotNull(data, message) {
+  static requireNotNull(data, message = "Invalid data provided") {
     if (data == null || data === undefined || data == "" || data == " ") {
       throw new InvalidDataError(message);
     };

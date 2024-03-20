@@ -2,7 +2,7 @@ class CentralizareTellPartySheet extends AbstractSheetService {
 
     static initialize() {
         if (DataUtils.isEmpty(CentralizareTellPartySheet.sheet)) {
-            this.sheet = SpreadsheetApp.openById(SpreadSheetIds.OVDATA).getSheetByName(SheetNames.CENTRALIZARE_TELLPARTY);
+            this.sheet = OVDATASpreadsheet.getSheetByName(SheetNames.CENTRALIZARE_TELLPARTY);
         }
     }
 

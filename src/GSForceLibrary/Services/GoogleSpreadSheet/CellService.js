@@ -1,5 +1,5 @@
 function playGround() {
-  
+
   // let range = sheet.getRange(2,2);
   // let bigRange = sheet.getRange(2,3, 7, 9);
   // CellService.clearFormat(bigRange);
@@ -18,7 +18,7 @@ function playGround() {
   // sheet.newChart().addRange();
   // bigRange.shiftColumnGroupDepth(1);
   // var italic = SpreadsheetApp.newTextStyle()
-    
+
   //   .build();
   // SpreadsheetApp.newRichTextValue().setText("dasda").setTextStyle("adasdas").build(); // TODO: FOr linked texts
 }
@@ -29,69 +29,74 @@ function playGround() {
  */
 class CellService {
 
+  static createHyperlink(range, url, displayText) {
+    var formula = '=HYPERLINK("' + url + '"; "' + displayText + '")';
+    range.setFormula(formula);
+  }
+
   static setWrap(range, wrapType = SpreadsheetApp.WrapStrategy.WRAP) {
     // todo: see if wrapStrategy is not the best one
     range.setWrap(wrapType);
     SpreadsheetApp.WrapStrategy.WRAP;
-}
+  }
 
-static setTextDirection(range, direction) {
+  static setTextDirection(range, direction) {
     range.setTextDirection(); // TODO
-}
+  }
 
-static setNumberFormat(range, numberFormat) {
+  static setNumberFormat(range, numberFormat) {
     range.setNumberFormat(numberFormat);
-}
+  }
 
-static sentFontWeight() {
+  static sentFontWeight() {
 
-}
+  }
 
-static setFormula() {
+  static setFormula() {
 
-}
+  }
 
-static setFontColor() {
+  static setFontColor() {
 
-}
+  }
 
-static setFontFamilies() {
+  static setFontFamilies() {
 
-}
+  }
 
-static setFontLine() {
+  static setFontLine() {
 
-}
+  }
 
-static sentFontSize() {
+  static sentFontSize() {
 
-}
+  }
 
-static getFontFamilies() {
+  static getFontFamilies() {
 
-}
+  }
 
-static getHeight() {
+  static getHeight() {
 
-}
+  }
 
-static getBanding(range) {
+  static getBanding(range) {
     return range.getBanding(); // TODO: Maybe i can copy custom bandings
-}
+  }
 
-static copyFormatToRange(sheet, column, columnEnd, row, rowEnd) {
+  static copyFormatToRange(sheet, column, columnEnd, row, rowEnd) {
     //TODO: Good for implementing copy paste template of the sheet
-}
+  }
 
-static copyTo(destination) {
+  static copyTo(destination) {
     //TODO: Same with copyFromatToRange
-}
+  }
 
-static clearFormat(range) {
+  static clearFormat(range) {
     range.clearFormat();
-}
+  }
 
-static setDataValidationBackground(range, fontColor, backgroundColor) {
+  static setDataValidationBackground(range, fontColor, backgroundColor) {
     range.setFontColor(fontColor);
     range.setBackground(backgroundColor)
   }
@@ -104,7 +109,7 @@ static setDataValidationBackground(range, fontColor, backgroundColor) {
     range.setBorderStyle(null, null, null, null, null, null, null);
   }
 
-  static sort(){
+  static sort() {
     //TODO:
   };
 
@@ -120,7 +125,7 @@ static setDataValidationBackground(range, fontColor, backgroundColor) {
     //TODO:
   }
 
-  
+
 
   static setShowHyperlink(showHyperlink) {
 
@@ -189,13 +194,13 @@ static setDataValidationBackground(range, fontColor, backgroundColor) {
   }
 
   static getFilter(range) {
-    
+
   }
 
-  
+
 
   static createFilter(range) {
-    
+
   }
 
   static getDataSourceUrl(range) {
@@ -214,12 +219,12 @@ static setDataValidationBackground(range, fontColor, backgroundColor) {
     // TODO: Maybe better in sheet manager
   }
 
-  
+
 
   static createDataSourcePivotTable(dataSource) {
     //TODO: Learn if pivot table are good
   }
- 
+
   static collapseGroups(range) {
     range.collapseGroups();
   }

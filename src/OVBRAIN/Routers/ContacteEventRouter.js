@@ -1,5 +1,8 @@
 class ContacteEventRouter {
 
+  /**
+   * @param {UserEvent} event 
+   */
   static routeEvent(event) {
     if (DataUtils.isEmpty(event)) {
       throw new Error("Cannot handle empty event from Contacte");
@@ -16,7 +19,7 @@ class ContacteEventRouter {
   */
   static checkForStatusEvent(event) {
     if (event.row >= ContacteIndex.STARTING_ROW && event.col == ContacteHeaders.STATUS) {
-      Lug.progress(`Routing to [STATUS EVENT]t ${event.row}:${event.col}`)
+      Lug.progress(`Routing to [STATUS EVENT] ${event.row}:${event.col}`)
       ContacteEventStatusRouter.routeStatusEvent(event);
     }
   }
@@ -35,7 +38,6 @@ class ContacteEventRouter {
   }
 
   /** 
-   * 
    * @param {UserEvent} event 
   */
   static checkForFreezeDateAndHour(event) {
@@ -47,7 +49,7 @@ class ContacteEventRouter {
       }
     }
   }
-  
+
   /** 
    * @param {UserEvent} event 
   */

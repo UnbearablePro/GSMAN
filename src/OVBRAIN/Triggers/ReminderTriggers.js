@@ -1,15 +1,10 @@
-function openReminderTrigger() {
-    ReminderHandler.openReminder();
-}
-
-function openReminderTriggerForSelectedPerson() {
+function openReminderTriggerForSelectedPersonTrigger() {
     ReminderHandler.openReminderForSelectedPerson();
 }
 
-function programReminderFromStatusEventTrigger(row, currentValue, numePrenume, lastValue, date, hour, details, reminder) {
-    ReminderHandler.setReminderFromStatusEvent(row, currentValue, numePrenume, lastValue, date, hour, details, reminder);
+function setReminderFromStatusEventTrigger(row, currentValue, lastValue, numePrenume, day, month, year, hour, minute, details) {
+    ReminderHandler.setReminderFromStatusEvent(row, currentValue, lastValue, numePrenume, day, month, year, hour, minute, details);
 }
-function programReminderForSelectedPersonTrigger(row, currentValue, numePrenume, day, month, year, hour, minute, details) {
-    ReminderHandler.programReminderForSelectedPerson(row, currentValue, numePrenume, day, month, year, hour, minute, details);
-
+function setReminderForSelectedPersonTrigger(row, currentValue, numePrenume, day, month, year, hour, minute, details) {
+    ReminderHandler.setReminderForSelectedPerson(row, currentValue, numePrenume, day, month, year, hour, minute, details);
 }

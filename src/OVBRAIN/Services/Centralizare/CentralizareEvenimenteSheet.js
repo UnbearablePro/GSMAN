@@ -2,15 +2,15 @@ class CentralizareEvenimenteSheet extends AbstractSheetService {
 
     static initialize() {
         if (DataUtils.isEmpty(CentralizareEvenimenteSheet.sheet)) {
-            this.sheet = SpreadsheetApp.openById(SpreadSheetIds.OVDATA).getSheetByName(SheetNames.CENTRALIZARE_EVENIMENTE);
+            this.sheet = OVDATASpreadsheet.getSheetByName(SheetNames.CENTRALIZARE_EVENIMENTE);
         }
     }
 
     static createSnapShot(eventId, tipEveniment, dataEveniment, ora, minute, nume, telefon, detalii) {
         Lug.build(`Creating event snapshot in progress...`);
         var snapshot = [
-            eventId, 
-            tipEveniment, 
+            eventId,
+            tipEveniment,
             RomanianDatesMapper.toRomanianDateFormat(new Date()),
             RomanianDatesMapper.toRomanianDateFormat(dataEveniment),
             TimeMapper.converHourAndMinuteToClockFormat(ora, minute),
@@ -23,7 +23,7 @@ class CentralizareEvenimenteSheet extends AbstractSheetService {
         this.appendSnapshot(snapshot);
         Lug.progress(`Successfully created event snapshot with values: ${snapshot}`);
     }
-    
+
     static appendSnapshot(snapshot) {
         CentralizareEvenimenteSheet.appendRow(snapshot);
     }

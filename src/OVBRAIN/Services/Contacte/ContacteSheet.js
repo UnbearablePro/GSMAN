@@ -4,8 +4,22 @@ class ContacteSheet extends AbstractSheetService {
 
   static initialize() {
     if (DataUtils.isEmpty(ContacteSheet.sheet)) {
-      this.sheet = SpreadSheetService.getSheetByName(SheetNames.CONTACTE);
+      this.sheet = OVBRAINSpreadsheet.getSheetByName(SheetNames.CONTACTE);
     }
+  }
+
+  static updateDocument(row = this.getCurrentCell()) {
+    this.initialize();
+    const c = Contact.getContactFrom(row);
+
+    const activitateFolder = OVBDriveService.getActivitateFolder();
+    let userFolder = DriveService.searchForFolderInFolder(activitateFolder, c.numePrenume);
+
+    if (!userFolder) {
+      userFolder = DriveService.createFolder(activitateFolder, c.numePrenume);
+    }
+
+    CellService.createHyperlink(this.sheet.getRange(row, ContacteHeaders.DOCUMENT), userFolder.getUrl(), `📁 ${c.numePrenume}`)
   }
 
   static updateInteractionDate(row = this.getCurrentCell()) {
@@ -66,10 +80,14 @@ class ContacteSheet extends AbstractSheetService {
 
   static setFilterContacteByStatus(filterName) {
     ContacteSheet.removeFilter();
-    const filterValues = ContacteStatusFilterRouter.route(filterName);
+    const filterValues = ContacteStatusFilterSupplier(filterName);
+
     if (filterValues != null) {
       const criteria = FilteringOVBService.buildCriteria(filterValues);
       ContacteSheet.setColumnFilterCriteria(ContacteHeaders.STATUS, criteria);
+      Lug.progress(`Contacte status filter applied for {${filterName}}`)
+    } else {
+      Lug.progress('Contacte status filter removed successfully');
     }
   }
 

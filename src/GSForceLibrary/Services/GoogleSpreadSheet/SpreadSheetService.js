@@ -1,10 +1,13 @@
-class SpreadSheetService {
+class AbstractSpreadSheetService {
+
+  static initialize() { };
 
   static getSheetByName(sheetName) {
-    return SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
+    this.initialize();
+    return this.spreadsheet.getSheetByName(sheetName);
   }
 
-  static getActiveSpreadSheet() {
+  static getActiveSpreadsheet() {
     return SpreadsheetApp.getActiveSpreadsheet();
   }
 
@@ -32,5 +35,7 @@ class SpreadSheetService {
     }
   }
 }
+
+AbstractSpreadSheetService.spreadsheet = null;
 
 

@@ -1,8 +1,6 @@
 class DocsService {
 
-    static createDocumentFromTemplate() {
-        // Replace TEMPLATE_ID with the ID of your Google Docs template
-        var templateId = 'TEMPLATE_ID';
+    static createDocumentFromTemplate(templateId) {
 
         // Create a new copy of the template
         var documentCopy = DriveApp.getFileById(templateId).makeCopy();

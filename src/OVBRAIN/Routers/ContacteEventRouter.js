@@ -35,10 +35,11 @@ class ContacteEventRouter {
   }
 
   /** 
+   * 
    * @param {UserEvent} event 
   */
   static checkForFreezeDateAndHour(event) {
-    if (event.row >= ContacteIndex.STARTING_ROW && event.col == ContacteHeaders.STATUS) {
+    if (event.row >= ContacteIndex.STARTING_ROW && event.col == ContacteHeaders.DATA) {
       Lug.progress(`Routing to [FREEZE DATE AND HOUR] ${event.row}:${event.col}`);
       if (Permisioner.requireAdminPermsissionWithNoError()) {
         event.restore();

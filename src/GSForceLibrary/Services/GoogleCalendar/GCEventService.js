@@ -1,7 +1,7 @@
-class GCEventService  {
+class GCEventService {
 
     static createCalendarEvent(calendar, gcEvent) {
-        GCEventCreator.createCalendarEvent(calendar, gcEvent);
+        return GCEventCreator.createCalendarEventFromGCEvent(calendar, gcEvent);
     }
- 
+
 }

@@ -1,3 +1,7 @@
 function centralizareCycleTrigger() {
-    CentralizareService.takeWeekSnapshot();
+    CentralizareTellPartySheet.takeSnapshotFromProperties();
+}
+
+function centralizareTellPartyTrigger() {
+
 }

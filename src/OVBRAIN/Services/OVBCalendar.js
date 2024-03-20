@@ -6,6 +6,11 @@ class OVBCalendar {
         }
     }
 
+    static getCalendar() {
+        this.initialize();
+        return this.calendar;
+    }
+
     static createReminder() {
 
     }

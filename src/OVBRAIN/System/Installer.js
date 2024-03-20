@@ -24,15 +24,13 @@ class Installer {
     this.installOwner();
     this.installAdmin();
     this.installTellPartyProperties();
-    this.installCentralizare();
+    this.installCentralizareTellPartyCycle();
     this.installSettings();
     this.installQuota();
     this.installOnEditTrigger();
+
   }
 
-  static installCentralizare() {
-    TriggerOVBService.startCentralizareCycle();
-  }
 
   static installOwner() {
     if (Owner.exist()) {
@@ -65,13 +63,12 @@ class Installer {
   }
 
   static installOnEditTrigger() {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet();
-    ScriptApp.newTrigger('onEditTrigger')
-      .forSpreadsheet(sheet)
-      .onEdit()
-      .create();
+    TriggerOVBService.onEditTrigger();
   }
 
+  static installCentralizareTellPartyCycle() {
+    TriggerOVBService.startTellPartyCycle();
+  }
 
   static clear() {
     PropertiesDocumentService.deleteAll();
@@ -79,6 +76,8 @@ class Installer {
     PropertiesUserService.deleteAll();
     TriggerService.deleteAll();
   }
+
+
 
 }
 

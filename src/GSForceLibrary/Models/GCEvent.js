@@ -1,7 +1,21 @@
 
 class GCEvent {
-    constructor(event) {
-        this.event = event;
+
+    constructor(title, start, end, description, color, reminders, location, 
+        guests, guestsCanSeeGuests, guestsCanModify, anyoneCanAddSelf,sendInvites) {
+
+        this.title = title;
+        this.start = start;
+        this.end = end;
+        this.description = description;
+        this.color = color;
+        this.reminders = reminders;
+        this.location = location;
+        this.guests = guests;
+        this.guestsCanSeeGuests = guestsCanSeeGuests;
+        this.guestsCanModify = guestsCanModify;
+        this.anyoneCanAddSelf = anyoneCanAddSelf;
+        this.sendInvites = sendInvites;
     }
 
     static of(event) {
@@ -20,7 +34,7 @@ class GCEvent {
 
     addPopupReminder(minutesBefore) {
         throw Error("Not implemented yet");
-        this.event.addPopupReminder(minutesBefore);
+        // this.event.addPopupReminder(minutesBefore);
     }
 
     addSmsReminder(minutesBefore) {

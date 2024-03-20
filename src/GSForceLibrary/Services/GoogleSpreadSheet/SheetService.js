@@ -62,6 +62,10 @@ class AbstractSheetService {
     return this.sheet.getRange(1, parseInt(col), this.sheet.getLastRow(), 1).getValues();
   }
 
+  static getRange(row, col) {
+    this.initialize();
+    return this.sheet.getRange(row, col);
+  }
   static getSheet() {
     this.initialize();
     return this.sheet;
@@ -85,13 +89,13 @@ class AbstractSheetService {
   }
   /**
    * 
-   * @param {String[][]} values 
-   * @param {Number} rows 
-   * @param {Number} columns 
+   * @param {any[][]} values 
+   * @param {Number} row 
+   * @param {Number} nrOfValues 
    */
-  static setValues(values, rows, columns) {
+  static setValues(values, row, nrOfValues) {
     this.initialize();
-    this.sheet.getRange(rows, columns).setValues(values);
+    this.sheet.getRange(row, 1, 1, nrOfValues).setValues(values);
   }
 
   static setColumnWidth(col, width) {
@@ -119,6 +123,7 @@ class AbstractSheetService {
 
   static setDataValidation(range, validationList) {
     range.setDataValidation(SpreadSheetService.createValidation(validationList));
+    Lug.progress(`Successfully setting data validation with validation list: ${validationList}`);
   }
   
   static deleteColumn(column) {

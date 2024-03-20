@@ -278,14 +278,6 @@
   </div>
 
   <script>
-    let personData = {};
-
-      window.onload = function(personSupplier){
-          google.script.run.withSuccessHandler(function(personSupplier){
-          giveContactSomeContent(personSupplier.numePrenume, personSupplier.status);
-          personData = personSupplier;
-      }).getPersonSupplier();}
-      
 
       const btn7 = document.getElementById("btn-7");
       const timeContainer = document.querySelector(".time-container");
@@ -378,12 +370,22 @@
         return later;
       }
 
-
       
+      
+      /**
+       * 
+      */
       function submit() {
-        if (personData.numePrenume === undefined ) {
-          return;
-        }
+        var row = '<?= row ?>';
+        var currentValue = '<?= currentValue ?>'; 
+        var lastValue = '<?= lastValue ?>';
+        var numePrenume = '<?= numePrenume ?>';
+
+        console.log(row);
+      
+        // if (personData.numePrenume === undefined ) {
+        //   return;
+        // }
         
         let date = document.getElementById("date").value;
         let time = document.getElementById("time").value;
@@ -417,7 +419,8 @@
         console.log(comentarii);
         console.log(rdBt);
         console.log(finalDate);
-        google.script.run.responseReminderForSelectedPerson("Reminder", finalDate.toString(), personData, comentarii);
+
+        google.script.run.programReminderFromSelectedPersonTrigger(row, currentValue, lastValue, numePrenume, day, month, year, hour, minute, details);
         google.script.host.close();
       }
 

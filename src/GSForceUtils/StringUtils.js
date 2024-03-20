@@ -1,5 +1,9 @@
 class StringUtils {
 
+    static convertFromNumberArrayToStringArray(snapshot) {
+        return snapshot.map(number => String(number));
+    }
+
     static addTwoStrings(str1, str2) {
         const num1 = parseInt(str1);
         const num2 = parseInt(str2);

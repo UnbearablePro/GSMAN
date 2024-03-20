@@ -12,12 +12,7 @@
     <title>Document</title>
     <script>
 
-      window.onload = function(person){
-          google.script.run.withSuccessHandler(function(person){
-          console.log("Persoana este:");
-          console.log(person);
-      }).getPersonSupplier();}
-
+      console.log(event);
 
       const btn7 = document.getElementById("btn-7");
       const timeContainer = document.querySelector(".time-container");
@@ -63,7 +58,6 @@
         let comentarii = document.querySelector(".comentarii-box").value;
         if(date === "" || time === "" || titlu === "" || comentarii === ""){
           displayWarning("ce vor muschii mei");
-
         }
 
         // if (btn7.checked) {
@@ -75,6 +69,8 @@
         //     }
         //   });
         // }
+
+        google.script.run.programMeetingFromStatusEventTrigger(event)
       }
       // vvv aceasta functie e menita sa inchida fereastra in momentul in care este chemata.
       function closeTheWindow() {

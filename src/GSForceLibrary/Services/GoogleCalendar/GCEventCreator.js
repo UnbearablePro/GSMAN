@@ -1,17 +1,19 @@
 class GCEventCreator {
 
-    static createCalendarEvent(calendar, { title, start, end, location, description, guests, sendInvites, color, reminders, guestsCanSeeGuests }) {
-        var event = calendar.createEvent(title, start, end, {
-            location: location,
-            description: description,
-            guests: guests,
-            sendInvites: sendInvites,
-            color: color,
-            reminders: reminders,
-            guestsCanSeeGuests: guestsCanSeeGuests
+    /**
+     * 
+     * @param {*} calendar 
+     * @param {GCEvent} gcEvent 
+     */
+    static createCalendarEventFromGCEvent(calendar, gcEvent) {
+        var event = calendar.createEvent(gcEvent.title, gcEvent.start, gcEvent.end, {
+            description: gcEvent.description,
+            color: gcEvent.color,
+            reminders: gcEvent.reminders,
         });
 
-        Logger.log(`Google calendar event created successfully. Event ${event}`);
+        Lug.progress(`Successfully created a google calendar event: ${gcEvent.title} at ${gcEvent.start}`);
+        return event.getId();
     }
 
     static createAllDayCalendarEvent() {};

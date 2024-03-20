@@ -25,7 +25,7 @@ class AbstractHtmlDisplayer {
   static getAndinsertPropertiesInTemplate(htmlFileName, properties = {}) {
     var template = HtmlService.createTemplateFromFile(htmlFileName);
 
-    if (properties != null && properties.length > 0) {
+    if (properties != null) {
       for (var key in properties) {
         template[key] = properties[key];
       }

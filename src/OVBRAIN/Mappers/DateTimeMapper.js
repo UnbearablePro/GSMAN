@@ -50,8 +50,6 @@ class DateTimeMapper {
         throw new Error(`The date converted unsuccesfully for the date input : ${dateInput}`);
     }
 
-    static getJSDateFrom(dateInput) {
-        return new Date(dateInput);
-    }
+    
 
 }

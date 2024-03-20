@@ -13,6 +13,7 @@ class ContacteSheet extends AbstractSheetService {
   }
 
   static setStatusDataValidation(range, statusValue) {
+    Lug.build(`Setting Status Data Validation for ${statusValue} on row ${range.getRow()}`);
     const statusDataValidation = ContateStatusValidationSupplier(statusValue);
     this.setDataValidation(range, statusDataValidation);
 

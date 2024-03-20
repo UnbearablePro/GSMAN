@@ -4,6 +4,10 @@
 luxon.Settings.defaultLocale = "ro";
 //# sourceMappingURL=luxon.js.map
 
+const SpreadSheetIds = {
+    OVDATA: "1GBytoF96QLGrSuBjSXS2g11jn6j7xyBPWZYXWPgigts",
+    OVBRAIN: "1GBytoF96QLGrSuBjSXS2g11jn6j7xyBPWZYXWPgigts"
+}
 
 Developer.mail = "alexandruiluca71@gmail.com";
 Developer.phone = "0752 589 038";
@@ -14,9 +18,9 @@ luxon.Settings.defaultLocale = "ro";
 //# sourceMappingURL=luxon.js.map
 
 const Paths = {
-    CHECKHEALTH : "/checkhealth",
-    CENTRALIZARE : "api/centralizare",
-    CONSULTANT : "api/consultant"
+    CHECKHEALTH: "/checkhealth",
+    CENTRALIZARE: "api/centralizare",
+    CONSULTANT: "api/consultant"
 }
 const ExecutionPath = [
     [Paths.CENTRALIZARE, 'getCentralizareDataAPITrigger', [RequiredPermission.CENTRALIZARE_VIEW]],

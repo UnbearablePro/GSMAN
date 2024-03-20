@@ -53,6 +53,7 @@ class ContacteStatusService {
     let contact = Contact.getContactFrom(event.row);
     let isChangedToday = contact.isLastInteractionToday();
 
+    ReminderService.openReminderFromStatusEvent(event);
     // Reminder.OpenHtml
   }
 
@@ -165,7 +166,6 @@ class ContacteStatusService {
     ContacteSheet.updateInteractionDate(event.row);
   }
 
-
   static refuzOferta(event) {
     ContacteSheet.setStatusDataValidation(event.range, ContacteStatus.REFUZOFERTA);
     ContacteSheet.updateInteractionDate(event.row);
@@ -236,6 +236,19 @@ class ContacteStatusService {
     }
     ContacteSheet.setStatusDataValidation(event.range, ContacteStatus.ABANDONEZ);
     ContacteSheet.updateInteractionDate(event.row);
+  }
+
+  static reminderResponse(c, status, lastValue, row)  {
+    let isChangedThisWeek = c.isLastInteractionThisWeek();
+
+    if (isChangedThisWeek == false) {
+      TellPartyService.incTelefoaneSunate();
+      TellPartyService.incTelefoaneRaspunse();
+    }
+
+    const range = ContacteSheet.getRange(row, ContacteHeaders.STATUS);
+    ContacteSheet.setStatusDataValidation(range, status);
+    ContacteSheet.updateInteractionDate(row);
   }
 
 }

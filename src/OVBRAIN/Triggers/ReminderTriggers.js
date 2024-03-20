@@ -2,9 +2,14 @@ function openReminderTrigger() {
     ReminderHandler.openReminder();
 }
 
-function programMeetingFromStatusEventTrigger(event, date, hour, details, reminder) {
-    ReminderHandler.setReminderFromStatusEvent(event, date, hour, details, reminder);
+function openReminderTriggerForSelectedPerson() {
+    ReminderHandler.openReminderForSelectedPerson();
 }
-function programMeetingTrigger(index, type, date, hour, details, reminder) {
-    ReminderHandler.setReminder(index, type, date, hour, details, reminder);
+
+function programReminderFromStatusEventTrigger(row, currentValue, numePrenume, lastValue, date, hour, details, reminder) {
+    ReminderHandler.setReminderFromStatusEvent(row, currentValue, numePrenume, lastValue, date, hour, details, reminder);
+}
+function programReminderForSelectedPersonTrigger(row, currentValue, numePrenume, day, month, year, hour, minute, details) {
+    ReminderHandler.programReminderForSelectedPerson(row, currentValue, numePrenume, day, month, year, hour, minute, details);
+
 }

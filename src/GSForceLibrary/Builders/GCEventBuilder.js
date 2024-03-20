@@ -1,20 +1,21 @@
 class GCEventBuilder {
 
     static createCalendarEventFrom(
-        defaultGCEvent = DefaultGCEvent,
-        title, 
-        start, 
+        defaultGCEvent,
+        title,
+        start,
         duration,
-        description, 
+        description,
         reminders,
-        color, 
+        color,
         location,
         guests,
-        guestsCanSeeGuests, 
-        guestsCanModify, 
-        anyoneCanAddSelf, 
+        guestsCanSeeGuests,
+        guestsCanModify,
+        anyoneCanAddSelf,
         sendInvites) {
 
+        defaultGCEvent = DataUtils.getIfNotEmpty(defaultGCEvent, DefaultGCEvent);
         DataUtils.requireNotNull(title);
         DataUtils.requireNotNull(start);
         duration = DataUtils.getIfNotEmpty(duration, defaultGCEvent.duration);
@@ -27,21 +28,10 @@ class GCEventBuilder {
         sendInvites = DataUtils.getIfNotEmpty(sendInvites, defaultGCEvent.sendInvites);
         anyoneCanAddSelf = DataUtils.getIfNotEmpty(anyoneCanAddSelf, defaultGCEvent.anyoneCanAddSelf);
         guestsCanModify = DataUtils.getIfNotEmpty(guestsCanModify, defaultGCEvent.guestsCanModify);
-        
-        const end = DateTime.getDateAfterMinutes(start, duration);
 
-        return {
-            title: title,
-            start: start,
-            end: end,
-            location: location,
-            description: description,
-            guests: guests,
-            sendInvites: sendInvites,
-            color: color,
-            reminders: reminders,
-            guestsCanSeeGuests: guestsCanSeeGuests
-        };
+        const end = JSDateUtils.getJSDateAfterMinutes(start, duration);
+
+        return new GCEvent(title, start, end, location, description, color, reminders);
     }
 
 }

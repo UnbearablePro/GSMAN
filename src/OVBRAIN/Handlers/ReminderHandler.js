@@ -1,24 +1,23 @@
 class ReminderHandler {
 
-    static openReminder() {
-        ReminderService.openReminderFromStatusEvent();
-    }
 
-    static setReminder(index, type, date, hour, details, reminder) {
+    static setReminderFromStatusEvent(row, currentValue, lastValue, date, hour, details, reminder) {
         try {
-            ReminderService.setReminder(type, date, hour, details, reminder);
+            ReminderService.setReminderFromStatusEvent(row, currentValue, lastValue, date, hour, details, reminder);
         } catch (e) {
+            let event = {
+                oldValue: lastValue,
+                range: ContacteSheet.getRange(row, ContacteHeaders.STATUS)
+            };
+            ContacteStatusService.restoreStatus(event);
             ErrorHandler.handleError(e);
         }
     }
 
-    static setReminderFromStatusEvent(event, date, hour, details, reminder) {
+    static programReminderForSelectedPerson(row, currentValue, numePrenume, day, month, year, hour, minute, details) {
         try {
-            var c = Contact.getContactFrom(event.row);
-            c.isLastInteractionThisWeek();
-            ReminderService.setReminderFromStatusEvent(event, date, hour, details, reminder);
+            ReminderService.setReminderForSelectedPerson(row, currentValue, numePrenume, day, month, year, hour, minute, details);
         } catch (e) {
-            ContacteStatusService.restoreStatus(event);
             ErrorHandler.handleError(e);
         }
     }

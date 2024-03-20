@@ -29,7 +29,14 @@ class DateTime extends LuxonDateTime {
   }
 
   static areEqualsDates(firstDate, secondDate) {
-    return DateTimeMapper.getLuxonDateFrom(firstDate).toLocaleString() != DateTimeMapper.getLuxonDateFrom(secondDate).toLocaleString() ? false : true;
+    try {
+      const d1 = DateTimeMapper.getLuxonDateFrom(firstDate).toISO();
+      const d2 = DateTimeMapper.getLuxonDateFrom(secondDate).toISO();
+      return d1 == d2;
+    } catch (e) {
+      Lug.error(`Cannot compare luxon dates d1:${firstDate}, d2: ${secondDate}`, e.name, e.stack);
+      ErrorHandler.handleError(e);
+    }
   }
 
   static toDay() {

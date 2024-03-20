@@ -5,28 +5,28 @@ class Lug {
     }
 
     static info(message) {
-      console.log(`📄 : ${message}`);
+      console.log(`📄: ${message}`);
     }
 
     static build(message){
-      console.log(`🔨 : ${message}`);
+      console.log(`⬜: ${message}`);
     }
 
     static debug(message){
-      console.log(`🐞 : ${message}`);
+      console.log(`🐞: ${message}`);
     }
   
     static warning(message) {
-      console.log(`⚠️ : ${message}`);
+      console.log(`⚠️: ${message}`);
     }
   
     static error(message, name, stack) {
       if (message instanceof Object) {
-        console.log(`🔴 : ${message.name} -> ${message.message}`);
-        console.log(`🧐 : ${message.stack}`);
+        console.log(`🔴: ${message.name} -> ${message.message}`);
+        console.log(`🧐: ${message.stack}`);
       } else {
-        console.log(`🔴 : ${name} -> ${message}`);
-        console.log(`🧐 : ${stack}`);
+        console.log(`🔴: ${name} -> ${message}`);
+        console.log(`🧐: ${stack}`);
       } 
     }
   }

@@ -1,0 +1,3 @@
+function addDocumentInContacteTrigger() {
+    AddDocuments.addDocumentInContacte();
+}

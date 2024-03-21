@@ -12,7 +12,11 @@ class DriveService {
         this.getFileById(id).getBlob().getDataAsString();
     }
 
-    static searchForFolderById(folderId) {
+    /**
+     * @param {string} folderId 
+     * @returns 
+     */
+    static getFolderById(folderId) {
         return DataUtils.getIfNotEmpty(DriveApp.getFolderById(folderId), null);
     }
 
@@ -41,7 +45,7 @@ class DriveService {
     /**
      * @param {string} fileId 
      * @param {string} folderName 
-     * @returns {string} folder id
+     * @returns
      */
     static createFolderInParent(fileId, folderName = "New folder") {
         DataUtils.requireNotNull(fileId, `Creating folder {${folderName}} failed. File id is mandatory for creating folder in parent`);
@@ -51,7 +55,7 @@ class DriveService {
 
         var newFolder = parentFolder.createFolder(folderName);
 
-        return newFolder.getId();
+        return newFolder;
     }
     /**
      * 

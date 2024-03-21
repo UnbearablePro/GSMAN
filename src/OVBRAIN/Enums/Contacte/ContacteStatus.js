@@ -40,5 +40,7 @@ const ContacteStatus = {
     REPROGRAMEAZAANALIZA: "ReprogramatAnaliza",
     REPROGRAMEAZACONSULTANTA: "ReprogramatConsultanta",
     REPROGRAMEAZACONTRACT: "ReprogramatContract",
-    REPROGRAMEAZASERVICE: "ReprogramatService"
+    REPROGRAMEAZASERVICE: "ReprogramatService",
+
+    PROGRAMEAZAINTALNIRE: "Programeaza Intalnire"
 }

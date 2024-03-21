@@ -6,7 +6,7 @@ luxon.Settings.defaultLocale = "ro";
 
 const SpreadSheetIds = {
     OVDATA: "1GBytoF96QLGrSuBjSXS2g11jn6j7xyBPWZYXWPgigts",
-    OVBRAIN: "1GBytoF96QLGrSuBjSXS2g11jn6j7xyBPWZYXWPgigts"
+    OVBRAIN: "1pZz9arl4ISsnNiEu7sfFsg6INHNteFutXEp73XIJfuA"
 }
 
 Developer.mail = "alexandruiluca71@gmail.com";

@@ -1,4 +1,4 @@
-class OVDATASpreadsheet extends AbstractSpreadSheetService {
+class OVDATASpreadsheet extends AbstractSpreadsheetService {
     
     static initialize() {
         if (DataUtils.isEmpty(OVDATASpreadsheet.spreadsheet)) {

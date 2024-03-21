@@ -1,4 +1,4 @@
-class OVBRAINSpreadsheet extends AbstractSpreadSheetService {
+class OVBRAINSpreadsheet extends AbstractSpreadsheetService {
     
     static initialize() {
         if (DataUtils.isEmpty(OVBRAINSpreadsheet.spreadsheet)) {

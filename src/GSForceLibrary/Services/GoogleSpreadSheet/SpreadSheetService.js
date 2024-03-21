@@ -1,4 +1,4 @@
-class AbstractSpreadSheetService {
+class AbstractSpreadsheetService {
 
   static initialize() { };
 
@@ -36,6 +36,6 @@ class AbstractSpreadSheetService {
   }
 }
 
-AbstractSpreadSheetService.spreadsheet = null;
+AbstractSpreadsheetService.spreadsheet = null;
 
 

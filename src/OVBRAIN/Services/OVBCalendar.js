@@ -11,14 +11,4 @@ class OVBCalendar {
         return this.calendar;
     }
 
-    static createReminder() {
-
-    }
-
-    static createMeeting(type, date, hour, details, reminder) {
-        this.initialize();
-        var gcEvent = GCEventBuilder.createCalendarEventFrom(type, date);
-        
-    }
-
 }

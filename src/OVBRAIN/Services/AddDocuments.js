@@ -1,5 +1,8 @@
 class AddDocuments {
     
+    static addDocumentInContacte() {
+        ContacteSheet.updateDocument();
+    }
     
 }
 

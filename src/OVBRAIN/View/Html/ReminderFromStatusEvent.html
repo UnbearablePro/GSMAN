@@ -29,7 +29,6 @@
         flex-direction: column;
         align-items: center;
         gap: 20px;
-        user-select: none;
       }
       .btn {
         padding: 5px 11px;
@@ -120,34 +119,19 @@
       </div>
       <div class="wrapper">
         <span>Peste :</span>
-        <button
-          class="btn"
-          onclick="handleButtonClick(this), setFastReminderValueFromBtn(10)"
-        >
+        <button class="btn" onclick="handleButtonClick(this), getTime(10)">
           10 min
         </button>
-        <button
-          class="btn"
-          onclick="handleButtonClick(this), setFastReminderValueFromBtn(15)"
-        >
+        <button class="btn" onclick="handleButtonClick(this), getTime(15)">
           15 min
         </button>
-        <button
-          class="btn"
-          onclick="handleButtonClick(this), setFastReminderValueFromBtn(30)"
-        >
+        <button class="btn" onclick="handleButtonClick(this), getTime(30)">
           30 min
         </button>
-        <button
-          class="btn"
-          onclick="handleButtonClick(this), setFastReminderValueFromBtn(60)"
-        >
+        <button class="btn" onclick="handleButtonClick(this), getTime(60)">
           1 ora
         </button>
-        <button
-          class="btn"
-          onclick="handleButtonClick(this), setFastReminderValueFromBtn(120)"
-        >
+        <button class="btn" onclick="handleButtonClick(this), getTime(120)">
           2 ore
         </button>
       </div>
@@ -155,7 +139,7 @@
         <span>Sau :</span>
         <button
           class="btn"
-          onclick="handleButtonClick(this),toggleVisiblityOfInputs(), setFastReminderValueFromBtn(0)"
+          onclick="handleButtonClick(this),toggleVisiblityOfInputs()"
         >
           Alege o data
         </button>
@@ -172,12 +156,11 @@
     </div>
 
     <script>
-      //@ts-check
       // Exemplu ce vine de pe back-end
-
       const row = "<?= row ?>";
       const numePrenume= "<?= numePrenume ?>";
       const currentValue = "<?= currentValue ?>";
+      const oldValue = "<?= oldValue ?>";
       
       let object = {
         name: numePrenume,
@@ -191,7 +174,7 @@
       const timeInput = document.querySelector('input[type="time"]');
       const warning = document.querySelector(".warning");
       let description = document.querySelector("textarea");
-      let fastReminderInputValue;
+      let hour, minute, year, month, day;
 
       personName.innerHTML = object.name;
 
@@ -208,99 +191,58 @@
         dateInput.classList.remove("hidden");
         timeInput.classList.remove("hidden");
       }
-
-      function setFastReminderValueFromBtn(value) {
-        fastReminderInputValue = value;
-      }
-
-      function getNewDateAfter(date, minutes) {
-        return new Date(date.getTime() + minutes * 60000);
-      }
-
-      function getParsedJSDate(date) {
-        return [
-          date.getFullYear(),
-          date.getMonth() + 1,
-          date.getDate(),
-          date.getHours(),
-          date.getMinutes(),
-        ];
-      }
-      function getDateFromParsedDateBox(inputDate) {
-        return ([year, month, date] = inputDate.split("-"));
-      }
-      function getTimeFromParsedTimeBox(inputTime) {
-        return ([hour, minute] = inputTime.split(":"));
-      }
-      function getJSDateFromDateAndTime(day, month, year, hour, minutes) {
-        return new Date(year, month - 1, day, hour, minutes);
-      }
-
-      function isDateFarMoreInTheFuture(date, days) {
-        const now = new Date();
-
-        let timeDifference = date.getTime() - now.getTime();
-        let oneYearInMilliseconds = days * 24 * 60 * 60 * 1000;
-
-        if (timeDifference > oneYearInMilliseconds) {
-          return true;
+      function getDescription() {
+        let descriptionElement = document.querySelector("textarea");
+        if (descriptionElement) {
+          let descriptionValue = descriptionElement.value.trim();
+          description =
+            descriptionValue === "" ? "" : descriptionValue;
         } else {
-          return false;
+          description = "";
         }
       }
+      function getTime(value) {
+        hour = new Date().getHours();
+        minute = new Date().getMinutes();
+        minute += value;
+
+        if (minute >= 60) {
+          hour += Math.floor(minute / 60);
+          minute %= 60;
+        }
+
+        hour %= 12;
+        if (hour === 0) {
+          hour = 12;
+        }
+      }
+      function getDate() {
+        if (!dateInput.value) {
+          year = new Date().getFullYear();
+          month = new Date().getMonth() + 1;
+          day = new Date().getDate();
+        } else {
+          [year, month, day] = dateInput.value.split("-");
+        }
+      }
+
       function submit() {
-        let year, month, day, hour, minute;
+        if (hour === undefined && minute === undefined) {
+          warning.textContent = "Alege o ora";
+          return;
+        } else warning.textContent = "";
 
-        if (fastReminderInputValue) {
-          const minutesToAdd = fastReminderInputValue;
-          const curentDate = new Date();
-          const newDate = getNewDateAfter(curentDate, minutesToAdd);
-          [year, month, day, hour, minute] = getParsedJSDate(newDate);
-        } else {
-          let dateFromChoice = dateInput.value;
-          let timeFromChoice = timeInput.value;
-          if (!dateFromChoice) {
-            warning.textContent = "Selecteaza un camp pentru reminder";
-            return;
-          }
-          if (!timeFromChoice) {
-            warning.textContent =
-              "Selecteaza timpul pentru a stabili reminderul";
-            return;
-          }
-          [year, month, day] = getDateFromParsedDateBox(dateFromChoice);
+        getDate();
+        getDescription();
 
-          [hour, minute] = getTimeFromParsedTimeBox(timeFromChoice);
-          const moment = getJSDateFromDateAndTime(
-            day,
-            month,
-            year,
-            hour,
-            minute
-          );
-          console.log(moment.getTime());
-          if (moment < new Date()) {
-            warning.textContent =
-              "Data selectata este in trecut, te rog sa schimbi";
-            return;
-          }
-          if (isDateFarMoreInTheFuture(moment, 366)) {
-            const response = confirm(
-              `Doriti sa puneti un reminder care trece de un an?`
-            );
-            if (!response) {
-              warning.textContent = "";
-              return;
-            }
-          }
-        }
-        description = description.value;
-        return console.log(
-          `Description ${description}, Year ${year}, Month ${month}, Day ${day} hour ${hour} minute ${minute} `
+        console.log(
+          `Description Row:${row}, CurrentValue:${currentValue}, NumePrenume:${numePrenume}, OldValue: ${oldValue}, ${description}, Year ${year}, Month ${month}, Day ${day} hour ${hour} minute ${minute} `
         );
-        google.script.run.withSuccessHandler(closeTheWindow).setReminderForSelectedPersonTrigger(row, currentValue, numePrenume, day, month, year, hour, minute, description);
+        google.script.run.withSuccessHandler(closeTheWindow).setReminderFromStatusEventTrigger(row, currentValue, oldValue, numePrenume, day, month, year, hour, minute, description);
         google.script.host.close();
       }
+
+      // adaugat din codul vechi
 
       function closeTheWindow() {
         google.script.host.close();

@@ -2,25 +2,33 @@ class OVBDriveService {
 
     static getActivitateFolder() {
         const folderId = PropertiesUserService.get(FileNames.FOLDER_ACTIVITATE);
-        if (folderId) {
-            throw Error(`User property: {${FileNames.FOLDER_ACTIVITATE}} could not be provided because is null`);
+        if (DataUtils.isEmpty(folderId)) {
+            return this.askForCreationOfActivitateFolder();
         }
 
-        const folder = DriveService.searchForFolderById(folderId);
+        const folder = DriveService.getFolderById(folderId);
         if (DataUtils.isEmpty(folder)) {
-            const response = Displayer.ask(`Nu a fost gasit folderul de activitate
+            return this.askForCreationOfActivitateFolder();
+        }
+
+        return folder;
+    }
+
+    static askForCreationOfActivitateFolder() {
+        const response = Displayer.ask(`Nu a fost gasit folderul de activitate
       Pentru o gestionare automata a documentelor doriti crearea acestuia?`);
-            if (response) {
-                this.createFolderActivitate();
-            } else {
-                throw Error(`Folder ACTIVITATE was not found`);
-            }
+        if (response) {
+            this.createFolderActivitate();
+        } else {
+            throw Error(`Folder ACTIVITATE was not found`);
         }
     }
 
     static createFolderActivitate() {
         try {
-            DriveService.createFolderInParent(SpreadSheetIds.OVBRAIN, `Activitati ${Owner.getOwner().firstName} ${Owner.getOwner().lastName}`);
+            let folder = DriveService.createFolderInParent(SpreadSheetIds.OVBRAIN, `Activitati ${Owner.getOwner().firstName} ${Owner.getOwner().lastName}`);
+            PropertiesScriptService.set(FileNames.FOLDER_ACTIVITATE, folder.getId());
+            return folder;
         } catch (e) {
             ErrorHandler.handleError(e);
         }

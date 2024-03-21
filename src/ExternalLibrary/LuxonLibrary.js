@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @ts-check
 var luxon = (function (exports) {
   'use strict';
 

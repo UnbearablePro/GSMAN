@@ -1,7 +1,6 @@
 
 class ContacteSheet extends AbstractSheetService {
 
-
   static initialize() {
     if (DataUtils.isEmpty(ContacteSheet.sheet)) {
       this.sheet = OVBRAINSpreadsheet.getSheetByName(SheetNames.CONTACTE);

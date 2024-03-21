@@ -50,6 +50,8 @@ class ContacteEventStatusRouter {
       case ContacteStatus.REPROGRAMEAZACONTRACT : service.reprogrameazaContract(event); break;
       case ContacteStatus.REPROGRAMEAZASERVICE : service.reprogrameazaService(event); break;
 
+      case ContacteStatus.PROGRAMEAZAINTALNIRE : service.programeazaIntalnire(event); break;
+
       default: throw Error(`Status unknown: ${event.value}`);
     }
   };

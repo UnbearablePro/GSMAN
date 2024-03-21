@@ -5,6 +5,10 @@ class ContacteStatusService {
     ContacteSheet.setStatusDataValidation(oldEvent.range, oldEvent.oldValue);
   }
 
+  static programeazaIntalnire(event) {
+    MeetingService.openMeetingFromStatusEvent(event);
+  }
+
   static neSunat(event) {
     ContacteSheet.setStatusDataValidation(event.range, ContacteStatus.NESUNAT);
     ContacteSheet.updateInteractionDate(event.row);
@@ -51,7 +55,6 @@ class ContacteStatusService {
 
   static revin(event) {
     let contact = Contact.getContactFrom(event.row);
-    let isChangedToday = contact.isLastInteractionToday();
 
     ReminderService.openReminderFromStatusEvent(event);
     // Reminder.OpenHtml
@@ -248,6 +251,21 @@ class ContacteStatusService {
 
     const range = ContacteSheet.getRange(row, ContacteHeaders.STATUS);
     ContacteSheet.setStatusDataValidation(range, status);
+    ContacteSheet.updateInteractionDate(row);
+  }
+
+  static meetingResponse(c, type, lastValue, row) {
+    if (lastValue != ContacteStatus.ANALIZA) {
+      let isChangedThisWeek = c.isLastInteractionThisWeek();
+
+      if (isChangedThisWeek == false) {
+        TellPartyService.incTelefoaneSunate();
+        TellPartyService.incTelefoaneRaspunse();
+      }
+    }
+   
+    const range = ContacteSheet.getRange(row, ContacteHeaders.STATUS);
+    ContacteSheet.setStatusDataValidation(range, type);
     ContacteSheet.updateInteractionDate(row);
   }
 

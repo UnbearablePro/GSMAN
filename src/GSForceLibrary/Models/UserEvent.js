@@ -1,17 +1,16 @@
 /** @class */
 class UserEvent {
 
-    constructor(event) {
-        this.range = event.range;
-        this.oldValue = event.oldValue;
-        this.value = event.value;
-        this.row = this.range.getRowIndex();
-        this.col = this.range.getColumn();
-        this.sheetName = this.range.getSheet().getName();
+    constructor(range, oldValue, value, row, col) {
+        this.range = range;
+        this.oldValue = oldValue;
+        this.value = value;
+        this.row = row
+        this.col = col;
     }
 
-    static of(event) {
-        return this.constructor(event);
+    static fromEditEvent(event) {
+        return new this(event.range, event.oldValue, event.value, event.range.getRowIndex(), event.range.getColumn());
     }
 
     restore() {

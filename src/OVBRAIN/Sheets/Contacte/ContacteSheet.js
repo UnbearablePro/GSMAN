@@ -30,8 +30,16 @@ class ContacteSheet extends AbstractSheetService {
     const statusDataValidation = ContateStatusValidationSupplier(statusValue);
     this.setDataValidation(range, statusDataValidation);
 
-    const [fontColor, bgColor] = ContacteStatusFormat(statusValue);
+    const [fontColor, bgColor] = ContacteStatusColorFormat(statusValue);
     CellService.setDataValidationBackground(range, fontColor, bgColor);
+  }
+
+  static setDate(row = this.getCurrentCell(), date) {
+    date = DateTimeMapper.getLuxonDateFrom(date);
+    date = date.toJSDate();
+    this.setValue(date, row, ContacteHeaders.DATA);
+    //TODO: Continue implementing link to google calendar
+    ContacteFormater.formatDateColumn();
   }
 
   static setAndGetNrContacte() {

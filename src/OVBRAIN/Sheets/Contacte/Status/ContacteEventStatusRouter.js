@@ -21,9 +21,10 @@ class ContacteEventStatusRouter {
       case ContacteStatus.NRNECUNOSCUT: service.nrNecunoscut(event); break;
       case ContacteStatus.DEJACLIENT: service.dejaClient(event); break;
 
-      case ContacteStatus.ANALIZA: service.analiza(event); break;
-      case ContacteStatus.CONSULTANTA: service.consultanta(event); break;
-      case ContacteStatus.CONTRACT: service.contract_(event); break;
+      case ContacteStatus.ANALIZA: service.programeazaIntalnire(event); break;
+      case ContacteStatus.CONSULTANTA: service.programeazaIntalnire(event); break;
+      case ContacteStatus.CONTRACT: service.programeazaIntalnire(event); break;
+      case ContacteStatus.PROGRAMEAZAINTALNIRE: service.programeazaIntalnire(event); break;
 
       case ContacteStatus.NUMAIRASPUNDE: service.nuMaiRaspunde(event); break;
       case ContacteStatus.ABSENTINTALNIRE: service.absentIntalnire(event); break;
@@ -36,7 +37,7 @@ class ContacteEventStatusRouter {
       case ContacteStatus.POTENTIALCOLABORATOR: service.potentialColaborator(event); break;
       case ContacteStatus.POTENTIALRECOMANDATOR: service.potentialRecomandator(event); break;
 
-      case ContacteStatus.SERVICE: service.service(event); break;
+      case ContacteStatus.SERVICE: service.programeazaIntalnire(event); break;
       case ContacteStatus.CLIENT: service.client_(event); break;
       case ContacteStatus.CLIENTPIERDUT: service.clientPierdut(event); break;
 

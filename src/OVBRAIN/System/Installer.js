@@ -43,7 +43,7 @@ class Installer {
   }
 
   static installTellPartyProperties() {
-    TellPartyService.setDefaultTellPartyValues();
+    CentralizareService.setDefaultTellPartyValues();
   }
 
   static installSettings() {

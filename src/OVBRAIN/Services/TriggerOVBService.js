@@ -10,11 +10,11 @@ class TriggerOVBService extends TriggerService {
     }
 
     static startTellPartyCycle() {
-        this.createRecurringWeeklyTimeTrigger('centralizareCycleTrigger', ScriptApp.WeekDay.MONDAY, 3, 0);
+        this.createRecurringWeeklyTimeTrigger('takeTellPartySnapshotFromPropertiesTrigger', ScriptApp.WeekDay.MONDAY, 3, 0);
     }
 
     static stopTellPartyCycle() {
-        this.deleteTriggerFromFunction('centralizareCycleTrigger');
+        this.deleteTriggerFromFunction('takeTellPartySnapshotFromPropertiesTrigger');
     }
 
     static onEditTrigger() {

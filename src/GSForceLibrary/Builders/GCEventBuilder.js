@@ -6,7 +6,8 @@ class GCEventBuilder {
         start,
         duration,
         description,
-        reminders,
+        emailReminder,
+        popupReminder,
         color,
         location,
         guests,
@@ -20,7 +21,8 @@ class GCEventBuilder {
         DataUtils.requireNotNull(start);
         duration = DataUtils.getIfNotEmpty(duration, defaultGCEvent.duration);
         description = DataUtils.getIfNotEmpty(description, defaultGCEvent.description);
-        reminders = DataUtils.getIfNotEmpty(reminders, defaultGCEvent.reminders);
+        emailReminder = DataUtils.getIfNotEmpty(emailReminder, defaultGCEvent.emailReminder);
+        popupReminder = DataUtils.getIfNotEmpty(popupReminder, defaultGCEvent.popupReminder);
         color = DataUtils.getIfNotEmpty(color, defaultGCEvent.color);
         location = DataUtils.getIfNotEmpty(location, defaultGCEvent.location);
         guests = DataUtils.getIfNotEmpty(guests, defaultGCEvent.guests);
@@ -31,7 +33,7 @@ class GCEventBuilder {
 
         const end = JSDateUtils.getJSDateAfterMinutes(start, duration);
 
-        return new GCEvent(title, start, end, location, description, color, reminders);
+        return new GCEvent(title, start, end, description, emailReminder, popupReminder, color, location, guests, guestsCanSeeGuests, sendInvites, anyoneCanAddSelf, guestsCanModify);
     }
 
 }

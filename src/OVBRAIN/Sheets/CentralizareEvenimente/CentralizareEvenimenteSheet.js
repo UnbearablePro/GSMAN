@@ -28,4 +28,20 @@ class CentralizareEvenimenteSheet extends AbstractSheetService {
         CentralizareEvenimenteSheet.appendRow(snapshot);
     }
 
+    /**
+     * 
+     * @param {LuxonDateTime} start 
+     * @param {LuxonDateTime} end
+     */
+    static getSuccessfullMettingsNr(start, end= DateTime.now()) {
+        DataUtils.requireNotNull(start, `The start day is mandatory to get the meetings`);
+
+        const dataEveniment = this.getColData(CentralizareEvenimenteHeaders.DATA_EVENIMENTE)[0];
+        const tipEveniment = this.getColData(CentralizareEvenimenteHeaders.TIP_EVENIMENTE)[0];
+
+        for (let i = 0; i < dataEveniment.length; i++) {
+            //TODO: Implement this further
+        }
+    }
+
 }

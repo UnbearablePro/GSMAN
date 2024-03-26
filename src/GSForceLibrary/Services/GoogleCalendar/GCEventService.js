@@ -1,6 +1,12 @@
 class GCEventService {
 
-    static createCalendarEvent(calendar, gcEvent) {
+    /**
+     * 
+     * @param {*} calendar 
+     * @param {GCEvent} gcEvent 
+     * @returns 
+     */
+    static createCalendarEventFromGCEvent(calendar, gcEvent) {
         return GCEventCreator.createCalendarEventFromGCEvent(calendar, gcEvent);
     }
 

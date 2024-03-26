@@ -1,7 +1,8 @@
-const ContacteStatusFormat = statusValue => {
+const ContacteStatusColorFormat = statusValue => {
     const START = [ColorPallet.WHITE, ColorPallet.GREEN];
     const DEAD = [ColorPallet.WHITE, ColorPallet.GREY];
     const INCERT = [ColorPallet.WHITE, ColorPallet.LIGHTGREEN];
+    const REMINDER = [ColorPallet.BLACK, ColorPallet.YELLOW];
     const INTALNIRE = [ColorPallet.WHITE, ColorPallet.BLUE];
     const CLIENT = [ColorPallet.WHITE, ColorPallet.LIGHTPURPLE];
     const LOST = [ColorPallet.WHITE, ColorPallet.RED];
@@ -14,8 +15,8 @@ const ContacteStatusFormat = statusValue => {
         case ContacteStatus.NURASPUNDE2: return INCERT;
         case ContacteStatus.NURASPUNDE3: return DEAD;
 
-        case ContacteStatus.REVINPESTE: return INCERT;
-        case ContacteStatus.REVINEELEA: return INCERT;
+        case ContacteStatus.REVINPESTE: return REMINDER;
+        case ContacteStatus.REVINEELEA: return REMINDER;
 
         case ContacteStatus.REFUZTELEFON: return DEAD;
         case ContacteStatus.NRINVALID: return DEAD;
@@ -30,8 +31,8 @@ const ContacteStatusFormat = statusValue => {
         case ContacteStatus.ABSENTINTALNIRE: return DEAD;
         case ContacteStatus.REFUZOFERTA: return DEAD;
 
-        case ContacteStatus.DEREPROGRAMATINTALNIRE: return INCERT;
-        case ContacteStatus.REVINCUOFERTAPANA: return INCERT;
+        case ContacteStatus.DEREPROGRAMATINTALNIRE: return REMINDER;
+        case ContacteStatus.REVINCUOFERTAPANA: return OPORTUN;
 
         case ContacteStatus.SERVICE: return CLIENT;
         case ContacteStatus.CLIENT: return CLIENT;
@@ -43,8 +44,8 @@ const ContacteStatusFormat = statusValue => {
 
         case ContacteStatus.ABANDONEZ: return DEAD;
 
-        case ContacteStatus.REVINPESTEDINOU: return INCERT;
-        case ContacteStatus.REVINEELEADINNOU: return INCERT;
+        case ContacteStatus.REVINPESTEDINOU: return REMINDER;
+        case ContacteStatus.REVINEELEADINNOU: return REMINDER;
 
         case ContacteStatus.REPROGRAMEAZAANALIZA: return INTALNIRE;
         case ContacteStatus.REPROGRAMEAZACONSULTANTA: return INTALNIRE;

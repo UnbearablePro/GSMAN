@@ -1,5 +1,9 @@
 class GCEventProvider {
 
+    static getEventById(calendar, id) {
+        return calendar.getEventById(id);
+    }
+
     static getAllEvents(calendar) {
         return calendar.getEvents(new Date(0), new Date(8640000000000000));
     }

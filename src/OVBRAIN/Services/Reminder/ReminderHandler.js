@@ -4,15 +4,14 @@ class ReminderHandler {
         ReminderService.openReminderForSelectedPerson();
     }
 
-    static setReminderFromStatusEvent(row, currentValue, lastValue, numePrenume, day, month, year, hour, minute, details) {
+    static setReminderFromStatusEvent(row, currentValue, oldValue, numePrenume, day, month, year, hour, minute, details) {
         try {
-            ReminderService.setReminderFromStatusEvent(row, currentValue, lastValue, numePrenume, day, month, year, hour, minute, details);
+            ReminderService.setReminderFromStatusEvent(row, currentValue, oldValue, numePrenume, day, month, year, hour, minute, details);
         } catch (e) {
-            let event = {
-                oldValue: lastValue,
-                range: ContacteSheet.getRange(row, ContacteHeaders.STATUS)
-            };
-            ContacteStatusService.restoreStatus(event);
+            const range = ContacteSheet.getRange(row, ContacteHeaders.STATUS);
+            const userEvent = new UserEvent(range, oldValue, currentValue, row, ContacteHeaders.STATUS);
+            
+            ContacteStatusService.cancelStatusForm(userEvent);
             ErrorHandler.handleError(e);
         }
     }

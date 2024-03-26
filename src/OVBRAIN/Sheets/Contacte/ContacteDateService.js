@@ -1,0 +1,6 @@
+class ContacteDateService {
+
+    static updateDate() {
+        
+    }
+}

@@ -1,10 +1,6 @@
 const GCEventReminders = {
     REMINDER: {
-        email: {
-            minutes: 10
-        },
-        popup: {
-            minutes: 10
-        }
+        email: 10,
+        popup: 10
     },
 }

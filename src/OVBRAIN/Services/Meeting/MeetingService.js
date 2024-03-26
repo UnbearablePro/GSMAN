@@ -20,20 +20,22 @@ class MeetingService {
         Displayer.openHtmlPopup(httpName, title, width, height, properties);
     }
 
-    static setMeetingFromStatusEvent(row, lastValue, numePrenume, day, month, year, hour, minute, details, meetingType) {
+    static setMeetingFromStatusEvent(row, meetingType, oldValue, numePrenume, day, month, year, hour, minute, description) {
         Lug.build(`Creating meeting ${meetingType} from status event for ${numePrenume} on ${day}/${month}/${year} at ${hour}:${minute} ...`);
 
         const c = Contact.getContactFrom(row);
         if (c.numePrenume != numePrenume) {
             throw Error(`Nume prenume from contact is not equal to nume prenume from html event: ${c.numePrenume} != ${numePrenume}`);
         }
-        GCMeeting.createMeeting(numePrenume, day, month, year, hour, minute, details, meetingType);
+        GCMeeting.createMeeting(meetingType, c, numePrenume, day, month, year, hour, minute, description);
 
         Lug.progress(`${meetingType} meeting created successfully!`);
-    }
-
-
     
+        //TODO: Questionable reduntant reminderResponse and handleReponse
+        ContacteStatusService.meetingResponse(c, meetingType, oldValue, row, JSDateUtils.createJSDateFromDateAndTime(day, month, year, hour, minute));
+    
+        Displayer.complete('Reminder created successfully');
+    }
 
 }
 

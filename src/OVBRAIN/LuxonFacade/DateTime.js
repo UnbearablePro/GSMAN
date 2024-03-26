@@ -2,13 +2,13 @@
 class DateTime extends LuxonDateTime {
 
   /**
-   * Convert an input date to luxon DateTime and then checks if a date is today or not.
+   * Convert an input date to luxon DateTime and then checks if a date is today or not
 
    * @param {string} dateInput
    * @return {boolean} 
    */
   static isToday(dateInput) {
-    let present = LuxonDateTime.now();
+    const present = LuxonDateTime.now();
     return this.areEqualsDates(dateInput, present).valueOf();
   }
 
@@ -16,8 +16,8 @@ class DateTime extends LuxonDateTime {
     return LuxonDateTime.now().toFormat(DateFormat.ROMANIADATE);
   }
   /**
-   * Convert an input date to luxon DateTime and then checks if a date is not older then 6 days.
-
+   * Convert an input date to luxon DateTime and then checks if a date is not older then 6 days
+   * 
    * @param {string} dateInput
    * @return {boolean} 
    */
@@ -30,9 +30,11 @@ class DateTime extends LuxonDateTime {
 
   static areEqualsDates(firstDate, secondDate) {
     try {
-      const d1 = DateTimeMapper.getLuxonDateFrom(firstDate).toISO();
-      const d2 = DateTimeMapper.getLuxonDateFrom(secondDate).toISO();
-      return d1 == d2;
+      const d1 = DateTimeMapper.getLuxonDateFrom(firstDate);
+      const d2 = DateTimeMapper.getLuxonDateFrom(secondDate);
+      return d1.hasSame(d2, 'day') &&
+        d1.hasSame(d2, 'month') &&
+        d1.hasSame(d2, 'year');
     } catch (e) {
       Lug.error(`Cannot compare luxon dates d1:${firstDate}, d2: ${secondDate}`, e.name, e.stack);
       ErrorHandler.handleError(e);

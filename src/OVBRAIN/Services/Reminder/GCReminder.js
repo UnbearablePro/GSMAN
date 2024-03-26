@@ -8,11 +8,12 @@ class GCReminder {
       jsDate,
       DurationTime.REMINDER,
       this.createDetailsForReminder_(c.telefon, c.recomandator, c.detalii, c.profesie, c.ultimaInteractiune, details),
-      GCEventReminders.REMINDER,
-      ColorPallet.LIGHTGREEN
+      GCEventReminders.REMINDER.email,
+      GCEventReminders.REMINDER.popup,
+      CalendarApp.EventColor.YELLOW
     );
 
-    const eventId = GCEventService.createCalendarEvent(OVBCalendar.getCalendar(), gcEvent);
+    const eventId = GCEventService.createCalendarEventFromGCEvent(OVBCalendar.getCalendar(), gcEvent);
 
     CentralizareEvenimenteSheet.createSnapShot(eventId, CentralizareEvenimenteType.REMINDER, gcEvent.start, hour, minute, c.numePrenume, c.telefon, details);
   }
@@ -25,7 +26,7 @@ class GCReminder {
 
   /** @private */
   static createDetailsForReminder_(telefon, recomandator, detalii, profesie, ultimaInteractiune, comments) {
-    return '\n' + 'Comentarii: ' + comments + '\n' + 'Telefon: ' + telefon + '\n' + 'Recomandator: ' + recomandator + '\n' + 'Detalii: ' + detalii + '\n' + '  Profesie: ' + profesie + 'Data programarii: ' + ultimaInteractiune;
+    return '\n' + 'Comentarii: ' + comments + '\n' + 'Telefon: ' + telefon + '\n' + 'Recomandator: ' + recomandator + '\n' + 'Detalii: ' + detalii + '\n' + '  Profesie: ' + profesie + '\n' +'Ultima interactiune: ' + ultimaInteractiune;
   }
 
 }

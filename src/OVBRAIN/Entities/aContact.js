@@ -23,18 +23,21 @@ class Contact {
     }
 
     static of(numePrenume, phoneNumber, recomandator, details) {
-        return new Contact(numePrenume, phoneNumber, recomandator, ContacteStatus.NESUNAT, null , details, null, null, DateTime.toDay().toString());
-    } 
+        return new Contact(numePrenume, phoneNumber, recomandator, ContacteStatus.NESUNAT, null, details, null, null, DateTime.toDay().toString());
+    }
 
     isLastInteractionToday() {
         if (DataUtils.isEmpty(this.ultimaInteractiune)) {
+            Lug.warning(`Cannot check if is last interaction day. Reason: Contact ${this.numePrenume} doesn't have ultima interactiune`);
             return false;
         }
+
         return DateTime.isToday(this.ultimaInteractiune).valueOf();
     }
 
     isLastInteractionThisWeek() {
         if (DataUtils.isEmpty(this.ultimaInteractiune)) {
+            Lug.warning(`Cannot check if is last interaction week. Reason: Contact ${this.numePrenume} doesn't have ultima interactiune`);
             return false;
         }
 

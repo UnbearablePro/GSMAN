@@ -45,29 +45,32 @@ class ReminderService {
   }
 
   static setReminderFromStatusEvent(row, currentValue, lastValue, numePrenume, day, month, year, hour, minute, details) {
-    Lug.build(`Creating reminder from status event for ${numePrenume} on ${day}/${month}/${year} at ${hour}:${minute} ...`);
+    Lug.build(`REMINDER: Start creating REMINDER from status event for ${numePrenume} on ${day}/${month}/${year} at ${hour}:${minute} ...`);
 
     const c = Contact.getContactFrom(row);
     if (c.numePrenume !=numePrenume) {
       throw Error(`Nume prenume from contact is not equal to nume prenume from html event: ${c.numePrenume} != ${numePrenume}`);
     }
     GCReminder.createReminder(currentValue, c, numePrenume, day, month, year, hour, minute, details);
+    Lug.progress(`REMINDER : Google calendar reminder ${currentValue} for ${numePrenume} created`);
 
-    ContacteStatusService.reminderResponse(c, currentValue, lastValue, row);
-    Lug.progress(`Reminder created successfully!`);
+    ContacteStatusService.reminderResponse(c, currentValue, lastValue, row, JSDateUtils.createJSDateFromDateAndTime(day, month, year, hour, minute));
+    
+    Displayer.complete('Reminder created successfully');
   }
 
   static setReminderForSelectedPerson(row, currentValue, numePrenume, day, month, year, hour, minute, details) {
-    Lug.build(`Creating reminder for selectect person ${numePrenume} on ${day}/${month}/${year} at ${hour}:${minute} ...`);
+    Lug.build(`REMINDER: Start creating REMINDER for selectect person ${numePrenume} on ${day}/${month}/${year} at ${hour}:${minute} ...`);
 
     const c = Contact.getContactFrom(row);
     if (c.numePrenume !=numePrenume) {
-      throw Error(`Nume prenume from contact is not equal to nume prenume from html event: ${c.numePrenume} != ${numePrenume}`);
+      throw Error(`REMINDER: Nume prenume from contact is not equal to nume prenume from html event: ${c.numePrenume} != ${numePrenume}`);
     }
 
     GCReminder.createReminder(currentValue, c, numePrenume, day, month, year, hour, minute, details);
+    Lug.progress(`REMINDER : Google calendar reminder ${currentValue} for ${numePrenume} created`);
 
-    Lug.progress(`Reminder created successfully!`);
+    Displayer.complete('Reminder created successfully');
   }
 
 }

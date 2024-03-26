@@ -1,29 +1,39 @@
 class ContacteStatusService {
 
-  static restoreStatus(oldEvent) {
-    oldEvent.range.setValue(oldEvent.oldValue);
-    ContacteSheet.setStatusDataValidation(oldEvent.range, oldEvent.oldValue);
-  }
+  /**
+   * @param {UserEvent} event 
+   */
+  static cancelStatusForm(event) {
+    if (event.value == ContacteStatus.REVINEELEA) {
+      this.handleRevineElEa_(event);
+    }
 
-  static programeazaIntalnire(event) {
-    MeetingService.openMeetingFromStatusEvent(event);
+    event.restore();
+    ContacteSheet.setStatusDataValidation(event.range, event.oldValue);
   }
 
   static neSunat(event) {
+    Lug.build(`CONTACTE EVENT HANDLING: Value: ${event.value} OldValue: ${event.oldValue}`);
+
     ContacteSheet.setStatusDataValidation(event.range, ContacteStatus.NESUNAT);
     ContacteSheet.updateInteractionDate(event.row);
   }
 
   static nuRaspunde1(event) {
+    Lug.build(`CONTACTE EVENT HANDLING: Value: ${event.value} OldValue: ${event.oldValue}`);
+
     ContacteSheet.setStatusDataValidation(event.range, ContacteStatus.NURASPUNDE1);
-    TellPartyService.incTelefoaneSunate();
+    CentralizareService.incTelefoaneSunate();
     ContacteSheet.updateInteractionDate(event.row);
   }
 
   static nuRaspunde2(event) {
+    Lug.build(`CONTACTE EVENT HANDLING: Value: ${event.value} OldValue: ${event.oldValue}`);
 
     let contact = Contact.getContactFrom(event.row);
     let isChangedToday = contact.isLastInteractionToday();
+    Lug.build(`CONTACTE EVENT HANDLING: isChangedToday: ${isChangedToday}`)
+
 
     if (isChangedToday == true && event.oldValue == ContacteStatus.NURASPUNDE1) {
       Displayer.warning("Ati sunat deja aceasta persoana astazi! Nu este nevoie sa schimbati statusul persoanei daca ati sunat aceeasi persoana de mai multe ori in aceeasi zi.\n Puteti schimba statusul de la NuRaspunde(1) la NuRaspunde(2) in urmatorul tell party.")
@@ -33,7 +43,7 @@ class ContacteStatusService {
     }
 
     ContacteSheet.setStatusDataValidation(event.range, ContacteStatus.NURASPUNDE2);
-    TellPartyService.incTelefoaneSunate();
+    CentralizareService.incTelefoaneSunate();
     ContacteSheet.updateInteractionDate(event.row);
   }
 
@@ -49,40 +59,41 @@ class ContacteStatusService {
     }
 
     ContacteSheet.setStatusDataValidation(event.range, ContacteStatus.NURASPUNDE3);
-    TellPartyService.incTelefoaneSunate();
+    CentralizareService.incTelefoaneSunate();
     ContacteSheet.updateInteractionDate(event.row);
   }
 
   static revin(event) {
-    let contact = Contact.getContactFrom(event.row);
-
     ReminderService.openReminderFromStatusEvent(event);
-    // Reminder.OpenHtml
   }
 
   static revineElEa(event) {
-    //   let contacte = Contact.getContactFrom(event.row);
-    //   let isChangedThisWeek = contact.isLastInteractionThisWeek();
+    const response = Displayer.ask(`Doriti sa setati un reminder?`);
 
-    //   if (isChangedThisWeek == false) {
-    //     TellPartyService.incTelefoaneSunate();
-    // TellPartyService.incTelefoaneRaspunse();
-    //   } else {
-    //     TellPartyService.incTelefoaneRaspunse();
-    //   }
-    //   ContacteSheet.setStatusDataValidation(event.range, REVINEELEA);
-    //   CellService.changeColors(event.range, color.WHITE, color.LIGHTGREEN);
-    //   ContacteSheet.updateInteractionDate(event.row);
+    if (response) {
+      ReminderService.openReminderFromStatusEvent(event);
+    } else {
+      this.handleRevineElEa_();
+      CentralizareService.incTelefoaneRaspunse();
+      ContacteSheet.setStatusDataValidation(event.range, ContacteStatus.REVINEELEA);
+      ContacteSheet.updateInteractionDate(event.row);
+    }
+  }
 
-    //   let response = Displayer.question("Doriti sa setati un reminder?");
-    //   if (response == true) {
-    //     // TODO: Set Reminder
-    //   }
+  static handleRevineElEa_(event) {
+    let contact = Contact.getContactFrom(event.row);
+    let isChangedThisWeek = contact.isLastInteractionThisWeek();
+    if (!isChangedThisWeek) {
+      CentralizareService.incTelefoaneSunate();
+    }
+    if (event.oldValue == ContacteStatus.REVINPESTE && event.oldValue == ContacteStatus.REVINEELEA) {
+
+    } else {
+      CentralizareService.incTelefoaneRaspunse();
+    }
   }
 
   static refuzTelefon(event) {
-    Lug.progress(`Handle Refuz Telefon Event`);
-
     let contact = Contact.getContactFrom(event.row);
     let isChangedThisWeek = contact.isLastInteractionThisWeek();
 
@@ -92,10 +103,10 @@ class ContacteStatusService {
     } else {
       if (isChangedThisWeek == true &&
         (event.oldValue == ContacteStatus.NURASPUNDE1 || event.oldValue == ContacteStatus.NURASPUNDE2 || event.oldValue == ContacteStatus.NURASPUNDE3)) {
-        TellPartyService.incTelefoaneRaspunse();
+        CentralizareService.incTelefoaneRaspunse();
       } else {
-        TellPartyService.incTelefoaneSunate();
-        TellPartyService.incTelefoaneRaspunse();
+        CentralizareService.incTelefoaneSunate();
+        CentralizareService.incTelefoaneRaspunse();
       }
     }
     ContacteSheet.setStatusDataValidation(event.range, ContacteStatus.REFUZTELEFON);
@@ -112,10 +123,10 @@ class ContacteStatusService {
     let isChangedThisWeek = contact.isLastInteractionThisWeek();
 
     if (isChangedThisWeek == false) {
-      TellPartyService.incTelefoaneSunate();
-      TellPartyService.incTelefoaneRaspunse();
+      CentralizareService.incTelefoaneSunate();
+      CentralizareService.incTelefoaneRaspunse();
     } else {
-      TellPartyService.incTelefoaneRaspunse();
+      CentralizareService.incTelefoaneRaspunse();
     }
 
     ContacteSheet.setStatusDataValidation(event.range, ContacteStatus.NRNECUNOSCUT);
@@ -127,27 +138,28 @@ class ContacteStatusService {
     let isChangedThisWeek = contact.isLastInteractionThisWeek();
 
     if (isChangedThisWeek == false) {
-      TellPartyService.incTelefoaneSunate();
-      TellPartyService.incTelefoaneRaspunse();
+      CentralizareService.incTelefoaneSunate();
+      CentralizareService.incTelefoaneRaspunse();
     } else {
-      TellPartyService.incTelefoaneRaspunse();
+      CentralizareService.incTelefoaneRaspunse();
     }
 
     ContacteSheet.setStatusDataValidation(event.range, ContacteStatus.DEJACLIENT);
-    TellPartyService.incTelefoaneSunate();
-    TellPartyService.incTelefoaneRaspunse();
+    CentralizareService.incTelefoaneSunate();
+    CentralizareService.incTelefoaneRaspunse();
     ContacteSheet.updateInteractionDate(event.row);
   }
 
-  static analiza(event) {
-    MeetingService.openMeetingFromStatusEvent(event);
-  }
+  /**
+   * 
+   * @param {UserEvent} event 
+   */
+  static programeazaIntalnire(event) {
+    let contact = Contact.getContactFrom(event.row);
+    if (DataUtils.isNotEmpty(contact.data)) {
+      ContacteDateService.updateDate(); //TODO: Implement this
+    }
 
-  static consultanta(event) {
-    MeetingService.openMeetingFromStatusEvent(event);
-  }
-
-  static contract_(event) {
     MeetingService.openMeetingFromStatusEvent(event);
   }
 
@@ -157,7 +169,7 @@ class ContacteStatusService {
 
     if (isChangedThisWeek == false &&
       (event.oldValue == ContacteStatus.REVINEELEA || event.oldValue == ContacteStatus.REVINPESTE)) {
-      TellPartyService.incTelefoaneSunate();
+      CentralizareService.incTelefoaneSunate();
     }
 
     ContacteSheet.setStatusDataValidation(event.range, ContacteStatus.NUMAIRASPUNDE);
@@ -189,12 +201,6 @@ class ContacteStatusService {
     ContacteSheet.setStatusDataValidation(event.range, ContacteStatus.CLIENT);
     ContacteSheet.updateInteractionDate(event.row);
   }
-
-  static service(event) {
-    MeetingService.openMeetingFromStatusEvent(event);
-  }
-
-
 
   static clientPierdut(event) {
     // ClientService.
@@ -241,32 +247,46 @@ class ContacteStatusService {
     ContacteSheet.updateInteractionDate(event.row);
   }
 
-  static reminderResponse(c, status, lastValue, row) {
+  static reminderResponse(c, status, lastValue, row, date) {
     let isChangedThisWeek = c.isLastInteractionThisWeek();
 
     if (isChangedThisWeek == false) {
-      TellPartyService.incTelefoaneSunate();
-      TellPartyService.incTelefoaneRaspunse();
+      CentralizareService.incTelefoaneSunate();
+      CentralizareService.incTelefoaneRaspunse();
     }
 
     const range = ContacteSheet.getRange(row, ContacteHeaders.STATUS);
     ContacteSheet.setStatusDataValidation(range, status);
     ContacteSheet.updateInteractionDate(row);
+    ContacteSheet.setDate(row, date);
   }
 
-  static meetingResponse(c, type, lastValue, row) {
-    if (lastValue != ContacteStatus.ANALIZA) {
+  static meetingResponse(c, meetingType, oldValue, row, jsDate) {
+    if (c.isLastInteractionThisWeek) {
+      if (oldValue == ContacteStatus.REVINPESTE || oldValue == ContacteStatus.REVINEELEA) {
+
+      } else {
+        CentralizareService.incTelefoaneRaspunse();
+      }
+    } else {
+      CentralizareService.incTelefoaneSunate();
+      CentralizareService.incTelefoaneRaspunse();
+    }
+    
+    if (meetingType != ContacteStatus.ANALIZA) {
       let isChangedThisWeek = c.isLastInteractionThisWeek();
 
       if (isChangedThisWeek == false) {
-        TellPartyService.incTelefoaneSunate();
-        TellPartyService.incTelefoaneRaspunse();
+        CentralizareService.incTelefoaneSunate();
+        CentralizareService.incTelefoaneRaspunse();
       }
     }
-   
+
+    CentralizareService.incIntalnire(meetingType);
     const range = ContacteSheet.getRange(row, ContacteHeaders.STATUS);
-    ContacteSheet.setStatusDataValidation(range, type);
+    ContacteSheet.setStatusDataValidation(range, meetingType);
     ContacteSheet.updateInteractionDate(row);
+    ContacteSheet.setDate(row, jsDate);
   }
 
   static revinPesteDinNou(event) {

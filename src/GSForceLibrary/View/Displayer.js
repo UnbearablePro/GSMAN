@@ -35,7 +35,7 @@ class Displayer extends AbstractHtmlDisplayer {
    */
   static recommend(message = "no message", timeShown = 8) {
     Logger.log(`💡 Recomandare ${message}.`);
-    SpreadSheetService.getActiveSpreadSheet().toast(message, "💡 Recomandare", timeShown);
+    SpreadsheetApp.getActiveSpreadsheet().toast(message, "💡 Recomandare", timeShown);
   }
 
   /**
@@ -49,7 +49,7 @@ class Displayer extends AbstractHtmlDisplayer {
    */
   static system(message = "no message", timeShown = 8 , icon = "⚙️") {
     Logger.log(`${icon} System ${message}.`);
-    SpreadSheetService.getActiveSpreadSheet().toast(message, `${icon} System`, timeShown);
+    SpreadsheetApp.getActiveSpreadsheet().toast(message, `${icon} System`, timeShown);
   }
 
   /**
@@ -123,7 +123,7 @@ class Displayer extends AbstractHtmlDisplayer {
   }
 
   static problem(message = "no message", timeShown = 8) {
-    SpreadSheetService.getActiveSpreadSheet().toast(message, "🟠", timeShown);
+    SpreadsheetApp.getActiveSpreadsheet().toast(message, "🟠", timeShown);
     Logger.log(`🟠 Problem: ${message}`);
   }
 
@@ -137,7 +137,7 @@ class Displayer extends AbstractHtmlDisplayer {
    * toast message will be displayed on the screen.
    */
   static quote(message = "no message", timeShown = 8) {
-    SpreadSheetService.getActiveSpreadSheet().toast(message, "💡", timeShown);
+    SpreadsheetApp.getActiveSpreadsheet().toast(message, "💡", timeShown);
     Logger.log(`💡 Quote: ${message}. Shown successfully`);
   }
 
@@ -151,7 +151,7 @@ class Displayer extends AbstractHtmlDisplayer {
    * message will be displayed on the screen.
    */
   static complete(message = "no message", title = "", timeShown = 5, ) {
-    SpreadSheetService.getActiveSpreadSheet().toast(message, "👍 " + title, timeShown);
+    SpreadsheetApp.getActiveSpreadsheet().toast(message, "👍 " + title, timeShown);
     Logger.log(`👍 Complete: ${message}. Shown successfully`);
   }
 }

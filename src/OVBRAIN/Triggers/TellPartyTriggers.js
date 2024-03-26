@@ -1,3 +1,3 @@
 function startTellPartyTrigger() {
-    TellPartyService.startTellParty();
+    CentralizareService.startTellParty();
 }

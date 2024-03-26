@@ -11,7 +11,7 @@ class TriggerService {
     //logs
   }
 
-  static createOneTimeTrigger(functionName, atDate, hour, minute) {
+  static createOneTimeTrigger(functionName, atDate) {
     // atDate has to be js Date object with hour and minute builded in.
     // TODO: Part this functios into two, one with Date direct input and a Build JS Date input
     ScriptApp.newTrigger(functionName)

@@ -160,6 +160,7 @@
       const row = "<?= row ?>";
       const numePrenume= "<?= numePrenume ?>";
       const currentValue = "<?= currentValue ?>";
+      const oldValue = "<?= oldValue ?>";
       
       let object = {
         name: numePrenume,
@@ -235,9 +236,9 @@
         getDescription();
 
         console.log(
-          `Description Row:${row}, CurrentValue:${currentValue}, NumePrenume:${numePrenume}, ${description}, Year ${year}, Month ${month}, Day ${day} hour ${hour} minute ${minute} `
+          `Description Row:${row}, CurrentValue:${currentValue}, NumePrenume:${numePrenume}, OldValue: ${oldValue}, ${description}, Year ${year}, Month ${month}, Day ${day} hour ${hour} minute ${minute} `
         );
-        google.script.run.withSuccessHandler(closeTheWindow).setReminderForSelectedPersonTrigger(row, currentValue, numePrenume, day, month, year, hour, minute, description);
+        google.script.run.withSuccessHandler(closeTheWindow).setMeetingFromStatusEvent(row, currentValue, oldValue, numePrenume, day, month, year, hour, minute, description);
         google.script.host.close();
       }
 

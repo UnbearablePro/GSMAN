@@ -1,6 +1,11 @@
 // @ts-nocheck
 class DateTimeMapper {
 
+  /**
+   * 
+   * @param {*} dateInput 
+   * @returns {DateTime}
+   */
     static getLuxonDateFrom(dateInput) {
 
         /* dateInput is already a Luxon DateTime */

@@ -1,8 +1,8 @@
-class TellPartyService extends PropertiesDocumentService {
+class CentralizareService extends PropertiesDocumentService {
 
     static startTellParty() {
         let teluri = this.askForTells();
-        Lug.progress(`Teluri: ${teluri}`);
+        Lug.progress(`TELL PARTY: Teluri stabilite ${teluri}`);
         this.setTellPartyTel(teluri);
         this.setDefaultTellPartyValues();
 
@@ -31,14 +31,14 @@ class TellPartyService extends PropertiesDocumentService {
     //TODO: not finished
     static setDefaultTellPartyValues() {
         const defaultProperties = {};
-        for (const key in TellPartyProperties) {
+        for (const key in CentralizareProperties) {
             switch (key) {
                 // case TellPartyProperties.NRCONTACTE: defaultProperties[TellPartyProperties[key]] = this.setAndGetNrContacte(); break;
                 // case TellPartyProperties.NRCONTACTESHORTLIST: defaultProperties[TellPartyProperties[key]] = this.setAndGetNrContacteShortList(); break;
                 // case TellPartyProperties.NrClienti: defaultProperties[TellPartyProperties[key]] = this.setAndGetNrClient(); break;
                 // case TellPartyProperties.NrColaboratoriNoi: defaultProperties[TellPartyProperties[key]] = this.setAndGetNrContacte(); break;
                 // case TellPartyProperties.NRCONTACTE: defaultProperties[TellPartyProperties[key]] = this.setAndGetNrContacte(); break;
-                default: defaultProperties[TellPartyProperties[key]] = "0"; break;
+                default: defaultProperties[CentralizareProperties[key]] = "0"; break;
             }
         }
 
@@ -46,62 +46,65 @@ class TellPartyService extends PropertiesDocumentService {
     }
 
     static setTellPartyTel(teluri) {
-        PropertiesDocumentService.set(TellPartyProperties.ANALIZETEL, teluri[0]);
-        PropertiesDocumentService.set(TellPartyProperties.CONSULTANTETEL, teluri[1]);
-        PropertiesDocumentService.set(TellPartyProperties.CONTRACTETELL, teluri[2]);
-        PropertiesDocumentService.set(TellPartyProperties.ServiceTel, teluri[3]);
+        PropertiesDocumentService.set(CentralizareProperties.ANALIZE_TEL, teluri[0]);
+        PropertiesDocumentService.set(CentralizareProperties.CONSULTANTE_TEL, teluri[1]);
+        PropertiesDocumentService.set(CentralizareProperties.CONSULTANTE_TEL, teluri[2]);
+        PropertiesDocumentService.set(CentralizareProperties.SERVICE_TEL, teluri[3]);
 
         ContacteSheet.updateTeluri(teluri[0], teluri[1], teluri[2], teluri[3]);
     }
 
+    static incIntalnire(meetingType) {
+        switch (meetingType) {
+            case ContacteStatus.ANALIZA: this.incAnalizeProg(); break;
+            case ContacteStatus.CONSULTANTA: this.incConsultanteProg(); break;
+            case ContacteStatus.CONTRACT: this.incContracteProg(); break;
+            case ContacteStatus.SERVICE: this.incServiceProg(); break;
+        }
+    }
+
     static incTelefoaneSunate() {
         Lug.build("Incrementing telefoane sunate");
-        
-        let actualValue = PropertiesDocumentService.get(TellPartyProperties.TELEFOANESUNATE);
+
+        let actualValue = PropertiesDocumentService.get(CentralizareProperties.TELEFOANE_SUNATE);
         let newValue = StringUtils.addTwoStrings(actualValue, "1");
-        PropertiesDocumentService.set(TellPartyProperties.TELEFOANESUNATE, newValue);
+        PropertiesDocumentService.set(CentralizareProperties.TELEFOANE_SUNATE, newValue);
         ContacteSheet.updateTelefoaneSunate(newValue);
     }
 
     static incTelefoaneRaspunse() {
         Lug.build("Incrementing telefoane raspunse");
 
-        let actualValue = PropertiesDocumentService.get(TellPartyProperties.TELEFOANERASPUNSE);
+        let actualValue = PropertiesDocumentService.get(CentralizareProperties.TELEFOANE_RASPUNSE);
         let newValue = StringUtils.addTwoStrings(actualValue, "1");
-        PropertiesDocumentService.set(TellPartyProperties.TELEFOANERASPUNSE, newValue);
+        PropertiesDocumentService.set(CentralizareProperties.TELEFOANE_RASPUNSE, newValue);
         ContacteSheet.updateTelefoaneRaspunse(newValue);
     }
 
     static incAnalizeProg() {
-        PropertiesDocumentService.increment(TellPartyProperties.AnalizeStabilite);
+        PropertiesDocumentService.increment(CentralizareProperties.ANALIZE_STABILITE);
     }
-
-    static incAnalizeTel() {
-        PropertiesDocumentService.increment(TellPartyProperties.ANALIZETEL);   
-    }
-
     static incConsultanteProg() {
-
+        PropertiesDocumentService.increment(CentralizareProperties.CONSULTANTE_STABILITE);
     }
-
-    static incConsultanteTel() {
-        
-    }
-
     static incContracteProg() {
-
+        PropertiesDocumentService.increment(CentralizareProperties.CONTRACTE_STABILITE);
     }
-
-    static incContracteTel() {
-        
-    }
-
     static incServiceProg() {
-
+        PropertiesDocumentService.increment(CentralizareProperties.SERVICE_STABILITE);
     }
 
-    static incServiceTel() {
-        
+    static incAnalizeTinute() {
+        PropertiesDocumentService.increment(CentralizareProperties.ANALIZE_TINUTE);
+    }
+    static incConsultanteTinute() {
+        PropertiesDocumentService.increment(CentralizareProperties.CONSULTANTE_TINUTE);
+    }
+    static incContracteTinute() {
+        PropertiesDocumentService.increment(CentralizareProperties.CONTRACTE_TINUTE);
+    }
+    static incServiceTinute() {
+        PropertiesDocumentService.increment(CentralizareProperties.SERVICE_TINUTE);
     }
 
     static setAndGetNrContacte() {

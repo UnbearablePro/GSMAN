@@ -6,13 +6,14 @@ class GCEventCreator {
      * @param {GCEvent} gcEvent 
      */
     static createCalendarEventFromGCEvent(calendar, gcEvent) {
-        var event = calendar.createEvent(gcEvent.title, gcEvent.start, gcEvent.end, {
-            description: gcEvent.description,
-            color: gcEvent.color,
-            reminders: gcEvent.reminders,
-        });
 
-        Lug.progress(`Successfully created a google calendar event: ${gcEvent.title} at ${gcEvent.start}`);
+        const event = calendar.createEvent(gcEvent.title, gcEvent.start, gcEvent.end);
+        event.addEmailReminder(gcEvent.emailReminder);
+        event.addEmailReminder(gcEvent.popupReminder);
+        event.setColor(gcEvent.color);
+        event.setDescription(gcEvent.description);
+
+        Lug.progress(`GOOGLE CALENDAR: Created event: ${gcEvent.title} at ${gcEvent.start}`);
         return event.getId();
     }
 

@@ -1,18 +1,22 @@
-class CentralizareTellPartySheet extends AbstractSheetService {
+class CentralizareSaptamanalaSheet extends AbstractSheetService {
 
     static initialize() {
-        if (DataUtils.isEmpty(CentralizareTellPartySheet.sheet)) {
+        if (DataUtils.isEmpty(CentralizareSaptamanalaSheet.sheet)) {
             this.sheet = OVDATASpreadsheet.getSheetByName(SheetNames.CENTRALIZARE_TELLPARTY);
         }
     }
 
-    static takeSnapshotFromProperties() {
-        Lug.build(`Taking Tell party  snapshot in progress...`);
+    static takeSnapshot() {
+        Lug.build(`Taking Tell party snapshot in progress...`);
+
+        CentralizareEvenimenteSheet.getSuccessfullMettingsNr(startOfWeek, endOfWeek);
 
         let currentDate = LuxonDateTime.now();
 
         let startOfWeek = currentDate.startOf('week');
         let endOfWeek = startOfWeek.plus({ days: 7 });
+
+        
 
         let properties = PropertiesDocumentService.getAll();
 
@@ -20,8 +24,8 @@ class CentralizareTellPartySheet extends AbstractSheetService {
 
         let snapshot = [];
         snapshot.push(q, DateTime.toRomanianFormat(startOfWeek), DateTime.toRomanianFormat(endOfWeek));
-        for (let key in TellPartyProperties) {
-            snapshot.push(properties[TellPartyProperties[key]]);
+        for (let key in CentralizareProperties) {
+            snapshot.push(properties[CentralizareProperties[key]]);
         }
 
         this.createSnapshot(snapshot);
@@ -34,9 +38,9 @@ class CentralizareTellPartySheet extends AbstractSheetService {
         if (row) {
             let stringsSnapshot = [];
             stringsSnapshot[0] = StringUtils.convertFromNumberArrayToStringArray(snapshot);
-            CentralizareTellPartySheet.setValues(stringsSnapshot, row, snapshot.length);
+            CentralizareSaptamanalaSheet.setValues(stringsSnapshot, row, snapshot.length);
         } else {
-            CentralizareTellPartySheet.appendRow(snapshot);
+            CentralizareSaptamanalaSheet.appendRow(snapshot);
         }
     }
 

@@ -89,7 +89,7 @@ const SATELITE_PATH = 'src/GSForceSatelite/**/*.js';
 // const ALLJS_PATH = ['build/**/*.js', `!build/9SaintTest.js`, `!build/9PlayGround.js`, `8Configuration.js`, `8Tests`];
 const ALLJS_PRODUCTION_PATH = ['src/!(SaintTestLibrary)/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
 
-const EXTERNALLIBRARY_PATH = ['src/ExternalLibrary/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
+const EXTERNALLIBRARY_PATH = ['src/lib/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
 const GSFORCE_API_PATH = ['src/GSForceAPI/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
 const SAINT_PATH = ['src/GSForceTest/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
 const GSFORCE_DEBUG_PATH = ['src/GSForceDebug/**/*.js', NO_CONFIG_PATH, NO_TEST_PATH];
@@ -103,7 +103,7 @@ const SAINT_LAUNCHER_PATH = [`src/SaintTest.js`];
 const APPSSCRIPT_PATH = [`src/appsscript.json`];
 
 const externalLibraryBuildConfig = {
-    externalLibrary: [EXTERNALLIBRARY_PATH, `ExternalLibrary.js`, ACTIONS.LIBRARY],
+    externalLibrary: [EXTERNALLIBRARY_PATH, `lib.js`, ACTIONS.LIBRARY],
     appscriptJson: [APPSSCRIPT_PATH, `appsscript.json`, ACTIONS.SIMPLE],
     playground: [PLAYGROUND_LAUNCHER_PATH, `PlayGround.js`, ACTIONS.LAUNCHER]
 }

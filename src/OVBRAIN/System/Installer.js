@@ -31,7 +31,6 @@ class Installer {
 
   }
 
-
   static installOwner() {
     if (Owner.exist()) {
       const response = Displayer.ask("Doriti sa reinstalati Ownerul?");

@@ -1,7 +1,7 @@
-function createDebugMenu() {
-    createDebugMenu_();
+function createDebugMenuTrigger() {
+    DebugMenu.createDebugMenu();
 }
 
-function removeGSDebug() {
-    removeDebugMenu_();
+function removeGSDebug(Trigger) {
+    DebugMenu.removeDebugMenu();
 }

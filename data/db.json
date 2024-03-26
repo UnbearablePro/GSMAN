@@ -1,0 +1,47 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "Pizza Margerita",
+      "category": "Pizza",
+      "price": 30,
+      "description": "Detalii pizza margerita"
+    },
+    {
+      "id": 2,
+      "title": "Pizza Calzone",
+      "category": "Pizza",
+      "price": 33,
+      "description": "Detalii pizza calzone"
+    },
+    {
+        "id": 3,
+        "title": "Pizza Capricioasa",
+        "category": "Pizza",
+        "price": 38,
+        "description": "Detalii pizza crapricioasa"
+      },
+      {
+        "id": 4,
+        "title": "Paste Carbonara",
+        "category": "Paste",
+        "price": 27,
+        "description": "Detalii paste carbonara"
+      },
+      {
+        "id": 5,
+        "title": "Paste Napoli",
+        "category": "Paste",
+        "price": 27,
+        "description": "Detalii paste napoli"
+      },
+      {
+        "id": 6,
+        "title": "Meniu Crispy",
+        "category": "Specialitati pui",
+        "price": 30,
+        "description": "Detalii specialitati pui"
+      }
+
+  ]
+}

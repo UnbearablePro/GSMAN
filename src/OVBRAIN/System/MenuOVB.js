@@ -7,6 +7,7 @@ class MenuOVB {
     let systemMenu = ui.createMenu('System');
 
     systemMenu
+      .addItem('Display debug menu', 'createDebugMenuTrigger')
       .addItem('Install Admin', 'installAdminTrigger')
       .addItem('Install Tell Party', 'installTellPartyTrigger');
 

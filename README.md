@@ -1,84 +1,56 @@
-# OVBRAIN
+GSMAN
+Project Status
+Current Status:
 
-## Installation
+Abandoned
+This project has been discontinued due to change in direction. It is no longer under active development and will not be completed.
 
-### 1. Setup environment
+About the project
+Management and statefull web application which function inside of google sheet writed in Google Script and HTML CSS JAVASCRIPT.
 
-#### 1.1 Install **Node.js** environment **LINK**: <https://nodejs.org/en>
+Functionalities:
 
-#### 1.2 Install **npm**
-
-```bash
+SSO Authentication
+Actively working with google services: Mail, Calendar, Drive
+State management
+Handling time and user trigger events
+Data manipulation from google sheets
+Created a testing library for unit and integration testing
+Active notifications
+...
+Installation
+1. Setup environment
+1.1 Install Node.js environment LINK: https://nodejs.org/en
+1.2 Install npm
 npm install
-```
-
-#### 1.3 Initialize a **package.json** for the project
-
-```bash
+1.3 Initialize a package.json for the project
 npm init
-```
-
-### 2. Setup **CLASP** for communicating with Google Apps Scripts
-
-#### 2.1 Install CLASP globaly
-
+2. Setup CLASP for communicating with Google Apps Scripts
+2.1 Install CLASP globaly
 If it does not work run with administrator rights
 
-```bash
 npm install -g @google/clasp
-```
+2.2 Active Google API so you can connect to the Google Scripts APIs
+Go to LINK: https://script.google.com/home/usersettings and set ON for Google Apps Script API
 
-#### 2.2 Active Google API so you can connect to the Google Scripts APIs
-
-Go to LINK: <https://script.google.com/home/usersettings> and set ON for Google Apps Script API
-
-#### 2.3 Login on CLASP with google account
-
-```bash
+2.3 Login on CLASP with google account
 clasp login
-```
-
-#### 2.4 Take the Script ID from script settings
-
-#### 2.5 Setup CLASP Json
-
+2.4 Take the Script ID from script settings
+2.5 Setup CLASP Json
 Becarefull this will overwrite your project in src.
 
-```bash
 clasp clone "scriptid" --rootDir src
-```
-
-#### 2.6 Install TypeScript definitions for Apps Script in your project
-
-```bash
+2.6 Install TypeScript definitions for Apps Script in your project
 npm i -S @types/google-apps-script
-```
-
-### 3. Clone project repository
-
-```bash
+3. Clone project repository
 git clone https://github.com/your-username/your-project.git
-```
-
-### 4. Setup GULP
-
-#### 4.1 Install GULP globally
-
-```bash
+4. Setup GULP
+4.1 Install GULP globally
 TODO
-```
-
-#### 4.2 Install GULP in your project
-
-```bash
+4.2 Install GULP in your project
 
 npm install --save-dev gulp
-
-```
-
-#### 4.3 Install GULP plugins
-
-```bash
+4.3 Install GULP plugins
 npm install --save-dev gulp-uglify
 npm install --save-dev gulp-concat
 npm install --save-dev gulp-shell
@@ -92,12 +64,6 @@ npm install --save-dev gulp-open
 npm install --save-dev gulp-clean
 npm install --save-dev gulp-if
 npm install --save-dev gulp-insert
-
-```
-
-#### 4.4 Install other plugins
-
-```bash
+4.4 Install other plugins
 npm install --save-dev yargs
 npm install del --save-dev
-```

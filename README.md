@@ -1,9 +1,7 @@
 # GSMAN
 
-# Project Status
-
-**Current Status:** 
-# Abandoned
+# Current Project Status
+## Abandoned
 
 This project has been discontinued due to change in direction. It is no longer under active development and will not be completed.
 
